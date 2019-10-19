@@ -11,6 +11,7 @@
                   type="email"
                   id="inputEmail"
                   class="form-control"
+                  v-model="email"
                   placeholder="Email address"
                   required
                   autofocus
@@ -22,12 +23,17 @@
                   type="password"
                   id="password"
                   class="form-control"
+                  v-model="password"
                   placeholder="Password"
                   required
                 />
               </div>
               <br />
-              <button class="btn btn-lg btn-primary btn-outline-primary" type="submit">Log In</button>
+              <button
+                class="btn btn-lg btn-primary btn-outline-primary"
+                @click="signin"
+                type="submit"
+              >Log In</button>
             </form>
           </div>
         </div>
@@ -39,10 +45,32 @@
 <style>
 </style>
 <script>
+import { fb } from "../firebaseInit";
+import router from "../router";
 export default {
   name: "signin",
-  data() {
-    return {};
+  data: function() {
+    return {
+      email: "",
+      password: ""
+    };
+  },
+  methods: {
+    signin: function(e) {
+      fb.auth()
+        .signInWithEmailAndPassword(this.email, this.password)
+        .then(
+          user => {
+            alert(`Login successful for ${user.user.email}`);
+            router.go({ name: "groceryDashboard" });
+            console.log(user);
+          },
+          err => {
+            alert("error " + err.message);
+          }
+        );
+      e.preventDefault();
+    }
   }
 };
 </script>

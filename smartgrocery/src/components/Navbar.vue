@@ -1,13 +1,25 @@
 <template>
-  <nav class="navbar">
+  <nav class="navbar navbar-light">
     <div class="container">
-      <h3 class="logo" to="/">Smart Grocery</h3>
-      <ul class="nav">
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0 logo">Smart Grocery</a>
+
+      <h3 class="logo"></h3>
+      <ul class="nav right">
         <li>
           <router-link to="/">Home</router-link>
         </li>
-
-        <router-link class="btn" to="/signin">Sign In</router-link>
+        <li v-if="isLoggedIn">
+          <router-link to="/grocery-dashboard">Dashboard</router-link>
+        </li>
+        <li v-if="!isLoggedIn">
+          <router-link to="/signin">Sign In</router-link>
+        </li>
+        <li v-if="!isLoggedIn">
+          <router-link to="/signup">Sign Up</router-link>
+        </li>
+        <li v-if="isLoggedIn">
+          <button class="btn" @click="logout">Log Out</button>
+        </li>
       </ul>
     </div>
   </nav>
@@ -47,11 +59,6 @@ img {
   padding-bottom: 0.3rem;
 }
 
-.navbar .container {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-}
-
 .navbar .logo {
   font-size: 2rem;
 }
@@ -88,10 +95,30 @@ img {
 </style>
 
 <script>
+import { fb } from "../firebaseInit";
+import router from "../router";
 export default {
   name: "navbar",
   data() {
-    return {};
+    return {
+      isLoggedIn: false,
+      currentUser: false
+    };
+  },
+  created() {
+    if (fb.auth().currentUser) {
+      this.isLoggedIn = true;
+      this.currentUser = fb.auth().currentUser.email;
+    }
+  },
+  methods: {
+    logout: function() {
+      fb.auth()
+        .signOut()
+        .then(() => {
+          router.go({ name: "homepage" });
+        });
+    }
   }
 };
 </script>

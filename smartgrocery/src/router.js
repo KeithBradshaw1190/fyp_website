@@ -6,61 +6,94 @@ import GroceryDashboard from '@/components/GroceryDashboard'
 import AddGrocery from '@/components/AddGrocery'
 import SignIn from '@/components/SignIn'
 import SignUp from '@/components/SignUp'
+
 import {
   fb
-} from './firebaseInit.js'
+} from './firebaseInit'
 
 Vue.use(Router)
 
-const router = new Router({
-  mode: 'history',
+let router = new Router({
   routes: [{
       path: '/',
       name: 'homepage',
       component: HomePage
     },
     {
-      path: '/grocery-dashboard',
+      path: '/verify-details/',
+      name: 'verifyDetails',
+      component: VerifyDetails,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/grocery-dashboard/',
       name: 'groceryDashboard',
       component: GroceryDashboard,
       meta: {
         requiresAuth: true
-      },
-      children: [{
-          path: '/verify-details',
-          name: 'verifyDetails',
-          component: VerifyDetails
-        },
-        {
-          path: '/add-dashboard',
-          name: 'addGrocery',
-          component: AddGrocery
-        }
-      ]
+      }
+    },
+    {
+      path: '/add-dashboard/',
+      name: 'addGrocery',
+      component: AddGrocery,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/signin',
       name: 'signin',
-      component: SignIn
+      component: SignIn,
+      meta: {
+        requiresGuest: true
+      }
     },
     {
       path: '/signup',
       name: 'signup',
-      component: SignUp
+      component: SignUp,
+      meta: {
+        requiresGuest: true
+      }
     }
   ]
 });
 
-router.beforeEach((to, from, next) => {
-  const requiresAuth = to.matched.some(x => x.meta.requiresAuth)
-  const currentUser = fb.auth().currentUser
+//Navigation Guards
 
-  if (requiresAuth && !currentUser) {
-    next('/')
-  } else if (requiresAuth && currentUser) {
-    next()
+router.beforeEach((to, from, next) => {
+  //Check for auth guard
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    //Check if Not Logged into FB
+    if (!fb.auth().currentUser) {
+      next({
+        path: '/signin',
+        query: {
+          redirect: to.fullPath
+        }
+      });
+    } else {
+      //If logged in 
+      next();
+    }
+  } else if (to.matched.some(record => record.meta.requiresGuest)) {
+    //Check if  Logged into FB
+    if (fb.auth().currentUser) {
+      next({
+        path: '/',
+        query: {
+          redirect: to.fullPath
+        }
+      });
+    } else {
+      //If logged in 
+      next();
+    }
   } else {
-    next()
+    next();
   }
 });
 export default router;

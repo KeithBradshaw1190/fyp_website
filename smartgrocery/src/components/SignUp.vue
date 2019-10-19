@@ -87,10 +87,12 @@ export default {
         .then(
           user => {
             alert(`Account Created for ${user.user.email}`);
-            router.replace("/signin");
+            this.router.go({
+              path: this.router.path
+            });
           },
           err => {
-            alert(err.message);
+            alert("error " + err.message);
           }
         );
       e.preventDefault();
