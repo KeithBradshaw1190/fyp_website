@@ -6,9 +6,9 @@
         <div>
           <h1>Smart Grocery Features</h1>
           <ul class="list-group">
-            <li class="list-item">Get Notified when your groceries go out of date</li>
-            <li class="list-item">Schedule a delivery or Pickup qith one message</li>
-            <li class="list-item">Ask for recipe ideas to use up your</li>
+            <li class="list-item">Get Notified when your groceries go out of date or when it's time to re order</li>
+            <li class="list-item">Schedule a delivery or Pickup with via messenger</li>
+            <li class="list-item">Ask for recipe suggestions based on your grocery list</li>
           </ul>
 
           <a href="#sign-up" class="btn">Sign Up</a>
@@ -23,8 +23,10 @@
         <div class="text-overlay-inner">
           <h3>How It Works</h3>
           <p>
-            You add your shopping and its expirary date, we'll let you know
-            when its about to expire and make shopping a whole lot easier
+            Create an account and link your Shopping account,
+            add your grocery list and purchase frequency.
+            You'll get a message when its time to order your groceries or when the items are about to go out of date.
+            You can then Schedule a delivery or pickup all through the messenger interface!
           </p>
         </div>
       </div>
@@ -37,7 +39,7 @@
   </div>
 </template>
 
-<style>
+<style scoped>
 #homepage {
   font-family: "Catamaran", "sans-serif";
   line-height: 1.6;

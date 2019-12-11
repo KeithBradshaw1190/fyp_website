@@ -74,3 +74,16 @@ export default {
   }
 };
 </script>
+<style scoped>
+.btn {
+  display: inline-block;
+  background: var(--primary-color);
+  color: #fff;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  border-radius: 30px;
+  margin-top: 0.2rem;
+}
+</style>

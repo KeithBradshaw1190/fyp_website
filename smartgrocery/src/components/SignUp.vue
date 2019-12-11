@@ -35,18 +35,6 @@
                 />
               </div>
               <hr />
-              <div class="custom-control custom-checkbox">
-                <input
-                  type="checkbox"
-                  class="custom-control-input"
-                  id="validTesco"
-                  name="validTesco"
-                />
-                <label class="custom-control-label" for="validTesco">
-                  <small>I have a valid tesco delivery account(Click here if not)</small>
-                </label>
-              </div>
-              <br />
               <button class="btn btn-lg btn-outline-primary" @click="signup" type="submit">Sign Up</button>
             </form>
           </div>
@@ -100,3 +88,16 @@ export default {
   }
 };
 </script>
+<style scoped>
+.btn {
+  display: inline-block;
+  background: var(--primary-color);
+  color: #fff;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  border-radius: 30px;
+  margin-top: 0.2rem;
+}
+</style>

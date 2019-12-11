@@ -1,5 +1,5 @@
 <template id="details">
-  <div id="grocery-dashboard" class="container-fluid bg-light">
+  <div id="verify-details" class="container-fluid bg-light">
     <div class="row">
       <Sidebar />
       <div class="col-md-6 ml-sm-auto col-lg-9 pt-4 pl-4">
@@ -25,7 +25,7 @@
                   </div>
                 </div>
                 <div>
-                  <button class="btn">Verify</button>
+                  <button class="btn btn-success">Verify</button>
                 </div>
               </div>
             </div>
@@ -49,3 +49,14 @@ export default {
   }
 };
 </script>
+<style scoped>
+#verify-details {
+  height: 100%;
+  min-height: 100%;
+  /*background-color: #edf0f5; */
+}
+body {
+  margin-top: 20px;
+  /* background: #fafafa; */
+}
+</style>
