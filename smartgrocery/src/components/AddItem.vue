@@ -1,0 +1,329 @@
+<template>
+  <div id="add-Item" class="container-fluid bg-light main-panel">
+    <div class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-4 col-md-5">
+            <div class="card card-user">
+              <div class="content">
+                <div class="author">
+                  <h4 class="title">
+                    List Name
+                    <br />
+                  </h4>
+                </div>
+
+                <div class="container">
+                  <ul class="list-group-flush mb-3 item">
+                    <li class="list-group-item d-flex justify-content-between lh-condensed item">
+                      <div>
+                        <h6 class="my-0">Product name</h6>
+                        <small class="text-muted">Quantity: 1</small>
+                      </div>
+                      <span class="text-success">$12</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between lh-condensed item">
+                      <div>
+                        <h6 class="my-0">Second product</h6>
+                        <small class="text-muted">Quantity: 1</small>
+                      </div>
+                      <span class="text-success">$8</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between lh-condensed item">
+                      <div>
+                        <h6 class="my-0">Third item</h6>
+                        <small class="text-muted">Quantity: 1</small>
+                      </div>
+                      <span class="text-success">$5</span>
+                    </li>
+                  </ul>
+                </div>
+                <!--end shopping-cart -->
+              </div>
+              <hr />
+              <div class="text-center">
+                <div class="row">
+                  <div class="col-md-5">
+                    <h5>
+                      0
+                      <br />
+                      <small>Items</small>
+                    </h5>
+                  </div>
+                  <div class="col-md-7">
+                    <h5>
+                      €0
+                      <br />
+                      <small>Total Cost</small>
+                    </h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-8 col-md-7">
+            <div class="card">
+              <div class="header">
+                <h4 class="title">Create List</h4>
+              </div>
+              <div class="content">
+                <form>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label>List Name</label>
+                        <input
+                          type="text"
+                          class="form-control border-input"
+                          placeholder="Name Of List"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-8">
+                      <label>Product</label>
+                      <AutoCompleteSearch
+                        :place-holder-text="placeHolderInputText"
+                        :result-items="autoCompleteResult"
+                        :on-key-up="onKeyUpAutoCompleteEvent"
+                        :on-selected="onSelectedAutoCompleteEvent"
+                        :auto-complete-progress="autoCompleteProgress"
+                        :item-text="autoCompleteText"
+                        :item-id="autoCompleteFieldId"
+                        :item-image="autoCompleteImage"
+                      ></AutoCompleteSearch>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Quantity</label>
+                        <input type="number" class="form-control border-input" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label>
+                          Expiry Date
+                          <small>(Optional)</small>
+                        </label>
+                        <input
+                          type="text"
+                          class="form-control border-input"
+                          placeholder="Home Address"
+                          value="01/01/20"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="text-center">
+                    <button type="submit" class="btn btn-secondary btn-fill btn-wd">Add to List</button>
+                  </div>
+                  <div class="clearfix"></div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { fb } from "../firebaseInit";
+import Sidebar from "./Sidebar";
+import products from "../assets/products";
+import AutoCompleteSearch from "./AutoCompleteSearch";
+import axios from "axios";
+
+export default {
+  name: "add-item",
+  mounted() {
+    this.products = products;
+  },
+  components: {
+    Sidebar,
+    AutoCompleteSearch
+  },
+  data() {
+    return {
+      currentUser: false,
+      placeHolderInputText: "Search for a Product",
+      autoCompleteResult: [],
+      autoCompleteProgress: false,
+      autoCompleteText: "name",
+      autoCompleteFieldId: "price",
+      autoCompleteImage: "image"
+    };
+  },
+  methods: {
+    created() {
+      if (fb.auth().currentUser) {
+        this.currentUser = fb.auth().currentUser.email;
+      }
+    },
+    onSelectedAutoCompleteEvent(id, text) {
+      this.autoCompleteProgress = false;
+      this.autoCompleteResult = [];
+      alert("You have selected " + id + ": " + text);
+    },
+
+    onKeyUpAutoCompleteEvent(keywordEntered) {
+      //reset
+
+      this.autoCompleteResult = [];
+      this.autoCompleteProgress = false;
+      if (keywordEntered.length > 1) {
+        this.autoCompleteProgress = true;
+        axios({
+          method: "get",
+          url:
+            "https://dev.tescolabs.com/grocery/products/?query=" +
+            keywordEntered +
+            "&offset=0&limit=10",
+          headers: {
+            "Ocp-Apim-Subscription-Key": "30661c41f57f4b1e8351e4834c462e40"
+          }
+        })
+          .then(response => {
+            // console.log(response.data.uk.ghs.products.results);
+            var newData = [];
+            response.data.uk.ghs.products.results.forEach(function(
+              item,
+              index
+            ) {
+              console.log(item);
+              if (
+                item.name.toLowerCase().indexOf(keywordEntered.toLowerCase()) >=
+                0
+              ) {
+                newData.push(item);
+              }
+            });
+            this.autoCompleteResult = newData;
+            this.autoCompleteProgress = false;
+          })
+          .catch(e => {
+            this.autoCompleteProgress = false;
+            this.autoCompleteResult = [];
+          });
+      } else {
+        this.autoCompleteProgress = false;
+        this.autoCompleteResult = [];
+      }
+    }
+  }
+};
+</script>
+<style scoped>
+#add-Item {
+  height: 100%;
+  min-height: 100%;
+  background-color: #edf0f5;
+}
+body {
+  margin-top: 20px;
+  /* background: #fafafa; */
+}
+/*#81cfe0; */
+.Slist .btn-link:hover,
+.Slist .btn-link:focus {
+  text-decoration: none;
+}
+
+.Slist {
+  margin: 50px auto;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+}
+
+.myaccordion li + li {
+  margin-top: 10px;
+}
+.card-header {
+  background-color: #ffffff;
+  border-bottom: 0;
+  text-align: center;
+}
+.center {
+  margin: auto;
+}
+#editBtn {
+  padding-top: 0;
+  padding-bottom: 5px;
+}
+.list-title {
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+.listName {
+  color: black;
+}
+.itemsCount {
+  font-size: 0.8rem;
+}
+.form-control:focus {
+  box-shadow: none;
+}
+
+.form-control-underlined {
+  border-width: 0;
+  border-bottom-width: 1px;
+  border-radius: 0;
+  padding-left: 0;
+}
+
+/*==================================================================*/
+.main-panel > .content {
+  padding: 30px 15px;
+  min-height: calc(100vh - 123px);
+}
+
+.card {
+  border-radius: 6px;
+  box-shadow: 0 2px 2px rgba(204, 197, 185, 0.5);
+  background-color: #ffffff;
+  color: #252422;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+}
+.card .title {
+  margin: 0;
+  color: #252422;
+  font-weight: 300;
+}
+.card .header {
+  padding: 20px 20px 0;
+}
+.card .content {
+  padding: 15px 15px 10px 15px;
+}
+
+.card-user .author .title {
+  color: #403d39;
+}
+.card-user .title {
+  font-weight: 600;
+  line-height: 24px;
+}
+.card-user .author {
+  text-align: center;
+  text-transform: none;
+}
+.row {
+  margin-left: 15px;
+}
+/*------------------------------------------------------------------*/
+.item {
+  position: relative;
+  display: block;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: -1px;
+  background-color: #fff;
+  border: 0;
+}
+</style>

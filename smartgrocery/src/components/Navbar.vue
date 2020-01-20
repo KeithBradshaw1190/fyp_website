@@ -18,7 +18,7 @@
           <router-link to="/signup">Sign Up</router-link>
         </li>
         <li v-if="isLoggedIn">
-          <button class="btn" @click="logout">Log Out</button>
+          <button class="btn btn-outline-primary" @click="logout">Log Out</button>
         </li>
       </ul>
     </div>
@@ -78,20 +78,7 @@ img {
   color: #555;
 }
 
-.btn {
-  display: inline-block;
-  background: var(--primary-color);
-  color: #fff;
-  padding: 0.8rem 1.5rem;
-  border: none;
-  cursor: pointer;
-  font-size: 0.9rem;
-  border-radius: 50px;
-}
 
-.btn:hover {
-  background: var(--secondary-color);
-}
 </style>
 
 <script>

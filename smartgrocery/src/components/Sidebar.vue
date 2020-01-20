@@ -5,7 +5,7 @@
         <div class="sidebar-user rounded">
           <div class="category-content">
             <h6>Good to see You!</h6>
-            <small>{{currentUser}}</small>
+            <small>{{ currentUser.displayName }}</small>
           </div>
         </div>
       </div>
@@ -17,14 +17,25 @@
         <div class="category-content">
           <ul class="nav flex-column">
             <li class="nav-item">
-              <router-link class="nav-link" to="/verify-details">
+              <router-link
+                v-if="!verified"
+                class="nav-link"
+                to="/verify-details"
+              >
                 <i class="fas fa-store"></i>Verify Store Login
+              </router-link>
+              <router-link
+                v-if="verified"
+                class="nav-link"
+                to="/verify-details"
+              >
+                <i class="fas fa-store"></i>Change Delivery Address
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/add-dashboard/">
+              <router-link class="nav-link" to="/GroceryLists/">
                 <i class="fas fa-shopping-cart"></i>
-                View Your Groceries
+                Grocery Lists
               </router-link>
             </li>
           </ul>
@@ -43,12 +54,16 @@ export default {
   name: "sidebar",
   data() {
     return {
-      currentUser: false
+      currentUser: false,
+      verified: null
     };
   },
   created() {
     if (fb.auth().currentUser) {
-      this.currentUser = fb.auth().currentUser.email;
+      this.currentUser = fb.auth().currentUser;
+    }
+    if (sessionStorage.getItem("storeId") != null) {
+      this.verified = true;
     }
   }
 };

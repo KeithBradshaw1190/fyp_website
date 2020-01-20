@@ -1,12 +1,37 @@
 <template>
-  <div class="container">
+  <div id="signUp" class="container">
     <div class="row">
       <div class="col-sm-8 col-md-8 col-lg-8 mx-auto">
         <div class="card card-signin my-5">
           <div class="card-body">
-            <h5 class="card-title">Time to make shopping a whole lot easier!</h5>
+            <h5 class="card-title">
+              Time to make shopping a whole lot easier!
+            </h5>
 
             <form class="form-signin">
+              <div class="row">
+                <div class="col-md-6 form-label-group">
+                  <input
+                    type="text"
+                    id="firstname"
+                    class="form-control"
+                    placeholder="First Name"
+                    v-model="firstname"
+                  />
+                </div>
+                <br />
+                <div class="col-md-6 form-label-group">
+                  <input
+                    type="text"
+                    id="lastname"
+                    class="form-control"
+                    placeholder="Last Name"
+                    v-model="lastname"
+                  />
+                </div>
+              </div>
+
+              <br />
               <div class="form-label-group">
                 <input
                   type="email"
@@ -34,8 +59,13 @@
                   placeholder="Confirm Password"
                 />
               </div>
-              <hr />
-              <button class="btn btn-lg btn-outline-primary" @click="signup" type="submit">Sign Up</button>
+              <button
+                class="btn btn-lg btn-outline-primary"
+                @click="signup"
+                type="submit"
+              >
+                Sign Up
+              </button>
             </form>
           </div>
         </div>
@@ -45,10 +75,13 @@
         <div class="card card-signin my-5">
           <div class="card-body">
             <h5 class="card-title text-center">Already Have an Account?</h5>
-            <p
-              class="text-center"
-            >If you already has an account, go ahead and sign in. We've missed you!</p>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign In</button>
+            <p class="text-center">
+              If you already has an account, go ahead and sign in. We've missed
+              you!
+            </p>
+            <router-link class="btn btn-lg btn-primary btn-block" to="/signin"
+              >Sign In</router-link
+            >
           </div>
         </div>
       </div>
@@ -56,33 +89,56 @@
   </div>
 </template>
 
-
 <script>
 import { fb } from "../firebaseInit";
 import router from "../router";
+const db = fb.firestore();
+
 export default {
   name: "signup",
   data: function() {
     return {
       email: "",
-      password: ""
+      password: "",
+      firstname: "",
+      lastname: ""
     };
   },
   methods: {
     signup: function(e) {
       fb.auth()
         .createUserWithEmailAndPassword(this.email, this.password)
-        .then(
-          user => {
-            alert(`Account Created for ${user.user.email}`);
-            this.router.go({
-              path: this.router.path
+        .then(() => {
+          fb.auth()
+            .currentUser.updateProfile({
+              displayName: this.firstname
+            })
+            .then(() => {
+              console.log(fb.auth().currentUser);
+              db.collection("users")
+                .doc(fb.auth().currentUser.uid)
+                .set({
+                  firstname: this.firstname,
+                  lastname: this.lastname,
+                  username: this.firstname,
+                  email: this.email
+                })
+                .then(() => {
+                  router.go({ name: "groceryDashboard" });
+                })
+                .catch(err => {
+                  this.errorMessage = err.message;
+                });
+            })
+            .catch(err => {
+              console.log(err);
+              this.errorMessage = err.message;
             });
-          },
-          err => {
-            alert("error " + err.message);
-          }
-        );
+        })
+        .catch(err => {
+          console.log(err);
+          this.errorMessage = err.message;
+        });
       e.preventDefault();
     }
   }
