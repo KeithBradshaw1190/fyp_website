@@ -235,24 +235,46 @@ export default {
       //Add product to items in that doc collection
       // this.db.collection('users').doc().set(Object.assign({}, user))
 
-      let admin = require("firebase-admin");
+      //let admin = require("firebase-admin");
       if (this.productList != null) {
-        var listRef = db.collection("shopping_lists").doc(this.listId);
         this.productList.quantity = this.quantity;
-        var plist = this.productList;
-      const budgets = arrayOfBudget.map(obj => {
-          return Object.assign({}, obj);
-        });
 
-        listRef
-          .update({
-            items: admin.firestore.FieldValue.arrayUnion(plist)
+        var listRef = db.collection("shopping_lists").doc(this.listId);
+        var plist = this.productList;
+
+        let transaction = db
+          .runTransaction(t => {
+            return t.get(listRef).then(doc => {
+              console.log(doc.data().items);
+              // Add one person to the city population.
+              // Note: this could be done without a transaction
+              //       by updating the population using FieldValue.increment()
+              var newItems = doc.data().items.concat(this.productList);
+              console.log(newItems);
+              t.update(listRef, { items: newItems });
+            });
           })
-          .then(() => {
-            console.log("Added");
+          .then(result => {
+            console.log("Transaction success!");
+          })
+          .catch(err => {
+            console.log("Transaction failure:", err);
           });
+
+        //   listRef
+        //     .set({
+        //       items: admin.firestore.FieldValue.arrayUnion(plist, {
+        //         merge: true
+        //       })
+        //     })
+        //     .then(() => {
+        //       console.log("Added");
+        //     });
+        // } else {
+        //   console.log("Product list is null");
+        // }
       } else {
-        console.log("Product list is null");
+        console.log("problem");
       }
     }
   }
