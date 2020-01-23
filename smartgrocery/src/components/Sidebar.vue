@@ -29,7 +29,7 @@
                 class="nav-link"
                 to="/verify-details"
               >
-                <i class="fas fa-store"></i>Change Delivery Address
+                <i class="fas fa-home"></i>Change Delivery Address
               </router-link>
             </li>
             <li class="nav-item">

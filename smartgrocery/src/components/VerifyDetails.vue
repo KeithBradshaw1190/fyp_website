@@ -79,7 +79,7 @@
                   <form
                     v-if="verified"
                     id="address-form"
-                    @submit.prevent="processForm"
+                    @submit.prevent="updateAddress"
                   >
                     <div class="row">
                       <div class="col-md-12">
@@ -90,7 +90,7 @@
                             name="address"
                             v-model="address"
                             class="form-control border-input"
-                            placeholder="Home Address"
+                            placeholder="No Address set"
                           />
                         </div>
                       </div>
@@ -102,7 +102,7 @@
                         type="submit"
                         class="btn btn-success btn-fill btn-wd p-2 m-2"
                       >
-                        Sign In
+                        Update
                       </button>
                     </div>
                     <div class="clearfix"></div>
@@ -125,7 +125,7 @@ const db = fb.firestore();
 
 import axios from "axios";
 export default {
-  name: "details",
+  name: "verifyDetails",
   components: {
     Sidebar
   },
@@ -164,6 +164,20 @@ export default {
                   { merge: true }
                 );
             }
+          },
+          error => {
+            console.log(error);
+          }
+        );
+    },
+    updateAddress: function() {
+      axios
+        .put("http://localhost:3000/api/customer/" + this.storeId, {
+          address: this.address
+        })
+        .then(
+          response => {
+            // console.log(response);
           },
           error => {
             console.log(error);

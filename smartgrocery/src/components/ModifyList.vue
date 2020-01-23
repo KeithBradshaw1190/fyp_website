@@ -7,11 +7,11 @@
             <div class="card card-user">
               <div class="content">
                 <div class="author">
-                  <h4 class="title" v-if="listName!=''">
+                  <h4 class="title" v-if="listName != ''">
                     {{ listName }}
                     <br />
                   </h4>
-                  <h4 class="title" v-if="listName==''">
+                  <h4 class="title" v-if="listName == ''">
                     List Name
                     <br />
                   </h4>
@@ -68,24 +68,10 @@
           <div class="col-lg-8 col-md-7">
             <div class="card">
               <div class="header">
-                <h4 class="title">Create List</h4>
+                <h4 class="title">Add Products</h4>
               </div>
               <div class="content">
                 <form id="createListForm">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <label>List Name</label>
-                        <input
-                          type="text"
-                          v-model="listName"
-                          class="form-control border-input"
-                          placeholder="Name Of List"
-                          required
-                        />
-                      </div>
-                    </div>
-                  </div>
                   <div class="row">
                     <div class="col-md-8">
                       <label>Product</label>
@@ -120,7 +106,11 @@
                           Expiry Date
                           <small>(Optional)</small>
                         </label>
-                        <input type="text" class="form-control border-input" value="01/01/20" />
+                        <input
+                          type="text"
+                          class="form-control border-input"
+                          placeholder="Date"
+                        />
                       </div>
                     </div>
                   </div>
@@ -128,10 +118,12 @@
                   <div class="text-center">
                     <button
                       type="submit"
-                      @click="createList"
+                      @click="addToList"
                       class="btn btn-secondary btn-fill btn-wd"
                       id="btnCreateList"
-                    >Add Product &amp; Create List</button>
+                    >
+                      Add Product
+                    </button>
                   </div>
                   <div class="clearfix"></div>
                 </form>
@@ -147,17 +139,14 @@
 
 <script>
 import { fb } from "../firebaseInit";
+import router from "../router";
 import Sidebar from "./Sidebar";
-import products from "../assets/products";
 import AutoCompleteSearch from "./AutoCompleteSearch";
 import axios from "axios";
 const db = fb.firestore();
 
 export default {
-  name: "add-item",
-  mounted() {
-    this.products = products;
-  },
+  name: "modify-list",
   components: {
     Sidebar,
     AutoCompleteSearch
@@ -173,13 +162,17 @@ export default {
       autoCompleteImage: "image",
       productList: {},
       listName: "",
-      quantity: null
+      quantity: null,
+      listId: null
     };
   },
   created() {
     if (fb.auth().currentUser) {
       this.currentUser = fb.auth().currentUser;
     }
+    this.listId = this.$route.params.id;
+
+    console.log(this.listId);
   },
   methods: {
     onSelectedAutoCompleteEvent(price, name, img) {
@@ -236,31 +229,37 @@ export default {
         this.autoCompleteResult = [];
       }
     },
-    createList() {
-      if (this.listName != "") {
-        this.productList.quantity = this.quantity;
+    addToList() {
+      //Check that all inputs have values
+      //Get id from url
+      //Add product to items in that doc collection
+      // this.db.collection('users').doc().set(Object.assign({}, user))
 
-        db.collection("shopping_lists")
-          .add({
-            uid: this.currentUser.uid,
-            listName: this.listName,
-            items: [this.productList]
+      let admin = require("firebase-admin");
+      if (this.productList != null) {
+        var listRef = db.collection("shopping_lists").doc(this.listId);
+        this.productList.quantity = this.quantity;
+        var plist = this.productList;
+      const budgets = arrayOfBudget.map(obj => {
+          return Object.assign({}, obj);
+        });
+
+        listRef
+          .update({
+            items: admin.firestore.FieldValue.arrayUnion(plist)
           })
-          .then(docRef => {
-            var id = docRef.id;
-            console.log(id);
-            this.$router.push({ name: "modify-list", params: { id: id } });
-          })
-          .catch(err => {
-            this.errorMessage = err.message;
+          .then(() => {
+            console.log("Added");
           });
+      } else {
+        console.log("Product list is null");
       }
     }
   }
 };
 </script>
 <style scoped>
-#add-Item {
+#modify-list {
   height: 100%;
   min-height: 100%;
   background-color: #edf0f5;

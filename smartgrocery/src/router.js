@@ -6,7 +6,9 @@ import GroceryDashboard from '@/components/GroceryDashboard'
 import GroceryLists from '@/components/GroceryLists'
 import SignIn from '@/components/SignIn'
 import SignUp from '@/components/SignUp'
-import AddItem from '@/components/AddItem.vue'
+import AddItem from '@/components/AddItem'
+import ModifyList from '@/components/ModifyList'
+
 import {
   fb
 } from './firebaseInit'
@@ -47,6 +49,15 @@ let router = new Router({
       path: '/addItem/',
       name: 'add-item',
       component: AddItem,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/modifyList/:id',
+      name: 'modify-list',
+      props: true,
+      component: ModifyList,
       meta: {
         requiresAuth: true
       }
