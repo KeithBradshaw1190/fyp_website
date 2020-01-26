@@ -106,11 +106,7 @@
                           Expiry Date
                           <small>(Optional)</small>
                         </label>
-                        <input
-                          type="text"
-                          class="form-control border-input"
-                          placeholder="Date"
-                        />
+                        <input type="text" class="form-control border-input" placeholder="Date" />
                       </div>
                     </div>
                   </div>
@@ -121,9 +117,7 @@
                       @click="addToList"
                       class="btn btn-secondary btn-fill btn-wd"
                       id="btnCreateList"
-                    >
-                      Add Product
-                    </button>
+                    >Add Product</button>
                   </div>
                   <div class="clearfix"></div>
                 </form>
@@ -163,7 +157,8 @@ export default {
       productList: {},
       listName: "",
       quantity: null,
-      listId: null
+      listId: null,
+      shoppingLists: []
     };
   },
   created() {
@@ -172,7 +167,8 @@ export default {
     }
     this.listId = this.$route.params.id;
 
-    console.log(this.listId);
+    this.fetchListItems(this.listId);
+    console.log(this.shoppingLists);
   },
   methods: {
     onSelectedAutoCompleteEvent(price, name, img) {
@@ -275,6 +271,34 @@ export default {
         // }
       } else {
         console.log("problem");
+      }
+    },
+    fetchListItems(listId) {
+      var shoppingLists = [];
+      let listsRef = db.collection("shopping_lists");
+      let query = listsRef
+        .doc(listId)
+        .get()
+        .then(doc => {
+          if (doc.empty) {
+            shoppingLists = null;
+            console.log("No matching documents.");
+            return;
+          } else {
+            var id = doc.id.toString;
+            var theDoc = doc.data();
+            theDoc.docuID = doc.id;
+            theDoc.amnt = theDoc.items.length;
+            shoppingLists.push(theDoc);
+          }
+        })
+        .catch(err => {
+          console.log("Error getting documents", err);
+        });
+      //Assign to data value
+      this.shoppingLists = shoppingLists;
+      for (x in shoppingLists) {
+        console.log(x[0].listName);
       }
     }
   }
