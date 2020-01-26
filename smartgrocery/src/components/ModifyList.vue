@@ -18,15 +18,22 @@
                 </div>
 
                 <div class="container">
-                  <!-- <ul class="list-group-flush mb-3 item">
-                    <li class="list-group-item d-flex justify-content-between lh-condensed item">
+                  <ul class="list-group-flush mb-3 item">
+                    <li
+                      v-for="item in shoppingLists[0]"
+                      v-bind:key="item"
+                      class="list-group-item d-flex justify-content-between lh-condensed item"
+                    >
                       <div>
-                        <h6 class="my-0">Product name</h6>
-                        <small class="text-muted">Quantity: 1</small>
+                        <h6 class="my-0">{{item.name}}</h6>
+                        <p class="quantity">
+                          <small class="text-success mr-3">Price: €{{item.price}}</small>
+                          <small class="text-muted">Quantity: {{item.quantity}}</small>
+                        </p>
                       </div>
-                      <span class="text-success">$12</span>
+                      <!-- <small class="text-success">€{{item.price}}</small> -->
                     </li>
-                    <li class="list-group-item d-flex justify-content-between lh-condensed item">
+                    <!-- <li class="list-group-item d-flex justify-content-between lh-condensed item">
                       <div>
                         <h6 class="my-0">Second product</h6>
                         <small class="text-muted">Quantity: 1</small>
@@ -39,8 +46,8 @@
                         <small class="text-muted">Quantity: 1</small>
                       </div>
                       <span class="text-success">$5</span>
-                    </li>
-                  </ul>-->
+                    </li>-->
+                  </ul>
                 </div>
                 <!--end shopping-cart -->
               </div>
@@ -49,14 +56,14 @@
                 <div class="row">
                   <div class="col-md-5">
                     <h5>
-                      0
+                      {{ amountOfItems }}
                       <br />
                       <small>Items</small>
                     </h5>
                   </div>
                   <div class="col-md-7">
                     <h5>
-                      €0
+                      €{{ totalPrice }}
                       <br />
                       <small>Total Cost</small>
                     </h5>
@@ -154,8 +161,9 @@ export default {
       autoCompleteText: "name",
       autoCompleteFieldId: "price",
       autoCompleteImage: "image",
-      productList: {},
       listName: "",
+      amountOfItems: 0,
+      totalPrice: 0,
       quantity: null,
       listId: null,
       shoppingLists: []
@@ -168,7 +176,6 @@ export default {
     this.listId = this.$route.params.id;
 
     this.fetchListItems(this.listId);
-    console.log(this.shoppingLists);
   },
   methods: {
     onSelectedAutoCompleteEvent(price, name, img) {
@@ -252,6 +259,7 @@ export default {
           })
           .then(result => {
             console.log("Transaction success!");
+            this.$router.go();
           })
           .catch(err => {
             console.log("Transaction failure:", err);
@@ -274,6 +282,7 @@ export default {
       }
     },
     fetchListItems(listId) {
+      var totalp = 0;
       var shoppingLists = [];
       let listsRef = db.collection("shopping_lists");
       let query = listsRef
@@ -281,15 +290,22 @@ export default {
         .get()
         .then(doc => {
           if (doc.empty) {
-            shoppingLists = null;
+            shoppingLists = [];
             console.log("No matching documents.");
             return;
           } else {
+            console.log("Found");
             var id = doc.id.toString;
             var theDoc = doc.data();
             theDoc.docuID = doc.id;
             theDoc.amnt = theDoc.items.length;
-            shoppingLists.push(theDoc);
+            this.listName = theDoc.listName;
+            this.amountOfItems = theDoc.amnt;
+            theDoc.items.forEach(element => {
+              totalp = totalp + element.quantity * element.price;
+            });
+            this.totalPrice = totalp;
+            shoppingLists.push(theDoc.items);
           }
         })
         .catch(err => {
@@ -297,9 +313,6 @@ export default {
         });
       //Assign to data value
       this.shoppingLists = shoppingLists;
-      for (x in shoppingLists) {
-        console.log(x[0].listName);
-      }
     }
   }
 };
@@ -366,7 +379,9 @@ body {
   padding: 30px 15px;
   min-height: calc(100vh - 123px);
 }
-
+.quantity {
+  line-height: 0.8rem;
+}
 .card {
   border-radius: 6px;
   box-shadow: 0 2px 2px rgba(204, 197, 185, 0.5);
