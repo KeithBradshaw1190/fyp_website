@@ -164,7 +164,6 @@ import router from "../router";
 import Sidebar from "./Sidebar";
 import AutoCompleteSearch from "./AutoCompleteSearch";
 import axios from "axios";
-import dropdown from "../assets/modifyList";
 const db = fb.firestore();
 
 export default {
