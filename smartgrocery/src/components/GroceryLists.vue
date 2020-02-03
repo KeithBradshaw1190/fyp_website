@@ -14,9 +14,13 @@
             </button>
           </div>
           <div class="container">
-            <div id="accordion" v-for="list in shoppingLists" v-bind:key="list.docuID">
+            <div
+              v-for="list in shoppingLists"
+              v-bind:key="list.docuID"
+              v-bind:id="'accordian'+list.docuID"
+            >
               <div class="card">
-                <div class="card-header" v-bind:id="list.docuID">
+                <div class="card-header">
                   <h5 class="mb-0">
                     <button
                       class="btn btn-link list-title"
@@ -36,10 +40,10 @@
                 </div>
 
                 <div
-                  v-bind:id="list.listName"
+                  v-bind:id="list.docuID"
                   class="collapse show"
                   v-bind:aria-labelledby="list.docuID"
-                  data-parent="#accordion"
+                  v-bind:data-parent="'#accordian'+list.docuID"
                 >
                   <div class="card-body">
                     <div class id="editBtn">

@@ -4,74 +4,88 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-lg-4 col-md-5">
-            <div class="card card-user">
-              <div class="content">
-                <div class="author">
-                  <h4 class="title" v-if="listName != ''">
-                    {{ listName }}
-                    <br />
-                  </h4>
-                  <h4 class="title" v-if="listName == ''">
-                    List Name
-                    <br />
-                  </h4>
-                </div>
-
-                <div class="container">
-                  <ul class="list-group-flush mb-3 item">
-                    <li
-                      v-for="item in shoppingLists[0]"
-                      v-bind:key="item"
-                      class="list-group-item d-flex justify-content-between lh-condensed item"
+            <div class="accordion" id="myAccordion">
+              <div class="card card-user">
+                <div class="card-header" id="headingOne">
+                  <h2 class="mb-0">
+                    <button
+                      type="button"
+                      class="btn btn-link author"
+                      data-toggle="collapse"
+                      data-target="#collapseOne"
                     >
-                      <div>
-                        <h6 class="my-0">{{item.name}}</h6>
-                        <p class="quantity">
-                          <small class="text-success mr-3">Price: €{{item.price}}</small>
-                          <small class="text-muted">Quantity: {{item.quantity}}</small>
-                        </p>
+                      <div class="author">
+                        <h4 class="title" v-if="listName != ''">
+                          {{ listName }}
+                          <br />
+                        </h4>
+                        <h4 class="title" v-if="listName == ''">
+                          List Name
+                          <br />
+                        </h4>
                       </div>
-                      <!-- <small class="text-success">€{{item.price}}</small> -->
-                    </li>
-                    <!-- <li class="list-group-item d-flex justify-content-between lh-condensed item">
-                      <div>
-                        <h6 class="my-0">Second product</h6>
-                        <small class="text-muted">Quantity: 1</small>
-                      </div>
-                      <span class="text-success">$8</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between lh-condensed item">
-                      <div>
-                        <h6 class="my-0">Third item</h6>
-                        <small class="text-muted">Quantity: 1</small>
-                      </div>
-                      <span class="text-success">$5</span>
-                    </li>-->
-                  </ul>
+                    </button>
+                  </h2>
                 </div>
-                <!--end shopping-cart -->
-              </div>
-              <hr />
-              <div class="text-center">
-                <div class="row">
-                  <div class="col-md-5">
-                    <h5>
-                      {{ amountOfItems }}
-                      <br />
-                      <small>Items</small>
-                    </h5>
+                <hr />
+                <div class="text-center">
+                  <div class="row">
+                    <div class="col-md-5">
+                      <h5>
+                        {{ amountOfItems }}
+                        <br />
+                        <small>Items</small>
+                      </h5>
+                    </div>
+                    <div class="col-md-7">
+                      <h5>
+                        €{{ totalPrice }}
+                        <br />
+                        <small>Total Cost</small>
+                      </h5>
+                    </div>
                   </div>
-                  <div class="col-md-7">
-                    <h5>
-                      €{{ totalPrice }}
-                      <br />
-                      <small>Total Cost</small>
-                    </h5>
+                </div>
+                <div
+                  id="collapseOne"
+                  class="collapse"
+                  aria-labelledby="headingOne"
+                  data-parent="#myAccordion"
+                >
+                  <div class>
+                    <div class="content container">
+                      <div class>
+                        <ul class="list-group-flush mb-3 item">
+                          <li
+                            v-for="(item, index) in shoppingLists[0]"
+                            v-bind:key="index"
+                            class="list-group-item d-flex justify-content-between lh-condensed item"
+                          >
+                            <div>
+                              <h6 class="my-0">{{ item.name }}</h6>
+                              <p class="quantity">
+                                <small class="text-success mr-3"
+                                  >Price: €{{ item.price }}</small
+                                >
+                                <small class="text-muted"
+                                  >Quantity: {{ item.quantity }}</small
+                                >
+                              </p>
+                            </div>
+                            <!-- <small class="text-success">€{{item.price}}</small> -->
+                          </li>
+                        </ul>
+                      </div>
+                      <!--end shopping-cart -->
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          <!-- Begining of list col -->
+
+          <!-- End of List col -->
           <div class="col-lg-8 col-md-7">
             <div class="card">
               <div class="header">
@@ -113,7 +127,11 @@
                           Expiry Date
                           <small>(Optional)</small>
                         </label>
-                        <input type="text" class="form-control border-input" placeholder="Date" />
+                        <input
+                          type="text"
+                          class="form-control border-input"
+                          placeholder="Date"
+                        />
                       </div>
                     </div>
                   </div>
@@ -124,7 +142,9 @@
                       @click="addToList"
                       class="btn btn-secondary btn-fill btn-wd"
                       id="btnCreateList"
-                    >Add Product</button>
+                    >
+                      Add Product
+                    </button>
                   </div>
                   <div class="clearfix"></div>
                 </form>
@@ -144,6 +164,7 @@ import router from "../router";
 import Sidebar from "./Sidebar";
 import AutoCompleteSearch from "./AutoCompleteSearch";
 import axios from "axios";
+import dropdown from "../assets/modifyList";
 const db = fb.firestore();
 
 export default {
@@ -163,7 +184,7 @@ export default {
       autoCompleteImage: "image",
       listName: "",
       amountOfItems: 0,
-      totalPrice: 0,
+      totalPrice: null,
       quantity: null,
       listId: null,
       shoppingLists: []
@@ -187,7 +208,6 @@ export default {
       this.placeHolderInputText = name;
       this.productList = product;
     },
-
     onKeyUpAutoCompleteEvent(keywordEntered) {
       //reset
 
@@ -233,12 +253,6 @@ export default {
       }
     },
     addToList() {
-      //Check that all inputs have values
-      //Get id from url
-      //Add product to items in that doc collection
-      // this.db.collection('users').doc().set(Object.assign({}, user))
-
-      //let admin = require("firebase-admin");
       if (this.productList != null) {
         this.productList.quantity = this.quantity;
 
@@ -249,12 +263,13 @@ export default {
           .runTransaction(t => {
             return t.get(listRef).then(doc => {
               console.log(doc.data().items);
-              // Add one person to the city population.
-              // Note: this could be done without a transaction
-              //       by updating the population using FieldValue.increment()
               var newItems = doc.data().items.concat(this.productList);
               console.log(newItems);
-              t.update(listRef, { items: newItems });
+              t.update(listRef, {
+                list_price: this.totalPrice,
+                list_quantity: this.quantity,
+                items: newItems
+              });
             });
           })
           .then(result => {
@@ -294,7 +309,6 @@ export default {
             console.log("No matching documents.");
             return;
           } else {
-            console.log("Found");
             var id = doc.id.toString;
             var theDoc = doc.data();
             theDoc.docuID = doc.id;
@@ -304,13 +318,23 @@ export default {
             theDoc.items.forEach(element => {
               totalp = totalp + element.quantity * element.price;
             });
-            this.totalPrice = totalp;
+            this.totalPrice = totalp.toFixed(2);
+            listsRef
+              .doc(listId)
+              .set(
+                {
+                  list_price: this.totalPrice,
+                  list_quantity: this.amountOfItems
+                },
+                { merge: true }
+              );
             shoppingLists.push(theDoc.items);
           }
         })
         .catch(err => {
           console.log("Error getting documents", err);
         });
+
       //Assign to data value
       this.shoppingLists = shoppingLists;
     }
@@ -425,5 +449,11 @@ body {
   margin-bottom: -1px;
   background-color: #fff;
   border: 0;
+}
+.btn-link:hover {
+  text-decoration: none;
+}
+.btn-link:focus {
+  text-decoration: none;
 }
 </style>

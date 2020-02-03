@@ -7,11 +7,11 @@
             <div class="card card-user">
               <div class="content">
                 <div class="author">
-                  <h4 class="title" v-if="listName!=''">
+                  <h4 class="title" v-if="listName != ''">
                     {{ listName }}
                     <br />
                   </h4>
-                  <h4 class="title" v-if="listName==''">
+                  <h4 class="title" v-if="listName == ''">
                     List Name
                     <br />
                   </h4>
@@ -44,7 +44,7 @@
                 </div>
                 <!--end shopping-cart -->
               </div>
-              <hr />
+              <!-- <hr />
               <div class="text-center">
                 <div class="row">
                   <div class="col-md-5">
@@ -62,7 +62,7 @@
                     </h5>
                   </div>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
           <div class="col-lg-8 col-md-7">
@@ -120,7 +120,11 @@
                           Expiry Date
                           <small>(Optional)</small>
                         </label>
-                        <input type="text" class="form-control border-input" value="01/01/20" />
+                        <input
+                          type="text"
+                          class="form-control border-input"
+                          value="01/01/20"
+                        />
                       </div>
                     </div>
                   </div>
@@ -131,7 +135,9 @@
                       @click="createList"
                       class="btn btn-secondary btn-fill btn-wd"
                       id="btnCreateList"
-                    >Add Product &amp; Create List</button>
+                    >
+                      Add Product &amp; Create List
+                    </button>
                   </div>
                   <div class="clearfix"></div>
                 </form>
@@ -239,12 +245,12 @@ export default {
     createList() {
       if (this.listName != "") {
         this.productList.quantity = this.quantity;
-
+        var plist = this.productList;
         db.collection("shopping_lists")
           .add({
             uid: this.currentUser.uid,
             listName: this.listName,
-            items: [this.productList]
+            items: [plist]
           })
           .then(docRef => {
             var id = docRef.id;
