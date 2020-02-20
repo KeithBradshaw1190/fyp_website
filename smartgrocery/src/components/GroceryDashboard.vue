@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import { fb } from "../firebaseInit";
+import firebaseApp from "../firebaseInit";
 import Sidebar from "./Sidebar";
 export default {
   name: "grocery-dashboard",
@@ -78,8 +78,8 @@ export default {
     };
   },
   created() {
-    if (fb.auth().currentUser) {
-      this.currentUser = fb.auth().currentUser.email;
+    if (firebaseApp.auth().currentUser) {
+      this.currentUser = firebaseApp.auth().currentUser.name;
     }
   }
 };

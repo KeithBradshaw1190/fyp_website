@@ -17,18 +17,10 @@
         <div class="category-content">
           <ul class="nav flex-column">
             <li class="nav-item">
-              <router-link
-                v-if="!verified"
-                class="nav-link"
-                to="/verify-details"
-              >
+              <router-link v-if="!verified" class="nav-link" to="/verify-details">
                 <i class="fas fa-store"></i>Verify Store Login
               </router-link>
-              <router-link
-                v-if="verified"
-                class="nav-link"
-                to="/verify-details"
-              >
+              <router-link v-if="verified" class="nav-link" to="/verify-details">
                 <i class="fas fa-home"></i>Change Delivery Address
               </router-link>
             </li>
@@ -48,7 +40,7 @@
   </nav>
 </template>
 <script>
-import { fb } from "../firebaseInit";
+import firebaseApp from "../firebaseInit";
 import router from "../router";
 export default {
   name: "sidebar",
@@ -59,10 +51,11 @@ export default {
     };
   },
   created() {
-    if (fb.auth().currentUser) {
-      this.currentUser = fb.auth().currentUser;
+    if (firebaseApp.auth().currentUser) {
+      this.currentUser = firebaseApp.auth().currentUser;
     }
     if (sessionStorage.getItem("storeId") != null) {
+      console.log(sessionStorage.getItem("storeId"));
       this.verified = true;
     }
   }

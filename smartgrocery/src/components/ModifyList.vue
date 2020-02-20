@@ -159,12 +159,12 @@
 </template>
 
 <script>
-import { fb } from "../firebaseInit";
+import firebaseApp from "../firebaseInit";
 import router from "../router";
 import Sidebar from "./Sidebar";
 import AutoCompleteSearch from "./AutoCompleteSearch";
 import axios from "axios";
-const db = fb.firestore();
+const db = firebaseApp.firestore();
 
 export default {
   name: "modify-list",
@@ -190,8 +190,8 @@ export default {
     };
   },
   created() {
-    if (fb.auth().currentUser) {
-      this.currentUser = fb.auth().currentUser;
+    if (firebaseApp.auth().currentUser) {
+      this.currentUser = firebaseApp.auth().currentUser;
     }
     this.listId = this.$route.params.id;
 

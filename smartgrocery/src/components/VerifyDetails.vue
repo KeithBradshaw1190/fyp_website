@@ -8,19 +8,13 @@
             class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-1 mb-3 border-bottom"
           >
             <h1 v-if="!verified" class="h2">Store Login</h1>
-            <h1 v-if="verified" class="h2">
-              Change Your Delivery Address
-            </h1>
+            <h1 v-if="verified" class="h2">Change Your Delivery Address</h1>
           </div>
           <div class="container">
             <div class="card">
               <div class="card-body">
                 <div class="content">
-                  <form
-                    v-if="!verified"
-                    id="signup-form"
-                    @submit.prevent="processForm"
-                  >
+                  <form v-if="!verified" id="signup-form" @submit.prevent="processForm">
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group">
@@ -65,22 +59,13 @@
 
                     <div class="text-center">
                       <!--<button type="submit" class="btn btn-info btn-fill btn-wd p-2">Update Details</button>-->
-                      <button
-                        type="submit"
-                        class="btn btn-success btn-fill btn-wd p-2 m-2"
-                      >
-                        Sign In
-                      </button>
+                      <button type="submit" class="btn btn-success btn-fill btn-wd p-2 m-2">Sign In</button>
                     </div>
                     <div class="clearfix"></div>
                   </form>
                   <!--End Of Store Login-->
 
-                  <form
-                    v-if="verified"
-                    id="address-form"
-                    @submit.prevent="updateAddress"
-                  >
+                  <form v-if="verified" id="address-form" @submit.prevent="updateAddress">
                     <div class="row">
                       <div class="col-md-12">
                         <div class="form-group">
@@ -98,12 +83,7 @@
 
                     <div class="text-center">
                       <!--<button type="submit" class="btn btn-info btn-fill btn-wd p-2">Update Details</button>-->
-                      <button
-                        type="submit"
-                        class="btn btn-success btn-fill btn-wd p-2 m-2"
-                      >
-                        Update
-                      </button>
+                      <button type="submit" class="btn btn-success btn-fill btn-wd p-2 m-2">Update</button>
                     </div>
                     <div class="clearfix"></div>
                   </form>
@@ -120,8 +100,8 @@
 
 <script>
 import Sidebar from "./Sidebar";
-import { fb } from "../firebaseInit";
-const db = fb.firestore();
+import firebaseApp from "../firebaseInit";
+const db = firebaseApp.firestore();
 
 import axios from "axios";
 export default {
@@ -131,7 +111,7 @@ export default {
   },
   data() {
     return {
-      currentUser: fb.auth().currentUser,
+      currentUser: firebaseApp.auth().currentUser,
       verified: null,
       storeId: sessionStorage.getItem("storeId"),
       errors: [],
@@ -146,7 +126,7 @@ export default {
   methods: {
     processForm: function() {
       axios
-        .post("http://localhost:3000/api/login", {
+        .post("http://localhost:3002/api/register", {
           email: this.email,
           password: this.password,
           address: this.address

@@ -1,13 +1,11 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import {
-  fb
-} from './firebaseInit'
+import firebaseApp from './firebaseInit'
 Vue.config.productionTip = false
 
 let app;
-fb.auth().onAuthStateChanged(user => {
+firebaseApp.auth().onAuthStateChanged(user => {
   if (!app) {
     app = new Vue({
       router,

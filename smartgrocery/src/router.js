@@ -9,9 +9,7 @@ import SignUp from '@/components/SignUp'
 import AddItem from '@/components/AddItem'
 import ModifyList from '@/components/ModifyList'
 
-import {
-  fb
-} from './firebaseInit'
+import firebaseApp from './firebaseInit'
 
 Vue.use(Router)
 
@@ -87,7 +85,7 @@ router.beforeEach((to, from, next) => {
   //Check for auth guard
   if (to.matched.some(record => record.meta.requiresAuth)) {
     //Check if Not Logged into FB
-    if (!fb.auth().currentUser) {
+    if (!firebaseApp.auth().currentUser) {
       next({
         path: '/signin',
         query: {
@@ -100,7 +98,7 @@ router.beforeEach((to, from, next) => {
     }
   } else if (to.matched.some(record => record.meta.requiresGuest)) {
     //Check if  Logged into FB
-    if (fb.auth().currentUser) {
+    if (firebaseApp.auth().currentUser) {
       next({
         path: '/',
         query: {

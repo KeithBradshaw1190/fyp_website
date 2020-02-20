@@ -103,9 +103,9 @@
 </template>
 
 <script>
-import { fb } from "../firebaseInit";
+import firebaseApp from "../firebaseInit";
 import Sidebar from "./Sidebar";
-const db = fb.firestore();
+const db = firebaseApp.firestore();
 
 export default {
   name: "groceryLists",
@@ -119,8 +119,8 @@ export default {
     };
   },
   created() {
-    if (fb.auth().currentUser) {
-      this.currentUser = fb.auth().currentUser;
+    if (firebaseApp.auth().currentUser) {
+      this.currentUser = firebaseApp.auth().currentUser;
     }
     this.getShoppingingLists();
     console.log(this.shoppingLists);
@@ -219,3 +219,4 @@ a {
   font: inherit;
 }
 </style>
+

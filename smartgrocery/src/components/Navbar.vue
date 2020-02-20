@@ -77,12 +77,10 @@ img {
 .navbar .nav a:hover {
   color: #555;
 }
-
-
 </style>
 
 <script>
-import { fb } from "../firebaseInit";
+import firebaseApp from "../firebaseInit";
 import router from "../router";
 export default {
   name: "navbar",
@@ -93,14 +91,16 @@ export default {
     };
   },
   created() {
-    if (fb.auth().currentUser) {
+    if (firebaseApp.auth().currentUser) {
       this.isLoggedIn = true;
-      this.currentUser = fb.auth().currentUser.email;
+      this.currentUser = firebaseApp.auth().currentUser.email;
     }
   },
   methods: {
     logout: function() {
-      fb.auth()
+      sessionStorage.clear();
+      firebaseApp
+        .auth()
         .signOut()
         .then(() => {
           router.go({ name: "homepage" });

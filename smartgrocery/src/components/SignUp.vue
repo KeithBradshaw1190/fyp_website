@@ -4,9 +4,7 @@
       <div class="col-sm-8 col-md-8 col-lg-8 mx-auto">
         <div class="card card-signin my-5">
           <div class="card-body">
-            <h5 class="card-title">
-              Time to make shopping a whole lot easier!
-            </h5>
+            <h5 class="card-title">Time to make shopping a whole lot easier!</h5>
 
             <form class="form-signin">
               <div class="row">
@@ -59,13 +57,7 @@
                   placeholder="Confirm Password"
                 />
               </div>
-              <button
-                class="btn btn-lg btn-outline-primary"
-                @click="signup"
-                type="submit"
-              >
-                Sign Up
-              </button>
+              <button class="btn btn-lg btn-outline-primary" @click="signup" type="submit">Sign Up</button>
             </form>
           </div>
         </div>
@@ -79,9 +71,7 @@
               If you already has an account, go ahead and sign in. We've missed
               you!
             </p>
-            <router-link class="btn btn-lg btn-primary btn-block" to="/signin"
-              >Sign In</router-link
-            >
+            <router-link class="btn btn-lg btn-primary btn-block" to="/signin">Sign In</router-link>
           </div>
         </div>
       </div>
@@ -90,9 +80,9 @@
 </template>
 
 <script>
-import { fb } from "../firebaseInit";
+import firebaseApp from "../firebaseInit";
 import router from "../router";
-const db = fb.firestore();
+const db = firebaseApp.firestore();
 
 export default {
   name: "signup",
@@ -106,17 +96,17 @@ export default {
   },
   methods: {
     signup: function(e) {
-      fb.auth()
+      firebaseApp.auth()
         .createUserWithEmailAndPassword(this.email, this.password)
         .then(() => {
-          fb.auth()
+          firebaseApp.auth()
             .currentUser.updateProfile({
               displayName: this.firstname
             })
             .then(() => {
-              console.log(fb.auth().currentUser);
+              console.log(firebaseApp.auth().currentUser);
               db.collection("users")
-                .doc(fb.auth().currentUser.uid)
+                .doc(firebaseApp.auth().currentUser.uid)
                 .set({
                   firstname: this.firstname,
                   lastname: this.lastname,

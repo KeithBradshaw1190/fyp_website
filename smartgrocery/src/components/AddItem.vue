@@ -62,7 +62,7 @@
                     </h5>
                   </div>
                 </div>
-              </div> -->
+              </div>-->
             </div>
           </div>
           <div class="col-lg-8 col-md-7">
@@ -120,11 +120,7 @@
                           Expiry Date
                           <small>(Optional)</small>
                         </label>
-                        <input
-                          type="text"
-                          class="form-control border-input"
-                          value="01/01/20"
-                        />
+                        <input type="text" class="form-control border-input" value="01/01/20" />
                       </div>
                     </div>
                   </div>
@@ -135,9 +131,7 @@
                       @click="createList"
                       class="btn btn-secondary btn-fill btn-wd"
                       id="btnCreateList"
-                    >
-                      Add Product &amp; Create List
-                    </button>
+                    >Add Product &amp; Create List</button>
                   </div>
                   <div class="clearfix"></div>
                 </form>
@@ -152,12 +146,12 @@
 </template>
 
 <script>
-import { fb } from "../firebaseInit";
+import firebaseApp from "../firebaseInit";
 import Sidebar from "./Sidebar";
 import products from "../assets/products";
 import AutoCompleteSearch from "./AutoCompleteSearch";
 import axios from "axios";
-const db = fb.firestore();
+const db = firebaseApp.firestore();
 
 export default {
   name: "add-item",
@@ -183,8 +177,8 @@ export default {
     };
   },
   created() {
-    if (fb.auth().currentUser) {
-      this.currentUser = fb.auth().currentUser;
+    if (firebaseApp.auth().currentUser) {
+      this.currentUser = firebaseApp.auth().currentUser;
     }
   },
   methods: {
