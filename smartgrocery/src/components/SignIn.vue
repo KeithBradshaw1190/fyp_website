@@ -1,14 +1,7 @@
 <template>
-  <div id="signIn" class="container">
-    <div class="row">
-      <div class="col-sm-8 col-md-8 col-lg-8 mx-auto">
-        <div class="card card-signin my-5">
-          <div class="card-body">
-            <h5 class="card-title">Welcome back, Sign In Below!</h5>
-            <div
-              class="btn btn-lg btn-primary btn-outline-primary"
-              @click="signin"
-            >Sign In With Facebook!</div>
+  <div id="signIn">
+            <button type="button" @click="signin" class="btn"  style="background-color:#3b5998;"><i class="fab fa-facebook-f pr-1 "></i>Sign in with Facebook</button>
+
             <!-- <form class="form-signin">
               <div class="form-label-group">
                 <input
@@ -39,10 +32,6 @@
                 type="submit"
               >Log In</button>
             </form>-->
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 

@@ -1,40 +1,127 @@
 <template>
   <div id="homepage">
-    <!--First Section(Features and Stores)-->
     <section class="features">
       <div class="container">
         <div>
-          <h1>Smart Grocery Features</h1>
+          <h1>Smart Grocery</h1>
           <ul class="list-group">
-            <li class="list-item">Get Notified when your groceries go out of date or when it's time to re order</li>
-            <li class="list-item">Schedule a delivery or Pickup with via messenger</li>
-            <li class="list-item">Ask for recipe suggestions based on your grocery list</li>
+            <li
+              class="list-item"
+            >The Chatbot to save you time and make grocery shopping much easier.</li>
           </ul>
-
-          <a href="#sign-up" class="btn">Sign Up</a>
+          <div class="row">
+              <button href="#sign-up" class="btn-site-primary text-center mr-3">View All Features</button>
+              <SignIn  v-if="!isLoggedIn" />
+          </div>
         </div>
         <img src="../assets/onePlusPhone.png" alt />
       </div>
     </section>
 
-    <!-- How It works & Retailers-->
+    <!-- How It works Steps-->
     <section class="text-overlay">
       <div class="overlay">
         <div class="text-overlay-inner">
           <h3>How It Works</h3>
-          <p>
-            Create an account and link your Shopping account,
-            add your grocery list and purchase frequency.
-            You'll get a message when its time to order your groceries or when the items are about to go out of date.
-            You can then Schedule a delivery or pickup all through the messenger interface!
-          </p>
+          <div class="row pt-5 m-2">
+            <div
+              class="col-lg-4 mb-5 mb-lg-0 card rounded-left bg-light pt-3 border-0"
+              style="border-radius:0; background-color:#181d20c2!important"
+            >
+              <i class="fas fa-clipboard-list fa-3x mb-3"></i>
+              <h5>Create A Grocery List</h5>
+              <p
+                class="px-lg-3 mb-0"
+              >Create As many shopping lists as needed, use the inbuilt grocery search for convenience</p>
+            </div>
+            <div
+              class="col-lg-4 mb-5 mb-lg-0 card bg-light pt-3 border-0"
+              style="border-radius:0; background-color:#181d20c2!important"
+            >
+              <i class="fas fa-store-alt fa-3x mb-3"></i>
+              <h5>Link Your Local Supermarket Account</h5>
+              <p
+                class="px-lg-3 mb-0"
+              >Link your account with your local supermarket to enable Delivery and Collection services</p>
+            </div>
+            <div
+              class="col-lg-4 card rounded-right bg-light pt-3 border-0"
+              style="border-radius:0; background-color:#181d20c2!important"
+            >
+              <i class="fas fa-comments fa-3x mb-3"></i>
+              <h5>Message The Bot</h5>
+              <p class="px-lg-3 mb-0">
+                "Can I see my shopping list?"
+                <br />"Can you schedule a grocery delivery?"
+                <br />"Can you find me a breakfast recipe?"
+                <br />
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!--Log in or Sign Up-->
-    <section class="sign-up" id="sign-up">
-      <SignUp />
+    <!--Chatbot Feature Section-->
+    <section class="feature-section" >
+      <!-- Section heading -->
+  <h2 class="font-weight-bold text-center my-5">ChatBot Features</h2>
+  <!-- Section description -->
+  <p class="lead grey-text text-center w-responsive mx-auto mb-5">The goal of the ChatBot is to help a user save time time when it comes to grocery shopping.<br>
+  
+  </p>
+
+  <!-- Grid row -->
+  <div class="row">
+
+    <!-- Messenger Icon-->
+    <div class="col-lg-5 text-center text-lg-left">
+      <img class="img-fluid" src="https://i.ya-webdesign.com/images/facebook-messenger-png-1.png">
+    </div>
+    <!--Messenger Icon -->
+
+    <!-- Text Columns -->
+    <div class="col-lg-7">
+      <div class="row mb-3">
+        <!--Icon -->
+        <div class="col-1">
+          <i class="fas fa-share fa-lg"></i>
+        </div>
+  
+        <!-- Delivery Feature -->
+        <div class="col-xl-10 col-md-11 col-10">
+          <h5 class="font-weight-bold mb-3">Delivery</h5>
+          <p>Send a Message asking to schedule a grocery delivery with the name of the list you want, the time and date that suits you.</p>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <!-- Icon -->
+        <div class="col-1">
+          <i class="fas fa-share fa-lg"></i>
+        </div>
+        <!-- Collection Feature -->
+        <div class="col-xl-10 col-md-11 col-10">
+          <h5 class="font-weight-bold mb-3">Collection / PickUp</h5>
+          <p>Send a Message asking to schedule a grocery Pickup from your local store with the name of the list you want, the time and date that suits you.</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <!-- Icon -->
+        <div class="col-1">
+          <i class="fas fa-share fa-lg"></i>
+        </div>
+        <!-- Recipe Feauture -->
+        <div class="col-xl-10 col-md-11 col-10">
+          <h5 class="font-weight-bold mb-3">Recipes</h5>
+          <p>Send a message asking for recipe suggestions with specified ingredients or ingredients in one of your shopping lists.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
     </section>
   </div>
 </template>
@@ -57,11 +144,6 @@ h4 {
   line-height: 1.3;
 }
 
-.card-signin {
-  border: 0;
-  border-radius: 1rem;
-  box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.5);
-}
 a {
   color: var(--secondary-color);
   text-decoration: none;
@@ -150,7 +232,7 @@ img {
   margin-top: 1rem;
 }
 
-.btn {
+.btn-site-primary {
   display: inline-block;
   background: var(--primary-color);
   color: #fff;
@@ -162,47 +244,32 @@ img {
   margin-top: 0.2rem;
 }
 
-.btn:hover {
+.btn-site-primary:hover {
   background: var(--secondary-color);
 }
 
-/* Footer */
-.footer-section {
-  background: var(--primary-color);
-  color: #fff;
-  padding: 2rem;
-}
-
-.footer-section .container {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-}
-
-.footer-section h2 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-}
-
-.footer-section a {
-  line-height: 1.9;
-  color: #ccc;
-}
-
-.footer-section a > i {
-  margin-right: 0.5rem;
-  color: #555;
-}
 </style>
 <script>
 import SignUp from "./SignUp";
-
+import SignIn from "./SignIn";
+import firebaseApp from "../firebaseInit";
 export default {
   name: "homepage",
   components: {
-    SignUp
+    SignUp,
+    SignIn
   },
   data() {
-    return {};
+    return {
+      isLoggedIn: false,
+      currentUser: false
+    };
+  },
+  created() {
+    if (firebaseApp.auth().currentUser) {
+      this.isLoggedIn = true;
+      this.currentUser = firebaseApp.auth().currentUser.email;
+    }
   }
 };
 </script>
