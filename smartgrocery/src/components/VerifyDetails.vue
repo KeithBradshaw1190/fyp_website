@@ -7,7 +7,7 @@
           <div
             class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-1 mb-3 border-bottom"
           >
-            <h1 v-if="!verified" class="h2">Store Login</h1>
+            <h1 v-if="!verified" class="h2">A daa link to Your Local Supermarket</h1>
             <h1 v-if="verified" class="h2">Change Your Delivery Address</h1>
           </div>
           <div class="container">
@@ -134,12 +134,14 @@ export default {
         .then(
           response => {
             console.log(response);
-            if (response.data.success == true) {
+            console.log(response.data._id);
+
+            if (response.status == 200) {
               db.collection("users")
                 .doc(this.currentUser.uid)
                 .set(
                   {
-                    storeId: response.data.id
+                    storeId: response.data._id
                   },
                   { merge: true }
                 );
@@ -152,7 +154,7 @@ export default {
     },
     updateAddress: function() {
       axios
-        .put("http://localhost:3000/api/customer/" + this.storeId, {
+        .put("http://localhost:3002/api/customer/" + this.storeId, {
           address: this.address
         })
         .then(
@@ -165,13 +167,16 @@ export default {
         );
     },
     loadData: function() {
+      console.log(sessionStorage.getItem("storeId"));
+      console.log("uid: "+ this.currentUser.uid)
+      
       // you can load data from here and assign response in to variable
       db.collection("users")
         .doc(this.currentUser.uid)
         .get()
         .then(function(doc) {
+          console.log("then")
           if (doc.exists && doc.get("storeId")) {
-            console.log("doc exists");
             sessionStorage.setItem("storeId", doc.get("storeId"));
           }
         })
@@ -180,6 +185,23 @@ export default {
         });
       if (sessionStorage.getItem("storeId") != null) {
         this.verified = true;
+         axios
+        .get("http://localhost:3002/api/customer/"+sessionStorage.getItem("storeId"))
+          .then(
+          response => {
+            console.log(response);
+            console.log(response.data.address);
+
+            if (response.status == 200) {
+              this.address = response.data.address;
+            }
+          },
+          error => {
+            console.log(error);
+          }
+        );
+      } else {
+        this.verified = false;
       }
     }
   }

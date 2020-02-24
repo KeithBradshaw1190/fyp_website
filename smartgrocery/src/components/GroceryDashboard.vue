@@ -13,10 +13,10 @@
             <div class="col-md-6 col-xl-6 pt-4">
               <div class="card bg-c-yellow order-card">
                 <div class="card-block">
-                  <h6 class="m-b-20">Next Delivery Date</h6>
+                  <h6 class="m-b-20">Latest Scheduled Delivery Date</h6>
                   <h2 class="text-right">
                     <i class="fa fa-calender f-left"></i>
-                    <span>12/12/19</span>
+                    <span>{{ deliveryDate }}</span>
                   </h2>
                 </div>
               </div>
@@ -25,10 +25,10 @@
             <div class="col-md-6 col-xl-6 pt-4">
               <div class="card bg-c-yellow order-card">
                 <div class="card-block">
-                  <h6 class="m-b-20">Next Pick-up Scheduled</h6>
+                  <h6 class="m-b-20">Latest Scheduled Pickup Date</h6>
                   <h2 class="text-right">
                     <i class="fa fa-rocket f-left"></i>
-                    <span>12/12/19</span>
+                    <span>{{ pickupDate }}</span>
                   </h2>
                 </div>
               </div>
@@ -40,7 +40,7 @@
                   <h6 class="m-b-20">Total Deliveries Ordered</h6>
                   <h2 class="text-right">
                     <i class="fa fa-refresh f-left"></i>
-                    <span>6</span>
+                    <span>{{ pickupCount }}</span>
                   </h2>
                 </div>
               </div>
@@ -52,21 +52,24 @@
                   <h6 class="m-b-20">Total Pick-ups Scheduled</h6>
                   <h2 class="text-right">
                     <i class="fa fa-credit-card f-left"></i>
-                    <span>2</span>
+                    <span>{{ deliveryCount }}</span>
                   </h2>
                 </div>
               </div>
             </div>
           </div>
         </div>
+        <!-- End of dashboard container-->
       </div>
     </div>
+    <!-- End of row-->
   </div>
 </template>
 
 <script>
 import firebaseApp from "../firebaseInit";
 import Sidebar from "./Sidebar";
+import axios from "axios";
 export default {
   name: "grocery-dashboard",
   components: {
@@ -74,12 +77,44 @@ export default {
   },
   data() {
     return {
-      currentUser: false
+      currentUser: false,
+      deliveryDate: "No Deliveries scheduled yet",
+      pickupDate: "No Pickups scheduled yet",
+      deliveryCount: 0,
+      pickupCount: 0
     };
   },
   created() {
+    this.fetchInfo();
     if (firebaseApp.auth().currentUser) {
       this.currentUser = firebaseApp.auth().currentUser.name;
+    }
+  },
+  methods: {
+    fetchInfo: function() {
+      //Deliveries
+      axios
+        .get(
+          "http://localhost:3002/api/delivery/customer/" +
+            sessionStorage.getItem("storeId")
+        )
+        .then(
+          response => {
+            console.log(response);
+            console.log(response.data[0]);
+
+            if (response.status == 200) {
+              this.deliveryDate = response.data[0].delivery_date;
+            } else {
+              this.deliveryDate = "No Deliveries yet";
+            }
+          },
+          error => {
+            console.log(error);
+          }
+        );
+      //Pickups
+      
     }
   }
 };
