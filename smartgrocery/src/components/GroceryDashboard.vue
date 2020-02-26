@@ -70,6 +70,7 @@
 import firebaseApp from "../firebaseInit";
 import Sidebar from "./Sidebar";
 import axios from "axios";
+const db = firebaseApp.firestore();
 export default {
   name: "grocery-dashboard",
   components: {
@@ -77,18 +78,18 @@ export default {
   },
   data() {
     return {
-      currentUser: false,
+      currentUser: firebaseApp.auth().currentUser,
       deliveryDate: "No Deliveries scheduled yet",
       pickupDate: "No Pickups scheduled yet",
       deliveryCount: 0,
-      pickupCount: 0
+      pickupCount: 0,
+      verified: null,
+      storeId: sessionStorage.getItem("storeId")
     };
   },
   created() {
     this.fetchInfo();
-    if (firebaseApp.auth().currentUser) {
-      this.currentUser = firebaseApp.auth().currentUser.name;
-    }
+    this.loadData();
   },
   methods: {
     fetchInfo: function() {
@@ -103,7 +104,7 @@ export default {
             console.log(response);
             console.log(response.data[0]);
 
-            if (response.status == 200) {
+            if (response.status == 200 && (response.data == undefined)) {
               this.deliveryDate = response.data[0].delivery_date;
             } else {
               this.deliveryDate = "No Deliveries yet";
@@ -114,7 +115,47 @@ export default {
           }
         );
       //Pickups
-      
+    },
+    loadData: function() {
+      console.log("Checking storage" + sessionStorage.getItem("storeId"));
+      console.log("uid: " + this.currentUser.uid);
+
+      // you can load data from here and assign response in to variable
+      db.collection("users")
+        .doc(this.currentUser.uid)
+        .get()
+        .then(function(doc) {
+          if (doc.exists && doc.get("storeId")) {
+            console.log(doc.get("storeId"));
+            sessionStorage.setItem("storeId", doc.get("storeId"));
+          }
+        })
+        .catch(function(error) {
+          console.log("Error getting document:", error);
+        });
+      if (sessionStorage.getItem("storeId") != null) {
+        this.verified = true;
+        axios
+          .get(
+            "http://localhost:3002/api/customer/" +
+              sessionStorage.getItem("storeId")
+          )
+          .then(
+            response => {
+              console.log(response);
+              console.log(response.data.address);
+
+              if (response.status == 200) {
+                this.address = response.data.address;
+              }
+            },
+            error => {
+              console.log(error);
+            }
+          );
+      } else {
+        this.verified = false;
+      }
     }
   }
 };

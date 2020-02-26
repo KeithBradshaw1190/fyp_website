@@ -1,8 +1,10 @@
 <template>
   <div id="signIn">
-            <button type="button" @click="signin" class="btn"  style="background-color:#3b5998;"><i class="fab fa-facebook-f pr-1 "></i>Sign in with Facebook</button>
+    <button type="button" @click="signin" class="btn" style="background-color:#3b5998;">
+      <i class="fab fa-facebook-f pr-1"></i>Sign in with Facebook
+    </button>
 
-            <!-- <form class="form-signin">
+    <!-- <form class="form-signin">
               <div class="form-label-group">
                 <input
                   type="email"
@@ -31,7 +33,7 @@
                 @click="signin"
                 type="submit"
               >Log In</button>
-            </form>-->
+    </form>-->
   </div>
 </template>
 
@@ -47,7 +49,8 @@ export default {
   data: function() {
     return {
       email: "",
-      password: ""
+      password: "",
+      currentUser: firebaseApp.auth().currentUser
     };
   },
   methods: {
@@ -72,14 +75,16 @@ export default {
               displayName: user.providerData[0].displayName
             })
             .then(() => {
-              console.log(firebaseApp.auth().currentUser);
+              this.currentUser = firebaseApp.auth().currentUser;
+              //console.log(firebaseApp.auth().currentUser);
               db.collection("users")
-                .doc(firebaseApp.auth().currentUser.uid)
-                .set({
+                .doc(this.currentUser.uid)
+                .update({
                   name: user.providerData[0].displayName,
                   facebookID: user.providerData[0].uid
                 })
                 .then(() => {
+                  this.loadData();
                   router.go({ name: "groceryDashboard" });
                 })
                 .catch(err => {
@@ -113,6 +118,24 @@ export default {
           // The firebase.auth.AuthCredential type that was used.
           var credential = error.credential;
           // ...
+        });
+    },
+    loadData: function() {
+      console.log("Checking storage" + sessionStorage.getItem("storeId"));
+      console.log("uid: " + this.currentUser.uid);
+
+      // you can load data from here and assign response in to variable
+      db.collection("users")
+        .doc(this.currentUser.uid)
+        .get()
+        .then(function(doc) {
+          if (doc.exists && doc.get("storeId")) {
+            console.log(doc.get("storeId"));
+            sessionStorage.setItem("storeId", doc.get("storeId"));
+          }
+        })
+        .catch(function(error) {
+          console.log("Error getting document:", error);
         });
     }
     // signin: function(e) {

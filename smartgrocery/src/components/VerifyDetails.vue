@@ -135,7 +135,7 @@ export default {
           response => {
             console.log(response);
             console.log(response.data._id);
-
+          console.log("trying to update store id in firebase")
             if (response.status == 200) {
               db.collection("users")
                 .doc(this.currentUser.uid)
@@ -145,6 +145,7 @@ export default {
                   },
                   { merge: true }
                 );
+                //Refresh Page
             }
           },
           error => {
@@ -167,7 +168,7 @@ export default {
         );
     },
     loadData: function() {
-      console.log(sessionStorage.getItem("storeId"));
+      console.log("Checking storage"+sessionStorage.getItem("storeId"));
       console.log("uid: "+ this.currentUser.uid)
       
       // you can load data from here and assign response in to variable
@@ -175,8 +176,8 @@ export default {
         .doc(this.currentUser.uid)
         .get()
         .then(function(doc) {
-          console.log("then")
           if (doc.exists && doc.get("storeId")) {
+            console.log(doc.get("storeId"))
             sessionStorage.setItem("storeId", doc.get("storeId"));
           }
         })

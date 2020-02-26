@@ -46,7 +46,7 @@ export default {
   name: "sidebar",
   data() {
     return {
-      currentUser: false,
+      currentUser: firebaseApp.auth().currentUser,
       verified: null
     };
   },
