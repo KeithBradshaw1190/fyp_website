@@ -10,7 +10,7 @@
             >The Chatbot to save you time and make grocery shopping much easier.</li>
           </ul>
           <div class="row">
-              <button href="#sign-up" class="btn-site-primary text-center mr-3">View All Features</button>
+              <a href="#features" class="btn-site-primary text-center mr-3">View All Features</a>
               <SignIn  v-if="!isLoggedIn" />
           </div>
         </div>
@@ -32,7 +32,7 @@
               <h5>Create A Grocery List</h5>
               <p
                 class="px-lg-3 mb-0"
-              >Create As many shopping lists as needed, use the inbuilt grocery search for convenience</p>
+              >Create as many shopping lists as needed. Use the inbuilt grocery search for convenience</p>
             </div>
             <div
               class="col-lg-4 mb-5 mb-lg-0 card bg-light pt-3 border-0"
@@ -42,7 +42,7 @@
               <h5>Link Your Local Supermarket Account</h5>
               <p
                 class="px-lg-3 mb-0"
-              >Link your account with your local supermarket to enable Delivery and Collection services</p>
+              >Link your account with your local supermarket to enable delivery and collection services</p>
             </div>
             <div
               class="col-lg-4 card rounded-right bg-light pt-3 border-0"
@@ -51,11 +51,9 @@
               <i class="fas fa-comments fa-3x mb-3"></i>
               <h5>Message The Bot</h5>
               <p class="px-lg-3 mb-0">
-                "Can I see my shopping list?"
-                <br />"Can you schedule a grocery delivery?"
-                <br />"Can you find me a breakfast recipe?"
-                <br />
+         Interact with the bot through Facebook Messenger
               </p>
+              <a href="#features" class="stretched-link">View features</a>
             </div>
           </div>
         </div>
@@ -63,7 +61,7 @@
     </section>
 
     <!--Chatbot Feature Section-->
-    <section class="feature-section" >
+    <section class="feature-section" id="features">
       <!-- Section heading -->
   <h2 class="font-weight-bold text-center my-5">ChatBot Features</h2>
   <!-- Section description -->

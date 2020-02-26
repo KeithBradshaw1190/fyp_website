@@ -30,6 +30,12 @@
                 Grocery Lists
               </router-link>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="https://www.facebook.com/SmartGrocery-103970551177074">
+                <i class="fab fa-facebook-messenger text-primary"></i>
+                Visit Facebook Page
+              </a>
+            </li>
           </ul>
           <!-- /Nav -->
         </div>

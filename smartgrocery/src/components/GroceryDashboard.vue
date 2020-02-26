@@ -11,30 +11,36 @@
           </div>
           <div class="row">
             <div class="col-md-6 col-xl-6 pt-4">
-              <div class="card bg-c-yellow order-card">
+              <div class="card bg-info-card order-card">
                 <div class="card-block">
-                  <h6 class="m-b-20">Latest Scheduled Delivery Date</h6>
-                  <h2 class="text-right">
-                    <i class="fa fa-calender f-left"></i>
-                    <span>{{ deliveryDate }}</span>
-                  </h2>
+              <h3 class="m-b-20 text-center"><i class="fas fa-truck" style="font-size:22px;"></i> Latest Delivery Details</h3>                        
+                    <div class="row">
+                    <h5 class="col-6  mt-2"><i class="fas fa-calendar-day" style="font-size:20px;"></i> Date {{ pickupDate }} </h5>
+                    <h5 class="col-6  mt-2"><i class="far fa-clock" style="font-size:20px;"></i> Expect at 11:25 </h5>
+                      <h5 class="col-12"><i class="fas fa-euro-sign mt-1" style="font-size:20px;"></i> 42.50 </h5>
+                    </div>
+
+      
                 </div>
               </div>
             </div>
 
             <div class="col-md-6 col-xl-6 pt-4">
-              <div class="card bg-c-yellow order-card">
+              <div class="card bg-info-card order-card">
                 <div class="card-block">
-                  <h6 class="m-b-20">Latest Scheduled Pickup Date</h6>
-                  <h2 class="text-right">
-                    <i class="fa fa-rocket f-left"></i>
-                    <span>{{ pickupDate }}</span>
-                  </h2>
+                  <h3 class="m-b-20 text-center"><i class="fas fa-shopping-basket" style="font-size:22px;"></i> Latest Pickup Details</h3>
+                 
+                     <div class="row">
+                    <h5 class="col-6 mt-2"><i class="fas fa-calendar-day" style="font-size:20px;"></i> Date {{ pickupDate }} </h5>
+                    <h5 class="col-6 mt-2"><i class="far fa-clock" style="font-size:20px;"></i> Expect at 11:25 </h5>
+                      <h5 class="col-12 "><i class="fas fa-euro-sign mt-1" style="font-size:20px;"></i> 42.50 </h5>
+                    </div>
+
                 </div>
               </div>
             </div>
 
-            <div class="col-md-6 col-xl-6 pt-4">
+            <!-- <div class="col-md-6 col-xl-6 pt-4">
               <div class="card bg-c-yellow order-card">
                 <div class="card-block">
                   <h6 class="m-b-20">Total Deliveries Ordered</h6>
@@ -44,9 +50,9 @@
                   </h2>
                 </div>
               </div>
-            </div>
+            </div> -->
 
-            <div class="col-md-6 col-xl-6 pt-4">
+            <!-- <div class="col-md-6 col-xl-6 pt-4">
               <div class="card bg-c-yellow order-card">
                 <div class="card-block">
                   <h6 class="m-b-20">Total Pick-ups Scheduled</h6>
@@ -56,7 +62,7 @@
                   </h2>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
         <!-- End of dashboard container-->
@@ -93,6 +99,12 @@ export default {
   },
   methods: {
     fetchInfo: function() {
+      this.deliveryInfo();
+      this.pickupInfo();
+      //Pickups
+      
+    },
+    deliveryInfo: function() {
       //Deliveries
       axios
         .get(
@@ -104,17 +116,39 @@ export default {
             console.log(response);
             console.log(response.data[0]);
 
-            if (response.status == 200 && (response.data == undefined)) {
-              this.deliveryDate = response.data[0].delivery_date;
-            } else {
+            if (response.status == 200 && response.data == undefined) {
               this.deliveryDate = "No Deliveries yet";
+            } else {
+              this.deliveryDate = response.data[0].delivery_date;
             }
           },
           error => {
             console.log(error);
           }
         );
-      //Pickups
+    },
+    pickupInfo: function() {
+      //Deliveries
+      axios
+        .get(
+          "http://localhost:3002/api/pickup/customer/" +
+            sessionStorage.getItem("storeId")
+        )
+        .then(
+          response => {
+            console.log(response);
+            console.log(response.data[0]);
+
+            if (response.status == 200 && response.data == undefined) {
+              this.pickupDate = "No Pickups yet";
+            } else {
+              this.pickupDate = response.data[0].pickup_date;
+            }
+          },
+          error => {
+            console.log(error);
+          }
+        );
     },
     loadData: function() {
       console.log("Checking storage" + sessionStorage.getItem("storeId"));
@@ -183,8 +217,9 @@ body {
   background: linear-gradient(45deg, #457aa7, #5784b8);
 }
 
-.bg-c-yellow {
-  background: #ffba58;
+.bg-info-card {
+  /* background: #ffba58; */
+background:  hsla(207, 83%, 41%, 0.44);
 }
 
 .bg-c-pink {
