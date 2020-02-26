@@ -10,8 +10,8 @@
             >The Chatbot to save you time and make grocery shopping much easier.</li>
           </ul>
           <div class="row">
-              <a href="#features" class="btn-site-primary text-center mr-3">View All Features</a>
-              <SignIn  v-if="!isLoggedIn" />
+            <a href="#features" class="btn-site-primary text-center mr-3">View All Features</a>
+            <SignIn v-if="!isLoggedIn" />
           </div>
         </div>
         <img src="../assets/onePlusPhone.png" alt />
@@ -35,7 +35,7 @@
               >Create as many shopping lists as needed. Use the inbuilt grocery search for convenience</p>
             </div>
             <div
-              class="col-lg-4 mb-5 mb-lg-0 card bg-light pt-3 border-0"
+              class="col-lg-4 col-md-12 mb-5 mb-lg-0 card bg-light pt-3 border-0"
               style="border-radius:0; background-color:#181d20c2!important"
             >
               <i class="fas fa-store-alt fa-3x mb-3"></i>
@@ -45,14 +45,12 @@
               >Link your account with your local supermarket to enable delivery and collection services</p>
             </div>
             <div
-              class="col-lg-4 card rounded-right bg-light pt-3 border-0"
+              class="col-lg-4 col-md-12 card rounded-right bg-light pt-3 border-0"
               style="border-radius:0; background-color:#181d20c2!important"
             >
               <i class="fas fa-comments fa-3x mb-3"></i>
               <h5>Message The Bot</h5>
-              <p class="px-lg-3 mb-0">
-         Interact with the bot through Facebook Messenger
-              </p>
+              <p class="px-lg-3 mb-0">Interact with the bot through Facebook Messenger</p>
               <a href="#features" class="stretched-link">View features</a>
             </div>
           </div>
@@ -63,63 +61,64 @@
     <!--Chatbot Feature Section-->
     <section class="feature-section" id="features">
       <!-- Section heading -->
-  <h2 class="font-weight-bold text-center my-5">ChatBot Features</h2>
-  <!-- Section description -->
-  <p class="lead grey-text text-center w-responsive mx-auto mb-5">The goal of the ChatBot is to help a user save time time when it comes to grocery shopping.<br>
-  
-  </p>
+      <h2 class="font-weight-bold text-center my-5">ChatBot Features</h2>
+      <!-- Section description -->
+      <p class="lead grey-text text-center w-responsive mx-auto mb-5">
+        The goal of the ChatBot is to help a user save time time when it comes to grocery shopping.
+        <br />
+      </p>
 
-  <!-- Grid row -->
-  <div class="row">
-
-    <!-- Messenger Icon-->
-    <div class="col-lg-5 text-center text-lg-left">
-      <img class="img-fluid" src="https://i.ya-webdesign.com/images/facebook-messenger-png-1.png">
-    </div>
-    <!--Messenger Icon -->
-
-    <!-- Text Columns -->
-    <div class="col-lg-7">
-      <div class="row mb-3">
-        <!--Icon -->
-        <div class="col-1">
-          <i class="fas fa-share fa-lg"></i>
-        </div>
-  
-        <!-- Delivery Feature -->
-        <div class="col-xl-10 col-md-11 col-10">
-          <h5 class="font-weight-bold mb-3">Delivery</h5>
-          <p>Send a Message asking to schedule a grocery delivery with the name of the list you want, the time and date that suits you.</p>
-        </div>
-      </div>
-
-      <div class="row mb-3">
-        <!-- Icon -->
-        <div class="col-1">
-          <i class="fas fa-share fa-lg"></i>
-        </div>
-        <!-- Collection Feature -->
-        <div class="col-xl-10 col-md-11 col-10">
-          <h5 class="font-weight-bold mb-3">Collection / PickUp</h5>
-          <p>Send a Message asking to schedule a grocery Pickup from your local store with the name of the list you want, the time and date that suits you.</p>
-        </div>
-      </div>
-
+      <!-- Grid row -->
       <div class="row">
-        <!-- Icon -->
-        <div class="col-1">
-          <i class="fas fa-share fa-lg"></i>
+        <!-- Messenger Icon-->
+        <div class="col-lg-5 text-center text-lg-left">
+          <img
+            class="img-fluid"
+            src="https://i.ya-webdesign.com/images/facebook-messenger-png-1.png"
+          />
         </div>
-        <!-- Recipe Feauture -->
-        <div class="col-xl-10 col-md-11 col-10">
-          <h5 class="font-weight-bold mb-3">Recipes</h5>
-          <p>Send a message asking for recipe suggestions with specified ingredients or ingredients in one of your shopping lists.</p>
+        <!--Messenger Icon -->
+
+        <!-- Text Columns -->
+        <div class="col-lg-7">
+          <div class="row mb-3">
+            <!--Icon -->
+            <div class="col-1">
+              <i class="fas fa-share fa-lg"></i>
+            </div>
+
+            <!-- Delivery Feature -->
+            <div class="col-xl-10 col-md-11 col-10">
+              <h5 class="font-weight-bold mb-3">Delivery</h5>
+              <p>Send a Message asking to schedule a grocery delivery with the name of the list you want, the time and date that suits you.</p>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <!-- Icon -->
+            <div class="col-1">
+              <i class="fas fa-share fa-lg"></i>
+            </div>
+            <!-- Collection Feature -->
+            <div class="col-xl-10 col-md-11 col-10">
+              <h5 class="font-weight-bold mb-3">Collection / PickUp</h5>
+              <p>Send a Message asking to schedule a grocery Pickup from your local store with the name of the list you want, the time and date that suits you.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <!-- Icon -->
+            <div class="col-1">
+              <i class="fas fa-share fa-lg"></i>
+            </div>
+            <!-- Recipe Feauture -->
+            <div class="col-xl-10 col-md-11 col-10">
+              <h5 class="font-weight-bold mb-3">Recipes</h5>
+              <p>Send a message asking for recipe suggestions with specified ingredients or ingredients in one of your shopping lists.</p>
+            </div>
+          </div>
         </div>
       </div>
-
-    </div>
-  </div>
-
     </section>
   </div>
 </template>
@@ -191,7 +190,7 @@ img {
 .text-overlay {
   position: relative;
   background: url("../assets/grocery-store.jpg") no-repeat bottom center/cover;
-  height: 600px;
+  height: 1000px;
 }
 
 .overlay {
@@ -245,7 +244,6 @@ img {
 .btn-site-primary:hover {
   background: var(--secondary-color);
 }
-
 </style>
 <script>
 import SignUp from "./SignUp";

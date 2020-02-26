@@ -87,7 +87,7 @@ router.beforeEach((to, from, next) => {
     //Check if Not Logged into FB
     if (!firebaseApp.auth().currentUser) {
       next({
-        path: '/signin',
+        path: '/',
         query: {
           redirect: to.fullPath
         }

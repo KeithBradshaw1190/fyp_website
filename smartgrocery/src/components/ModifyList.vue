@@ -18,6 +18,7 @@
                         <h4 class="title" v-if="listName != ''">
                           {{ listName }}
                           <br />
+                          <small class="text-grey">(Click to expand)</small>
                         </h4>
                         <h4 class="title" v-if="listName == ''">
                           List Name
@@ -29,7 +30,7 @@
                 </div>
                 <hr />
                 <div class="text-center">
-                  <div class="row">
+                  <div v-if="!changes" class="row">
                     <div class="col-md-5">
                       <h5>
                         {{ amountOfItems }}
@@ -45,6 +46,29 @@
                       </h5>
                     </div>
                   </div>
+                  <!--Row for changes -->
+                  <div v-if="changes" class="row">
+                    <div class="col-md-3">
+                      <h5>
+                        {{ amountOfItems }}
+                        <br />
+                        <small>Items</small>
+                      </h5>
+                    </div>
+                    <div class="col-md-4">
+                      <h5>
+                        €{{ totalPrice }}
+                        <br />
+                        <small>Total Cost</small>
+                      </h5>
+                    </div>
+                    <div class="col-md-4 mt-2">
+                      <small class="mt-3 mr-1">
+                        <button class="btn btn-sm btn-outline-success">Save Changes</button>
+                      </small>
+                    </div>
+                  </div>
+                  <!-- Row for changes -->
                 </div>
                 <div
                   id="collapseOne"
@@ -62,17 +86,30 @@
                             class="list-group-item d-flex justify-content-between lh-condensed item"
                           >
                             <div>
-                              <h6 class="my-0">{{ item.name }}</h6>
-                              <p class="quantity">
-                                <small class="text-success mr-3"
-                                  >Price: €{{ item.price }}</small
-                                >
-                                <small class="text-muted"
+                              <h6 class="my-0">
+                                <a class="text-danger" @click="deleteItemFromList(index)">X Remove</a>
+                                <br />
+                                {{ item.name }}
+                              </h6>
+                              <div class="quantity">
+                                <small class="text-success mr-3">Price: €{{ item.price }}</small>
+                                <!-- <small class="text-muted"
                                   >Quantity: {{ item.quantity }}</small
-                                >
-                              </p>
+                                >-->
+
+                                <div class="input-group">
+                                  <div class="input-group-prepend">
+                                    <small class="input-group-text">Quantity</small>
+                                  </div>
+                                  <input
+                                    type="number"
+                                    name="quantity"
+                                    v-model="item.quantity"
+                                    class="form-control form-control"
+                                  />
+                                </div>
+                              </div>
                             </div>
-                            <!-- <small class="text-success">€{{item.price}}</small> -->
                           </li>
                         </ul>
                       </div>
@@ -127,11 +164,7 @@
                           Expiry Date
                           <small>(Optional)</small>
                         </label>
-                        <input
-                          type="text"
-                          class="form-control border-input"
-                          placeholder="Date"
-                        />
+                        <input type="text" class="form-control border-input" placeholder="Date" />
                       </div>
                     </div>
                   </div>
@@ -142,9 +175,7 @@
                       @click="addToList"
                       class="btn btn-secondary btn-fill btn-wd"
                       id="btnCreateList"
-                    >
-                      Add Product
-                    </button>
+                    >Add Product</button>
                   </div>
                   <div class="clearfix"></div>
                 </form>
@@ -186,7 +217,8 @@ export default {
       totalPrice: null,
       quantity: null,
       listId: null,
-      shoppingLists: []
+      shoppingLists: [],
+      changes: false
     };
   },
   created() {
@@ -295,6 +327,62 @@ export default {
         console.log("problem");
       }
     },
+    deleteItemFromList(itemindex) {
+      this.changes = true;
+      var localSlist = this.shoppingLists[0];
+      localSlist.splice(itemindex, 1);
+      var totalp = 0;
+
+      //Adjust new total price
+      localSlist.forEach(element => {
+        totalp = totalp + element.quantity * element.price;
+      });
+      this.totalPrice = totalp.toFixed(2);
+      this.amountOfItems = localSlist.length;
+      console.log(totalp);
+      console.log(localSlist.length);
+
+      //Remove from local array
+      //Loop and assign new price and quantity
+      // var localSlist = shoppingLists;
+      //var newprice = 0;
+      // localSlist.forEach(element => {
+      //   totalp = totalp + element.quantity * element.price;
+      // });
+      //  newprice = totalp.toFixed(2);
+      //    console.log(newprice);
+
+      //   if (this.productList != null) {
+      //   this.productList.quantity = this.quantity;
+
+      //   var listRef = db.collection("shopping_lists").doc(this.listId);
+      //   var plist = this.productList;
+
+      //   let transaction = db
+      //     .runTransaction(t => {
+      //       return t.get(listRef).then(doc => {
+      //         console.log(doc.data().items);
+      //         var newItems = doc.data().items.concat(this.productList);
+      //         console.log(newItems);
+      //         t.update(listRef, {
+      //           list_price: this.totalPrice,
+      //           list_quantity: this.quantity,
+      //           items: newItems
+      //         });
+      //       });
+      //     })
+      //     .then(result => {
+      //       console.log("Transaction success!");
+      //       this.$router.go();
+      //     })
+      //     .catch(err => {
+      //       console.log("Transaction failure:", err);
+      //     });
+
+      // } else {
+      //   console.log("problem");
+      // }
+    },
     fetchListItems(listId) {
       var totalp = 0;
       var shoppingLists = [];
@@ -318,15 +406,13 @@ export default {
               totalp = totalp + element.quantity * element.price;
             });
             this.totalPrice = totalp.toFixed(2);
-            listsRef
-              .doc(listId)
-              .set(
-                {
-                  list_price: this.totalPrice,
-                  list_quantity: this.amountOfItems
-                },
-                { merge: true }
-              );
+            listsRef.doc(listId).set(
+              {
+                list_price: this.totalPrice,
+                list_quantity: this.amountOfItems
+              },
+              { merge: true }
+            );
             shoppingLists.push(theDoc.items);
           }
         })

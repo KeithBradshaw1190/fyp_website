@@ -13,14 +13,29 @@
             <div class="col-md-6 col-xl-6 pt-4">
               <div class="card bg-info-card order-card">
                 <div class="card-block">
-              <h3 class="m-b-20 text-center"><i class="fas fa-truck" style="font-size:22px;"></i> Latest Delivery Details</h3>                        
-                    <div class="row">
-                    <h5 class="col-6  mt-2"><i class="fas fa-calendar-day" style="font-size:20px;"></i> Date {{ pickupDate }} </h5>
-                    <h5 class="col-6  mt-2"><i class="far fa-clock" style="font-size:20px;"></i> Expect at 11:25 </h5>
-                      <h5 class="col-12"><i class="fas fa-euro-sign mt-1" style="font-size:20px;"></i> 42.50 </h5>
-                    </div>
+                  <h3 class="m-b-20 text-center">
+                    <i class="fas fa-truck" style="font-size:22px;"></i> Latest Delivery Details
+                    <br>
+                    <!-- <small>List Name: {{ deliveryList }}</small> -->
+                  </h3>
+                                      <br>
 
-      
+                  <div class="row">
+                   <h5 class="col-6 mt-2">
+                      <i class="fas fa-clipboard-list" style="font-size:20px;"></i>
+                     {{ pickupList }}
+                    </h5>
+                    <h5 class="col-6 mt-2">
+                      <i class="fas fa-calendar-day" style="font-size:20px;"></i>
+                      Date {{ pickupDate }}
+                    </h5>
+                    <h5 class="col-6 mt-2">
+                      <i class="far fa-clock" style="font-size:20px;"></i> Expect at {{ deliveryTime.slice(0, -3) }}
+                    </h5>
+                    <h5 class="col-6 mt-2">
+                      <i class="fas fa-euro-sign mt-1" style="font-size:20px;"></i> Cost {{ deliveryCost }}
+                    </h5>
+                  </div>
                 </div>
               </div>
             </div>
@@ -28,14 +43,31 @@
             <div class="col-md-6 col-xl-6 pt-4">
               <div class="card bg-info-card order-card">
                 <div class="card-block">
-                  <h3 class="m-b-20 text-center"><i class="fas fa-shopping-basket" style="font-size:22px;"></i> Latest Pickup Details</h3>
-                 
-                     <div class="row">
-                    <h5 class="col-6 mt-2"><i class="fas fa-calendar-day" style="font-size:20px;"></i> Date {{ pickupDate }} </h5>
-                    <h5 class="col-6 mt-2"><i class="far fa-clock" style="font-size:20px;"></i> Expect at 11:25 </h5>
-                      <h5 class="col-12 "><i class="fas fa-euro-sign mt-1" style="font-size:20px;"></i> 42.50 </h5>
-                    </div>
+                  <h3 class="m-b-20 text-center">
+                    <i class="fas fa-shopping-basket" style="font-size:22px;"></i> Latest Pickup Details
+                                      <br>
+                    <!-- <small>List Name: {{ pickupList }}</small> -->
+                  </h3>
+                                      <br>
 
+                  <div class="row">
+                    <h5 class="col-6 mt-2">
+                      <i class="fas fa-clipboard-list" style="font-size:20px;"></i>
+                     {{ pickupList }}
+                    </h5>
+                    <h5 class="col-6 mt-2">
+                      <i class="fas fa-calendar-day" style="font-size:20px;"></i>
+                      Date {{ pickupDate }}
+                    </h5>
+                    <h5 class="col-6 mt-2">
+                      <i class="far fa-clock" style="font-size:20px;"></i>
+                      Expect at {{ pickupTime.slice(0, -3) }}
+                    </h5>
+                    <h5 class="col-6 mt-2">
+                      <i class="fas fa-euro-sign mt-1" style="font-size:20px;"></i>
+                     Cost {{ pickupCost }}
+                    </h5>
+                  </div>
                 </div>
               </div>
             </div>
@@ -50,7 +82,7 @@
                   </h2>
                 </div>
               </div>
-            </div> -->
+            </div>-->
 
             <!-- <div class="col-md-6 col-xl-6 pt-4">
               <div class="card bg-c-yellow order-card">
@@ -62,7 +94,7 @@
                   </h2>
                 </div>
               </div>
-            </div> -->
+            </div>-->
           </div>
         </div>
         <!-- End of dashboard container-->
@@ -86,9 +118,13 @@ export default {
     return {
       currentUser: firebaseApp.auth().currentUser,
       deliveryDate: "No Deliveries scheduled yet",
+      deliveryList:null,
+      deliveryTime: null,
+      deliveryCost: null,
       pickupDate: "No Pickups scheduled yet",
-      deliveryCount: 0,
-      pickupCount: 0,
+      pickupList:null,
+      pickupTime: null,
+      pickupCost: null,
       verified: null,
       storeId: sessionStorage.getItem("storeId")
     };
@@ -102,7 +138,6 @@ export default {
       this.deliveryInfo();
       this.pickupInfo();
       //Pickups
-      
     },
     deliveryInfo: function() {
       //Deliveries
@@ -119,7 +154,11 @@ export default {
             if (response.status == 200 && response.data == undefined) {
               this.deliveryDate = "No Deliveries yet";
             } else {
+              this.deliveryList = response.data[0].list_name;
               this.deliveryDate = response.data[0].delivery_date;
+              this.deliveryDate = response.data[0].delivery_date;
+              this.deliveryTime = response.data[0].delivery_time;
+              this.deliveryCost = response.data[0].order_price;
             }
           },
           error => {
@@ -142,7 +181,10 @@ export default {
             if (response.status == 200 && response.data == undefined) {
               this.pickupDate = "No Pickups yet";
             } else {
+              this.pickupList =response.data[0].list_name;
               this.pickupDate = response.data[0].pickup_date;
+              this.pickupTime = response.data[0].pickup_time;
+              this.pickupCost = response.data[0].order_price;
             }
           },
           error => {
@@ -219,7 +261,7 @@ body {
 
 .bg-info-card {
   /* background: #ffba58; */
-background:  hsla(207, 83%, 41%, 0.44);
+  background: hsla(207, 83%, 41%, 0.44);
 }
 
 .bg-c-pink {
