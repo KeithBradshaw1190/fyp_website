@@ -18,16 +18,16 @@
                     <br>
                     <!-- <small>List Name: {{ deliveryList }}</small> -->
                   </h3>
-                                      <br>
+                   <br>
 
                   <div class="row">
                    <h5 class="col-6 mt-2">
                       <i class="fas fa-clipboard-list" style="font-size:20px;"></i>
-                     {{ pickupList }}
+                     {{ deliveryList }}
                     </h5>
                     <h5 class="col-6 mt-2">
                       <i class="fas fa-calendar-day" style="font-size:20px;"></i>
-                      Date {{ pickupDate }}
+                      Date {{ deliveryDate }}
                     </h5>
                     <h5 class="col-6 mt-2">
                       <i class="far fa-clock" style="font-size:20px;"></i> Expect at {{ deliveryTime.slice(0, -3) }}

@@ -252,6 +252,7 @@ export default {
             this.$router.push({ name: "modify-list", params: { id: id } });
           })
           .catch(err => {
+            this.$router.push({ name: "groceryLists", params: { id: id } });
             this.errorMessage = err.message;
           });
       }

@@ -31,19 +31,27 @@
                 <hr />
                 <div class="text-center">
                   <div v-if="!changes" class="row">
-                    <div class="col-md-5">
+                    <div class="col-md-3">
                       <h5>
                         {{ amountOfItems }}
                         <br />
                         <small>Items</small>
                       </h5>
                     </div>
-                    <div class="col-md-7">
+                    <div class="col-md-4">
                       <h5>
                         €{{ totalPrice }}
                         <br />
                         <small>Total Cost</small>
                       </h5>
+                    </div>
+                    <div class="col-md-4 mt-2">
+                      <small class="mt-3 mr-1">
+                        <button
+                          class="btn btn-sm btn-outline-danger"
+                          @click="deleteList"
+                        >Delete List</button>
+                      </small>
                     </div>
                   </div>
                   <!--Row for changes -->
@@ -64,7 +72,10 @@
                     </div>
                     <div class="col-md-4 mt-2">
                       <small class="mt-3 mr-1">
-                        <button class="btn btn-sm btn-outline-success">Save Changes</button>
+                        <button
+                          class="btn btn-sm btn-outline-success"
+                          @click="updateList"
+                        >Save Changes</button>
                       </small>
                     </div>
                   </div>
@@ -87,7 +98,10 @@
                           >
                             <div>
                               <h6 class="my-0">
-                                <a class="text-danger" @click="deleteItemFromList(index)">X Remove</a>
+                                <a
+                                  class="text-danger"
+                                  @click="deleteItemFromLocalList(index)"
+                                >X Remove</a>
                                 <br />
                                 {{ item.name }}
                               </h6>
@@ -104,7 +118,9 @@
                                   <input
                                     type="number"
                                     name="quantity"
+                                    min="1"
                                     v-model="item.quantity"
+                                    v-on:change="event => changeLocalQuantity(index, event)"
                                     class="form-control form-control"
                                   />
                                 </div>
@@ -310,24 +326,11 @@ export default {
           .catch(err => {
             console.log("Transaction failure:", err);
           });
-
-        //   listRef
-        //     .set({
-        //       items: admin.firestore.FieldValue.arrayUnion(plist, {
-        //         merge: true
-        //       })
-        //     })
-        //     .then(() => {
-        //       console.log("Added");
-        //     });
-        // } else {
-        //   console.log("Product list is null");
-        // }
       } else {
         console.log("problem");
       }
     },
-    deleteItemFromList(itemindex) {
+    deleteItemFromLocalList(itemindex) {
       this.changes = true;
       var localSlist = this.shoppingLists[0];
       localSlist.splice(itemindex, 1);
@@ -341,47 +344,55 @@ export default {
       this.amountOfItems = localSlist.length;
       console.log(totalp);
       console.log(localSlist.length);
+    },
+    changeLocalQuantity(itemindex) {
+      this.changes = true;
+      var localSlist = this.shoppingLists[0];
+      this.shoppingLists[0][itemindex] = localSlist[itemindex];
+      var totalp = 0;
+      localSlist.forEach(element => {
+        totalp = totalp + element.quantity * element.price;
+      });
+      this.totalPrice = totalp.toFixed(2);
+      this.amountOfItems = localSlist.length;
+    },
+    updateList() {
+      if (this.changes == true) {
+        var localSlist = this.shoppingLists[0];
 
-      //Remove from local array
-      //Loop and assign new price and quantity
-      // var localSlist = shoppingLists;
-      //var newprice = 0;
-      // localSlist.forEach(element => {
-      //   totalp = totalp + element.quantity * element.price;
-      // });
-      //  newprice = totalp.toFixed(2);
-      //    console.log(newprice);
+        var listRef = db.collection("shopping_lists").doc(this.listId);
 
-      //   if (this.productList != null) {
-      //   this.productList.quantity = this.quantity;
-
-      //   var listRef = db.collection("shopping_lists").doc(this.listId);
-      //   var plist = this.productList;
-
-      //   let transaction = db
-      //     .runTransaction(t => {
-      //       return t.get(listRef).then(doc => {
-      //         console.log(doc.data().items);
-      //         var newItems = doc.data().items.concat(this.productList);
-      //         console.log(newItems);
-      //         t.update(listRef, {
-      //           list_price: this.totalPrice,
-      //           list_quantity: this.quantity,
-      //           items: newItems
-      //         });
-      //       });
-      //     })
-      //     .then(result => {
-      //       console.log("Transaction success!");
-      //       this.$router.go();
-      //     })
-      //     .catch(err => {
-      //       console.log("Transaction failure:", err);
-      //     });
-
-      // } else {
-      //   console.log("problem");
-      // }
+        let transaction = db
+          .runTransaction(t => {
+            return t.get(listRef).then(doc => {
+              console.log(doc.data().items);
+              var newItems = localSlist;
+              console.log(newItems);
+              t.update(listRef, {
+                list_price: this.totalPrice,
+                list_quantity: this.amountOfItems,
+                items: newItems
+              });
+            });
+          })
+          .then(result => {
+            console.log("Transaction success!");
+            this.$router.go();
+          })
+          .catch(err => {
+            console.log("Transaction failure:", err);
+          });
+      } else {
+        console.log("problem");
+      }
+    },
+    deleteList() {
+      db.collection("shopping_lists")
+        .doc(this.listId)
+        .delete()
+        .then(() => {
+          this.$router.push({ name: "groceryLists"});
+        });
     },
     fetchListItems(listId) {
       var totalp = 0;

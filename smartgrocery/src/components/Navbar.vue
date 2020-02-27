@@ -5,18 +5,18 @@
 
       <h3 class="logo"></h3>
       <ul class="nav right">
-        <li>
+        <li v-if="isLoggedIn">
           <router-link to="/">Home</router-link>
         </li>
         <li v-if="isLoggedIn">
           <router-link to="/grocery-dashboard">Dashboard</router-link>
         </li>
-        <li v-if="!isLoggedIn">
+        <!-- <li v-if="!isLoggedIn">
           <router-link to="/signin">Sign In</router-link>
         </li>
         <li v-if="!isLoggedIn">
           <router-link to="/signup">Sign Up</router-link>
-        </li>
+        </li>-->
         <li v-if="isLoggedIn">
           <button class="btn btn-outline-primary" @click="logout">Log Out</button>
         </li>
