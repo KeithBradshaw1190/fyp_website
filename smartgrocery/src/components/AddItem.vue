@@ -82,7 +82,9 @@
                           class="form-control border-input"
                           placeholder="Name Of List"
                           required
+                          @keyup="validateListName"
                         />
+                        <p class="text-danger" v-if="errorMessage">{{errorMessageValue}}</p>
                       </div>
                     </div>
                   </div>
@@ -107,6 +109,7 @@
                           type="number"
                           class="form-control border-input"
                           required
+                          min="1"
                           v-model="quantity"
                         />
                       </div>
@@ -164,7 +167,7 @@ export default {
   },
   data() {
     return {
-      currentUser: false,
+      currentUser: firebaseApp.auth().currentUser,
       placeHolderInputText: "Search for a Product",
       autoCompleteResult: [],
       autoCompleteProgress: false,
@@ -173,13 +176,14 @@ export default {
       autoCompleteImage: "image",
       productList: {},
       listName: "",
-      quantity: null
+      quantity: null,
+      listNames: [],
+      errorMessageValue: null,
+      errorMessage: false
     };
   },
   created() {
-    if (firebaseApp.auth().currentUser) {
-      this.currentUser = firebaseApp.auth().currentUser;
-    }
+    this.getListNames();
   },
   methods: {
     onSelectedAutoCompleteEvent(price, name, img) {
@@ -237,7 +241,7 @@ export default {
       }
     },
     createList() {
-      if (this.listName != "") {
+      if (this.errorMessage === false && this.listName != "") {
         this.productList.quantity = this.quantity;
         var plist = this.productList;
         db.collection("shopping_lists")
@@ -255,6 +259,40 @@ export default {
             this.$router.push({ name: "groceryLists", params: { id: id } });
             this.errorMessage = err.message;
           });
+      }
+    },
+    getListNames() {
+      var listNames = [];
+      let citiesRef = db.collection("shopping_lists");
+      let query = citiesRef
+        .where("uid", "==", this.currentUser.uid)
+        .get()
+        .then(snapshot => {
+          if (snapshot.empty) {
+            console.log("No matching documents.");
+            return;
+          }
+
+          snapshot.forEach(doc => {
+            console.log(doc.id, "=>", doc.data().listName);
+            listNames.push(doc.data().listName.toLowerCase());
+          });
+          this.listNames = listNames;
+        })
+        .catch(err => {
+          console.log("Error getting documents", err);
+        });
+    },
+    validateListName() {
+      var lowerListName = this.listName.toLowerCase();
+      if (this.listNames.includes(lowerListName)) {
+        this.errorMessage = true;
+        this.errorMessageValue = "A list with this name exists already.";
+      } else if (this.listName == "") {
+        this.errorMessage = true;
+        this.errorMessageValue = "The List Name can't be empty!";
+      } else {
+        this.errorMessage = false;
       }
     }
   }
