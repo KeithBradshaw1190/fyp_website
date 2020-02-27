@@ -261,7 +261,8 @@ body {
 
 .bg-info-card {
   /* background: #ffba58; */
-  background: hsla(207, 83%, 41%, 0.44);
+  /* background: hsla(207, 83%, 41%, 0.44); */
+  background: #FF5722;
 }
 
 .bg-c-pink {

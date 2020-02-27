@@ -29,12 +29,12 @@
                       aria-expanded="true"
                       v-bind:aria-controls="list.docuID"
                     >
-                      <h4 class="listName">
+                      <h5 class="listName">
                         {{ list.listName}}
                         <span
                           class="badge badge-secondary itemsCount"
                         >{{ list.amnt}} Items</span>
-                      </h4>
+                      </h5>
                     </button>
                   </h5>
                 </div>
