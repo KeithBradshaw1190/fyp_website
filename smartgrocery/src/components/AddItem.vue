@@ -179,7 +179,8 @@ export default {
       quantity: null,
       listNames: [],
       errorMessageValue: null,
-      errorMessage: false
+      errorMessage: false,
+      messengerID: null
     };
   },
   created() {
@@ -263,24 +264,85 @@ export default {
     },
     getListNames() {
       var listNames = [];
-      let citiesRef = db.collection("shopping_lists");
-      let query = citiesRef
+
+      let shoppingListRef = db.collection("shopping_lists");
+      let query = shoppingListRef
         .where("uid", "==", this.currentUser.uid)
         .get()
         .then(snapshot => {
+          var messengerID;
           if (snapshot.empty) {
             console.log("No matching documents.");
             return;
           }
-
           snapshot.forEach(doc => {
             console.log(doc.id, "=>", doc.data().listName);
             listNames.push(doc.data().listName.toLowerCase());
+            if (doc.data().messengerID) {
+              messengerID = doc.data().messengerID;
+            } else {
+              messengerID = null;
+            }
           });
+          //assign to local values
+          this.messengerID = messengerID;
           this.listNames = listNames;
         })
         .catch(err => {
           console.log("Error getting documents", err);
+        })
+        .then(() => {
+          this.checkForMessengerID();
+        });
+    },
+    checkForMessengerID() {
+      //local value should be null as it is not in the shopping list document
+      console.log("check for messengerID" + this.messengerID);
+
+      if (this.messengerID == null) {
+        var messengerID;
+        //This means we need to get it from the users document
+        db.collection("users")
+          .doc(this.currentUser.uid)
+          .get()
+          .then(function(doc) {
+            if (doc.exists) {
+              console.log("checkformessenger" + doc.data().messengerID);
+              messengerID = doc.data().messengerID;
+
+              //then call method to add messenger ID to lists
+            }
+          })
+          .catch(function(error) {
+            console.log("Error getting document:", error);
+          })
+          .then(() => {
+            this.messengerID = messengerID;
+            if (this.messengerID != null) {
+              this.addMessengerIDToLists();
+            } else {
+              console.log("Messenger ID is still not set! " + this.messengerID);
+            }
+          });
+      }
+    },
+    addMessengerIDToLists() {
+      console.log("addMessengerIDToLists" + this.messengerID);
+      const newDocumentBody = {
+        messengerID: this.messengerID
+      };
+      db.collection("shopping_lists")
+        .where("uid", "==", this.currentUser.uid)
+        .get()
+        .then(response => {
+          let batch = db.batch();
+          response.docs.forEach(doc => {
+            const docRef = db.collection("shopping_lists").doc(doc.id);
+            batch.update(docRef, newDocumentBody);
+          });
+          batch.commit().then(() => {
+            console.log(`updated all documents inside`);
+          });
         });
     },
     validateListName() {

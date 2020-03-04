@@ -234,7 +234,8 @@ export default {
       quantity: null,
       listId: null,
       shoppingLists: [],
-      changes: false
+      changes: false,
+      messengerID: null
     };
   },
   created() {
@@ -391,27 +392,36 @@ export default {
         .doc(this.listId)
         .delete()
         .then(() => {
-          this.$router.push({ name: "groceryLists"});
+          this.$router.push({ name: "groceryLists" });
         });
     },
     fetchListItems(listId) {
       var totalp = 0;
+
       var shoppingLists = [];
       let listsRef = db.collection("shopping_lists");
       let query = listsRef
         .doc(listId)
         .get()
         .then(doc => {
+          var messengerID;
           if (doc.empty) {
             shoppingLists = [];
             console.log("No matching documents.");
             return;
           } else {
+            if (doc.data().messengerID) {
+              messengerID = doc.data().messengerID;
+              console.log("messengerID in fetchList" + messengerID);
+            } else {
+              messengerID = null;
+            }
             var id = doc.id.toString;
             var theDoc = doc.data();
             theDoc.docuID = doc.id;
             theDoc.amnt = theDoc.items.length;
             this.listName = theDoc.listName;
+            this.messengerID = messengerID;
             this.amountOfItems = theDoc.amnt;
             theDoc.items.forEach(element => {
               totalp = totalp + element.quantity * element.price;
@@ -426,13 +436,65 @@ export default {
             );
             shoppingLists.push(theDoc.items);
           }
+          //Assign to data value
+          this.shoppingLists = shoppingLists;
         })
         .catch(err => {
           console.log("Error getting documents", err);
+        })
+        .then(() => {
+          this.checkForMessengerID();
         });
+    },
+    checkForMessengerID() {
+      //local value should be null as it is not in the shopping list document
+      console.log("check for messengerID" + this.messengerID);
 
-      //Assign to data value
-      this.shoppingLists = shoppingLists;
+      if (this.messengerID == null) {
+        var messengerID;
+        //This means we need to get it from the users document
+        db.collection("users")
+          .doc(this.currentUser.uid)
+          .get()
+          .then(function(doc) {
+            if (doc.exists) {
+              console.log("checkformessenger" + doc.data().messengerID);
+              messengerID = doc.data().messengerID;
+
+              //then call method to add messenger ID to lists
+            }
+          })
+          .catch(function(error) {
+            console.log("Error getting document:", error);
+          })
+          .then(() => {
+            this.messengerID = messengerID;
+            if (this.messengerID != null) {
+              this.addMessengerIDToLists();
+            } else {
+              console.log("Messenger ID is still not set! " + this.messengerID);
+            }
+          });
+      }
+    },
+    addMessengerIDToLists() {
+      console.log("addMessengerIDToLists" + this.messengerID);
+      const newDocumentBody = {
+        messengerID: this.messengerID
+      };
+      db.collection("shopping_lists")
+        .where("uid", "==", this.currentUser.uid)
+        .get()
+        .then(response => {
+          let batch = db.batch();
+          response.docs.forEach(doc => {
+            const docRef = db.collection("shopping_lists").doc(doc.id);
+            batch.update(docRef, newDocumentBody);
+          });
+          batch.commit().then(() => {
+            console.log(`updated all documents inside`);
+          });
+        });
     }
   }
 };
