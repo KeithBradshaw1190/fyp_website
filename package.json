@@ -1,0 +1,37 @@
+{
+  "name": "smartgrocery",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build"
+  },
+  "dependencies": {
+    "axios": "^0.19.1",
+    "core-js": "^2.6.5",
+    "dns": "^0.2.2",
+    "firebase": "^7.1.0",
+    "firebase-admin": "^8.9.1",
+    "http2": "^3.3.7",
+    "pure-object": "^2.0.1",
+    "vue": "^2.6.10",
+    "vue-router": "^3.0.3",
+    "webpack": "^4.41.0",
+    "ws": "^7.2.3"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.11.0",
+    "@vue/cli-service": "^4.1.2",
+    "vue-cli-plugin-bootstrap": "^1.0.0-alpha.1",
+    "vue-template-compiler": "^2.6.10"
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions"
+  ]
+}
