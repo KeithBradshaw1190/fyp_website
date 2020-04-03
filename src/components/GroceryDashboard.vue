@@ -5,102 +5,65 @@
       <div class="col-md-6 ml-sm-auto col-lg-9 pt-4 pl-4">
         <div class="container">
           <div
-            class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-1 mb-3 border-bottom"
+            class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-1 mb-3"
           >
-            <h1 class="h2">Dashboard</h1>
+            <h1 class="h2 text-center">Dashboard</h1>
           </div>
-          <div class="row">
-            <div class="col-md-6 col-xl-6 pt-4">
-              <div class="card bg-info-card order-card">
+          <!--Dashboard content  -->
+          <div class="container">
+            <div v-if="!verified" class="row">
+              <div class="card">
                 <div class="card-block">
-                  <h3 class="m-b-20 text-center">
-                    <i class="fas fa-truck" style="font-size:22px;"></i> Latest Delivery Details
-                    <br>
-                    <!-- <small>List Name: {{ deliveryList }}</small> -->
-                  </h3>
-                   <br>
-
                   <div class="row">
-                   <h5 class="col-6 mt-2">
-                      <i class="fas fa-clipboard-list" style="font-size:20px;"></i>
-                     {{ deliveryList }}
-                    </h5>
-                    <h5 class="col-6 mt-2">
-                      <i class="fas fa-calendar-day" style="font-size:20px;"></i>
-                      Date {{ deliveryDate }}
-                    </h5>
-                    <h5 class="col-6 mt-2">
-                      <i class="far fa-clock" style="font-size:20px;"></i> Expect at {{ deliveryTime.slice(0, -3) }}
-                    </h5>
-                    <h5 class="col-6 mt-2">
-                      <i class="fas fa-euro-sign mt-1" style="font-size:20px;"></i> Cost {{ deliveryCost }}
-                    </h5>
+                    <div class="col-6">
+                      <h5 class="text-center">Link Shopping Account</h5>
+                      <div class="row justify-content-center">
+                        <div class="col-12" style="text-align: center">
+                          <i class="fas fa-store text-center" style="font-size:3rem;"></i>
+                        </div>
+                        <small
+                          class="text-center"
+                        >Linking your account allows you to order deliveries and pickups</small>
+                      </div>
+                      <div class="text-center">
+                        <!--<button type="submit" class="btn btn-info btn-fill btn-wd p-2">Update Details</button>-->
+                        <button
+                          to="/verify-details"
+                          class="btn btn-dark btn-fill btn-wd p-2 m-2"
+                        >Link Account</button>
+                      </div>
+                    </div>
+
+                    <div class="col-6">
+                      <h5 class="text-center">Make an Order!</h5>
+                      <div class="row justify-content-center">
+                        <div class="col-12" style="text-align: center">
+                          <i
+                            class="fab fa-facebook-messenger text-center text-primary"
+                            style="font-size:3rem;"
+                          ></i>
+                        </div>
+                        <small
+                          class="text-center"
+                        >Order information will display here when you create your first order.</small>
+                      </div>
+                      <div class="text-center">
+                        <!--<button type="submit" class="btn btn-info btn-fill btn-wd p-2">Update Details</button>-->
+                        <button
+                          type="submit"
+                          class="btn btn-dark btn-fill btn-wd p-2 m-2"
+                        >Message Bot</button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-
-            <div class="col-md-6 col-xl-6 pt-4">
-              <div class="card bg-info-card order-card">
-                <div class="card-block">
-                  <h3 class="m-b-20 text-center">
-                    <i class="fas fa-shopping-basket" style="font-size:22px;"></i> Latest Pickup Details
-                                      <br>
-                    <!-- <small>List Name: {{ pickupList }}</small> -->
-                  </h3>
-                                      <br>
-
-                  <div class="row">
-                    <h5 class="col-6 mt-2">
-                      <i class="fas fa-clipboard-list" style="font-size:20px;"></i>
-                     {{ pickupList }}
-                    </h5>
-                    <h5 class="col-6 mt-2">
-                      <i class="fas fa-calendar-day" style="font-size:20px;"></i>
-                      Date {{ pickupDate }}
-                    </h5>
-                    <h5 class="col-6 mt-2">
-                      <i class="far fa-clock" style="font-size:20px;"></i>
-                      Expect at {{ pickupTime.slice(0, -3) }}
-                    </h5>
-                    <h5 class="col-6 mt-2">
-                      <i class="fas fa-euro-sign mt-1" style="font-size:20px;"></i>
-                     Cost {{ pickupCost }}
-                    </h5>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- <div class="col-md-6 col-xl-6 pt-4">
-              <div class="card bg-c-yellow order-card">
-                <div class="card-block">
-                  <h6 class="m-b-20">Total Deliveries Ordered</h6>
-                  <h2 class="text-right">
-                    <i class="fa fa-refresh f-left"></i>
-                    <span>{{ pickupCount }}</span>
-                  </h2>
-                </div>
-              </div>
-            </div>-->
-
-            <!-- <div class="col-md-6 col-xl-6 pt-4">
-              <div class="card bg-c-yellow order-card">
-                <div class="card-block">
-                  <h6 class="m-b-20">Total Pick-ups Scheduled</h6>
-                  <h2 class="text-right">
-                    <i class="fa fa-credit-card f-left"></i>
-                    <span>{{ deliveryCount }}</span>
-                  </h2>
-                </div>
-              </div>
-            </div>-->
           </div>
+          <!-- End of Dashboard content -->
         </div>
-        <!-- End of dashboard container-->
       </div>
     </div>
-    <!-- End of row-->
   </div>
 </template>
 
@@ -118,13 +81,13 @@ export default {
     return {
       currentUser: firebaseApp.auth().currentUser,
       deliveryDate: "No Deliveries scheduled yet",
-      deliveryList:null,
-      deliveryTime: null,
-      deliveryCost: null,
+      deliveryList: "",
+      deliveryTime: "",
+      deliveryCost: "",
       pickupDate: "No Pickups scheduled yet",
-      pickupList:null,
-      pickupTime: null,
-      pickupCost: null,
+      pickupList: "",
+      pickupTime: "",
+      pickupCost: "",
       verified: null,
       storeId: sessionStorage.getItem("storeId")
     };
@@ -141,6 +104,12 @@ export default {
     },
     deliveryInfo: function() {
       //Deliveries
+      var storeId = sessionStorage.getItem("storeId");
+      if (storeId != null) {
+        console.log("NOT NULL");
+      } else {
+        console.log("nul");
+      }
       axios
         .get(
           "https://supermarketmock-api.herokuapp.com/api/delivery/customer/" +
@@ -148,11 +117,12 @@ export default {
         )
         .then(
           response => {
-            console.log(response);
+            console.log("Then response" + response.status);
             console.log(response.data[0]);
 
-            if (response.status == 200 && response.data == undefined) {
+            if (response.status == 200 && response.data[0] == undefined) {
               this.deliveryDate = "No Deliveries yet";
+              console.log("IF DELIVERY DATE" + this.deliveryDate);
             } else {
               this.deliveryList = response.data[0].list_name;
               this.deliveryDate = response.data[0].delivery_date;
@@ -162,7 +132,7 @@ export default {
             }
           },
           error => {
-            console.log(error);
+            console.log("ERr" + error);
           }
         );
     },
@@ -178,10 +148,10 @@ export default {
             console.log(response);
             console.log(response.data[0]);
 
-            if (response.status == 200 && response.data == undefined) {
+            if (response.status == 200 && response.data[0] == undefined) {
               this.pickupDate = "No Pickups yet";
             } else {
-              this.pickupList =response.data[0].list_name;
+              this.pickupList = response.data[0].list_name;
               this.pickupDate = response.data[0].pickup_date;
               this.pickupTime = response.data[0].pickup_time;
               this.pickupCost = response.data[0].order_price;
@@ -262,7 +232,7 @@ body {
 .bg-info-card {
   /* background: #ffba58; */
   /* background: hsla(207, 83%, 41%, 0.44); */
-  background: #FF5722;
+  background: #ff5722;
 }
 
 .bg-c-pink {

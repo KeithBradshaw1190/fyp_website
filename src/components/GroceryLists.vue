@@ -14,6 +14,30 @@
             </button>
           </div>
           <div class="container">
+            <div v-if="shoppingLists.length==0">
+              <div class="card clist">
+                <div class="card-block">
+                  <div class="row">
+                    <div class="col-12">
+                      <h5 class="text-center">No Grocery Lists Created</h5>
+                      <div class="row justify-content-center">
+                        <div class="col-12" style="text-align: center">
+                          <i class="fas fa-shopping-cart text-center" style="font-size:3rem;"></i>
+                        </div>
+                      </div>
+                      <div class="text-center">
+                        <!--<button type="submit" class="btn btn-info btn-fill btn-wd p-2">Update Details</button>-->
+                        <button
+                          to="/verify-details"
+                          class="btn btn-dark btn-fill btn-wd p-2 m-2"
+                        >Create Your First List</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div
               v-for="list in shoppingLists"
               v-bind:key="list.docuID"
@@ -217,6 +241,19 @@ a {
   color: inherit;
   text-decoration: none;
   font: inherit;
+}
+.clist {
+  border-radius: 5px;
+  -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4, 26, 55, 0.16);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  border: none;
+  margin-bottom: 30px;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+.card .card-block {
+  padding: 25px;
 }
 </style>
 
