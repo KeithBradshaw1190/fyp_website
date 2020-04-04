@@ -93,7 +93,7 @@ export default {
             var token = result.credential.accessToken;
             // The signed-in user info.
             var user = result.user;
-            alert(`Login successful for ${user.providerData[0].displayName}`);
+            alert(`Alert 1 Login successful for ${user.providerData[0].displayName}`);
             firebaseApp
               .auth()
               .currentUser.updateProfile({
@@ -129,7 +129,7 @@ export default {
             var token = result.credential.accessToken;
             // The signed-in user info.
             var user = result.user;
-            alert(`Login successful for ${user.providerData[0].displayName}`);
+            alert(`Alert 2 Login successful for ${user.providerData[0].displayName}`);
             firebaseApp
               .auth()
               .currentUser.updateProfile({
@@ -137,13 +137,14 @@ export default {
               })
               .then(() => {
                 this.currentUser = firebaseApp.auth().currentUser;
-                //console.log(firebaseApp.auth().currentUser);
+                console.log("Then "+this.currentUser.uid+" "+firebaseApp.auth().currentUser);
+
                 db.collection("users")
                   .doc(this.currentUser.uid)
-                  .update({
+                  .set({
                     name: user.providerData[0].displayName,
                     facebookID: user.providerData[0].uid
-                  })
+                  },{merge: true})
                   .then(() => {
                     this.loadData();
                     router.go({ name: "groceryDashboard" });

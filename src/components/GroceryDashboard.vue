@@ -27,10 +27,10 @@
                       </div>
                       <div class="text-center">
                         <!--<button type="submit" class="btn btn-info btn-fill btn-wd p-2">Update Details</button>-->
-                        <button
+                        <router-link
+                          class="btn btn-dark btn-fill btn-wd p-2 m-2 text-white"
                           to="/verify-details"
-                          class="btn btn-dark btn-fill btn-wd p-2 m-2"
-                        >Link Account</button>
+                        >Link Account</router-link>
                       </div>
                     </div>
 
@@ -49,10 +49,11 @@
                       </div>
                       <div class="text-center">
                         <!--<button type="submit" class="btn btn-info btn-fill btn-wd p-2">Update Details</button>-->
-                        <button
-                          type="submit"
+
+                        <a
+                          href="https://www.facebook.com/SmartGrocery-103970551177074"
                           class="btn btn-dark btn-fill btn-wd p-2 m-2"
-                        >Message Bot</button>
+                        >Message Bot</a>
                       </div>
                     </div>
                   </div>

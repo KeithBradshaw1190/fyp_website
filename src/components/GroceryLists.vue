@@ -26,11 +26,10 @@
                         </div>
                       </div>
                       <div class="text-center">
-                        <!--<button type="submit" class="btn btn-info btn-fill btn-wd p-2">Update Details</button>-->
-                        <button
-                          to="/verify-details"
-                          class="btn btn-dark btn-fill btn-wd p-2 m-2"
-                        >Create Your First List</button>
+                        <router-link
+                          class="btn btn-dark btn-fill btn-wd p-2 m-2 text-white"
+                          to="/addItem"
+                        >Create First List</router-link>
                       </div>
                     </div>
                   </div>
