@@ -11,7 +11,7 @@
           </div>
           <!--Dashboard content  -->
           <div class="container">
-            <div v-if="!verified" class="row">
+            <div v-if="verified" class="row">
               <div class="card">
                 <div class="card-block">
                   <div class="row">
@@ -60,6 +60,126 @@
                 </div>
               </div>
             </div>
+
+            <!-- When Verified -->
+            <div v-if="!verified" class="row">
+              <div v-if="deliveryExists" class="col-md-6 col-xl-6 pt-4">
+                <div class="card">
+                  <div class="card-block">
+                    <h4 class="m-b-20 text-center">
+                      <i class="fas fa-truck" style="font-size:20px;"></i> Latest Delivery Details
+                      <br />
+                    </h4>
+                    <br />
+
+                    <div class="row">
+                      <h5 class="col-6 mt-2">
+                        <i class="fas fa-clipboard-list" style="font-size:20px;"></i>
+                        {{ deliveryList }}
+                      </h5>
+                      <h5 class="col-6 mt-2">
+                        <i class="fas fa-calendar-day" style="font-size:20px;"></i>
+                        Date {{ deliveryDate }}
+                      </h5>
+                      <h5 class="col-6 mt-2">
+                        <i class="far fa-clock" style="font-size:20px;"></i>
+                        Expect at {{ deliveryTime.slice(0, -3) }}
+                      </h5>
+                      <h5 class="col-6 mt-2">
+                        <i class="fas fa-euro-sign mt-1" style="font-size:20px;"></i>
+                        Cost {{ deliveryCost }}
+                      </h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- DElivery Doesnt Exist -->
+
+              <div v-if="!deliveryExists" class="col-md-6 col-xl-6 pt-4">
+                <div class="card">
+                  <div class="card-block">
+                    <h5 class="text-center">Schedule a Delivery!</h5>
+                    <div class="row justify-content-center">
+                      <div class="col-12" style="text-align: center">
+                        <i
+                          class="fab fa-facebook-messenger text-center text-primary"
+                          style="font-size:3rem;"
+                        ></i>
+                      </div>
+                      <small class="text-center">No Deliveries have been made yet!</small>
+                    </div>
+                    <div class="text-center">
+                      <!--<button type="submit" class="btn btn-info btn-fill btn-wd p-2">Update Details</button>-->
+                      <a
+                        href="https://www.facebook.com/SmartGrocery-103970551177074"
+                        class="btn btn-dark btn-fill btn-wd p-2 m-2"
+                      >Schedule a Delivery</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- End of deilvery doesnt exist -->
+              <div v-if="pickupExists" class="col-md-6 col-xl-6 pt-4">
+                <div class="card">
+                  <div class="card-block">
+                    <h4 class="m-b-20 text-center">
+                      <i class="fas fa-shopping-basket" style="font-size:22px;"></i> Latest Pickup Details
+                      <br />
+                      <!-- <small>List Name: {{ pickupList }}</small> -->
+                    </h4>
+                    <br />
+
+                    <div class="row">
+                      <h5 class="col-6 mt-2">
+                        <i class="fas fa-clipboard-list" style="font-size:20px;"></i>
+                        {{ pickupList }}
+                      </h5>
+                      <h5 class="col-6 mt-2">
+                        <i class="fas fa-calendar-day" style="font-size:20px;"></i>
+                        Date {{ pickupDate }}
+                      </h5>
+                      <h5 class="col-6 mt-2">
+                        <i class="far fa-clock" style="font-size:20px;"></i>
+                        Expect at {{ pickupTime.slice(0, -3) }}
+                      </h5>
+                      <h5 class="col-6 mt-2">
+                        <i class="fas fa-euro-sign mt-1" style="font-size:20px;"></i>
+                        Cost {{ pickupCost }}
+                      </h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Pickup Doesnt Exist -->
+
+              <div v-if="!pickupExists" class="col-md-6 col-xl-6 pt-4">
+                <div class="card">
+                  <div class="card-block">
+                    <h5 class="text-center">Schedule a Pickup!</h5>
+                    <div class="row justify-content-center">
+                      <div class="col-12" style="text-align: center">
+                        <i
+                          class="fab fa-facebook-messenger text-center text-primary"
+                          style="font-size:3rem;"
+                        ></i>
+                      </div>
+                      <small class="text-center">No Pickups have have been made yet!</small>
+                    </div>
+                    <div class="text-center">
+                      <!--<button type="submit" class="btn btn-info btn-fill btn-wd p-2">Update Details</button>-->
+                      <a
+                        href="https://www.facebook.com/SmartGrocery-103970551177074"
+                        class="btn btn-dark btn-fill btn-wd p-2 m-2"
+                      >Schedule a Pickup</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- End of deilvery doesnt exist -->
+            </div>
+            <!-- End of When Verified -->
           </div>
           <!-- End of Dashboard content -->
         </div>
@@ -81,16 +201,18 @@ export default {
   data() {
     return {
       currentUser: firebaseApp.auth().currentUser,
-      deliveryDate: "No Deliveries scheduled yet",
+      deliveryDate: "",
       deliveryList: "",
       deliveryTime: "",
       deliveryCost: "",
-      pickupDate: "No Pickups scheduled yet",
+      pickupDate: "",
       pickupList: "",
       pickupTime: "",
       pickupCost: "",
       verified: null,
-      storeId: sessionStorage.getItem("storeId")
+      storeId: sessionStorage.getItem("storeId"),
+      deliveryExists: false,
+      pickupExists: false
     };
   },
   created() {
@@ -122,7 +244,7 @@ export default {
             console.log(response.data[0]);
 
             if (response.status == 200 && response.data[0] == undefined) {
-              this.deliveryDate = "No Deliveries yet";
+              this.deliveryDate = "00/00/00";
               console.log("IF DELIVERY DATE" + this.deliveryDate);
             } else {
               this.deliveryList = response.data[0].list_name;
@@ -150,8 +272,9 @@ export default {
             console.log(response.data[0]);
 
             if (response.status == 200 && response.data[0] == undefined) {
-              this.pickupDate = "No Pickups yet";
+              this.pickupDate = "00/00/00";
             } else {
+              this.pickupExists = true;
               this.pickupList = response.data[0].list_name;
               this.pickupDate = response.data[0].pickup_date;
               this.pickupTime = response.data[0].pickup_time;
