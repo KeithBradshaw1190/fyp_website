@@ -14,6 +14,7 @@
             </button>
           </div>
           <div class="container">
+            <!-- Display when no lists -->
             <div v-if="shoppingLists.length==0">
               <div class="card clist">
                 <div class="card-block">
@@ -36,27 +37,38 @@
                 </div>
               </div>
             </div>
+            <!-- Display when no lists -->
 
             <div
               v-for="list in shoppingLists"
               v-bind:key="list.docuID"
               v-bind:id="'accordian'+list.docuID"
+              class="listAccordion"
             >
               <div class="card">
                 <div class="card-header">
                   <h5 class="mb-0">
                     <button
-                      class="btn btn-link list-title"
+                      class="d-flex btn btn-link list-title collapsed fullBtn justify-content-center"
                       data-toggle="collapse"
                       v-bind:data-target="'#'+list.docuID"
-                      aria-expanded="true"
+                      aria-expanded="false"
                       v-bind:aria-controls="list.docuID"
                     >
-                      <h5 class="listName">
+                      <!-- Title -->
+                      <h4 class="font-weight-bold listName">
                         {{ list.listName}}
-                        <span
-                          class="badge badge-secondary itemsCount"
-                        >{{ list.amnt}} Items</span>
+                      </h4>
+                      <br>
+                      <br>
+
+                      <p class="mb-2">{{ list.amnt}} Items</p>
+
+                        <!-- <i class="fa text-secondary" aria-hidden="true"></i> -->
+                        <br />
+                        <span class="badge badge-secondary itemsCount"></span>
+                      <h5 class="listName">
+                        
                       </h5>
                     </button>
                   </h5>
@@ -84,31 +96,52 @@
                     </div>
 
                     <div class="row">
-                      <div class="list-group col-lg-12">
-                        <div class="row">
-                          <div
-                            class="col-xs-12 col-sm-6 col-md-4 col-lg-4 p-3"
-                            v-for="(name, index) in list.items"
-                            v-bind:key="index"
-                          >
-                            <div href class="list-group-item">
-                              <div class="flex-column">
-                                {{ name.name }}
-                                <!-- <p>
-                                <small>by Kelloggs</small>
-                                </p>-->
-                                <div class>
-                                  <p class="d-inline badge">Price: €{{ name.price }}</p>
-                                  <span
-                                    class="d-inline badge badge-light badge-pill"
-                                  >Amount Needed: {{ name.quantity }}</span>
-                                </div>
-                              </div>
-                              <div class="image-parent">
-                                <img v-bind:src="name.img" class="img-fluid" alt="quixote" />
-                              </div>
+                      <div class="card-group col-lg-12 row">
+                        <div
+                          class="col-xs-12 col-sm-4 col-md-4 col-lg-4 p-3"
+                          v-for="(name, index) in list.items"
+                          v-bind:key="index"
+                        >
+                          <!-- <div href class="card">
+                            <div class="card-body">
+                              <h6 class="title">{{ name.name }}</h6>
+                              <img class="img-sm float-right" v-bind:src="name.img" />
+                              <p class="text-muted">
+                                Quantity {{ name.quantity }}
+                                <br />
+                                Price: €{{ name.price }}
+                              </p>
+                            </div>
+                          </div>-->
+                          <!-- Card -->
+                          <div class="card h-100">
+                            <!-- Card content -->
+                            <div class="card-body">
+                              <img class="img-sm float-right" v-bind:src="name.img" />
+                              <!-- Title -->
+                              <h4 class="card-title">
+                                <a>{{ name.name }}</a>
+                              </h4>
+
+                              <!-- Classic tabs -->
+                              <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                  <a class="btn-sm">
+                                    <i class="fas fa-euro-sign"></i>
+                                  </a>
+                                  {{ name.price }}
+                                </li>
+                                <li class="list-group-item">
+                                  <a class="btn-floating btn-tw btn-sm">
+                                    <i class="fas fa-clipboard-list"></i>
+                                  </a>Quantity
+                                </li>
+                              </ul>
+
+                              <!-- End of clasic tabs -->
                             </div>
                           </div>
+                          <!-- Card -->
                         </div>
                       </div>
                     </div>
@@ -202,13 +235,9 @@ body {
   box-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
 }
 
-.myaccordion li + li {
-  margin-top: 10px;
-}
 .card-header {
   background-color: #ffffff;
   border-bottom: 0;
-  text-align: center;
 }
 .card {
   border-radius: 6px;
@@ -234,7 +263,7 @@ body {
   color: black;
 }
 .itemsCount {
-  font-size: 0.8rem;
+  font-size: 1rem;
 }
 a {
   color: inherit;
@@ -253,6 +282,63 @@ a {
 
 .card .card-block {
   padding: 25px;
+}
+[data-toggle="collapse"] .fa:before {
+  content: "\f139";
+}
+
+[data-toggle="collapse"].collapsed .fa:before {
+  content: "\f13a";
+}
+/* .listAccordion .card,
+.listAccordion .card:last-child .card-header {
+  border: none;
+} */
+
+.listAccordion .card-header {
+  border-bottom-color: #edeff0;
+  background: transparent;
+}
+
+.listAccordion .fa-stack {
+  font-size: 18px;
+}
+
+.listAccordion .fullBtn {
+  width: 100%;
+  font-weight: bold;
+  padding: 0;
+}
+
+.listAccordion .fullBtn:hover,
+.listAccordion .fullBtn:focus {
+  text-decoration: none;
+}
+
+.listaccordion li + li {
+  margin-top: 10px;
+}
+.chip {
+  display: inline-block;
+  height: 32px;
+  padding: 0 12px;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 32px;
+  color: rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+  background-color: #eceff1;
+  border-radius: 16px;
+  -webkit-transition: all 0.3s linear;
+  transition: all 0.3s linear;
+}
+.list-group-flush .list-group-item {
+  border-top: 0;
+}
+.list-group-item {
+  padding: 0;
 }
 </style>
 

@@ -177,10 +177,20 @@
                     <div class="col-md-12">
                       <div class="form-group">
                         <label>
-                          Expiry Date
+                          Purchase Frequency
                           <small>(Optional)</small>
                         </label>
-                        <input type="text" class="form-control border-input" placeholder="Date" />
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                            <label class="input-group-text" for="inputGroupSelect01">Frequency</label>
+                          </div>
+                          <select class="custom-select" id="inputGroupSelect01">
+                            <option selected>Choose Purchase Frequency</option>
+                            <option value="1">More than Once A Week</option>
+                            <option value="2">Once A Week</option>
+                            <option value="3">Bi-Weekly</option>
+                          </select>
+                        </div>
                       </div>
                     </div>
                   </div>
