@@ -56,21 +56,13 @@
                       v-bind:aria-controls="list.docuID"
                     >
                       <!-- Title -->
-                      <h4 class="font-weight-bold listName">
-                        {{ list.listName}}
-                      </h4>
-                      <br>
-                      <br>
-
-                      <p class="mb-2">{{ list.amnt}} Items</p>
-
-                        <!-- <i class="fa text-secondary" aria-hidden="true"></i> -->
-                        <br />
-                        <span class="badge badge-secondary itemsCount"></span>
-                      <h5 class="listName">
-                        
-                      </h5>
+                      <h4 class="font-weight-bold listName mb-0 mt-3">{{ list.listName}}</h4>
                     </button>
+                    <p class="mb-2">
+                      <i class="fas fa-shopping-basket"></i>
+                      {{ list.amnt}} Items
+                    </p>
+                    <p>Total List Price €{{list.list_price}}</p>
                   </h5>
                 </div>
 
@@ -125,16 +117,17 @@
 
                               <!-- Classic tabs -->
                               <ul class="list-group list-group-flush">
-                                <li class="list-group-item">
+                                <!-- <li class="list-group-item">
                                   <a class="btn-sm">
                                     <i class="fas fa-euro-sign"></i>
                                   </a>
                                   {{ name.price }}
-                                </li>
+                                </li> -->
                                 <li class="list-group-item">
                                   <a class="btn-floating btn-tw btn-sm">
                                     <i class="fas fa-clipboard-list"></i>
-                                  </a>Quantity
+                                  </a>
+                                  {{ name.quantity }} Items @ €{{name.price.toFixed(2)}} each
                                 </li>
                               </ul>
 
