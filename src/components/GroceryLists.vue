@@ -82,29 +82,15 @@
                       >
                         <i class="fa fa-edit"></i> Edit List
                       </router-link>
-
-                      <!-- <i class="fa fa-edit"></i> Edit List -->
-                      <!-- </button> -->
                     </div>
 
                     <div class="row">
                       <div class="card-group col-lg-12 row">
                         <div
-                          class="col-xs-12 col-sm-4 col-md-4 col-lg-4 p-3"
+                          class="col-xs-12 col-sm-6 col-md-6 col-lg-4 p-3"
                           v-for="(name, index) in list.items"
                           v-bind:key="index"
                         >
-                          <!-- <div href class="card">
-                            <div class="card-body">
-                              <h6 class="title">{{ name.name }}</h6>
-                              <img class="img-sm float-right" v-bind:src="name.img" />
-                              <p class="text-muted">
-                                Quantity {{ name.quantity }}
-                                <br />
-                                Price: €{{ name.price }}
-                              </p>
-                            </div>
-                          </div>-->
                           <!-- Card -->
                           <div class="card h-100">
                             <!-- Card content -->
@@ -115,14 +101,8 @@
                                 <a>{{ name.name }}</a>
                               </h4>
 
-                              <!-- Classic tabs -->
+                              <!-- Info List -->
                               <ul class="list-group list-group-flush">
-                                <!-- <li class="list-group-item">
-                                  <a class="btn-sm">
-                                    <i class="fas fa-euro-sign"></i>
-                                  </a>
-                                  {{ name.price }}
-                                </li> -->
                                 <li class="list-group-item">
                                   <a class="btn-floating btn-tw btn-sm">
                                     <i class="fas fa-clipboard-list"></i>
@@ -130,8 +110,7 @@
                                   {{ name.quantity }} Items @ €{{name.price.toFixed(2)}} each
                                 </li>
                               </ul>
-
-                              <!-- End of clasic tabs -->
+                              <!-- End of Info List -->
                             </div>
                           </div>
                           <!-- Card -->
@@ -211,11 +190,11 @@ export default {
 #add-grocery {
   height: 100%;
   min-height: 100%;
-  background-color: #edf0f5;
+  background-color: #f8f9fa !important;
 }
 body {
   margin-top: 20px;
-  /* background: #fafafa; */
+  background-color: #f8f9fa !important;
 }
 /*#81cfe0; */
 .Slist .btn-link:hover,
