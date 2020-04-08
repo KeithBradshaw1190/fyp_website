@@ -6,11 +6,15 @@
         <div class="container">
           <div
             class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-1 mb-3"
-          >
-            <!-- <h1 v-if="!verified" class="h2">Add a link to Your Local Supermarket</h1>
-            <h1 v-if="verified" class="h2">Change Your Delivery Address</h1>-->
-          </div>
+          ></div>
           <div class="container">
+            <div
+              v-if="errors.length > 0"
+              class="alert alert-danger"
+              role="alert"
+            >
+              {{ errors[0] }}
+            </div>
             <div class="card bg-info-card order-card">
               <div class="card-block">
                 <form
@@ -193,11 +197,11 @@ export default {
                   { merge: true }
                 )
                 .then(this.$router.push({ name: "groceryLists" }));
-              //Refresh Page
             }
           },
           error => {
-            console.log("This is the error"+error);
+            console.log("This is the error" + error);
+            this.errors.push("Error: This email may be in use \n" + error);
           }
         );
     },
