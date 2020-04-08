@@ -11,12 +11,12 @@
           </div>
           <!--Dashboard content  -->
           <div class="container">
-            <div v-if="verified" class="row">
+            <div v-if="!verified" class="row">
               <div class="card">
                 <div class="card-block">
                   <div class="row">
                     <div class="col-6">
-                      <h5 class="text-center">Link Shopping Account</h5>
+                      <h5 class="text-center">Firstly Link Shopping Account</h5>
                       <div class="row justify-content-center">
                         <div class="col-12" style="text-align: center">
                           <i class="fas fa-store text-center" style="font-size:3rem;"></i>
@@ -62,7 +62,7 @@
             </div>
 
             <!-- When Verified -->
-            <div v-if="!verified" class="row">
+            <div v-if="verified" class="row">
               <div v-if="deliveryExists" class="col-md-6 col-xl-6 pt-4">
                 <div class="card">
                   <div class="card-block">

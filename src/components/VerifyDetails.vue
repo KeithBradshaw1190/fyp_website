@@ -13,13 +13,17 @@
           <div class="container">
             <div class="card bg-info-card order-card">
               <div class="card-block">
-                <form v-if="!verified" id="signup-form" @submit.prevent="processForm">
+                <form
+                  v-if="!verified"
+                  id="signup-form"
+                  @submit.prevent="processForm"
+                >
                   <h5 class="m-b-20 text-center">
                     Sign up to Your Local Supermarket
                     <br />
-                    <small
-                      class="text-center text-grey"
-                    >(Needed for delivery and Collection Services)</small>
+                    <small class="text-center text-grey"
+                      >(Needed for delivery and Collection Services)</small
+                    >
                   </h5>
 
                   <div class="row">
@@ -32,6 +36,7 @@
                           v-model="email"
                           class="form-control border-input"
                           placeholder="JohnDowe@mail.com"
+                          required
                         />
                       </div>
                     </div>
@@ -44,6 +49,7 @@
                           v-model="password"
                           class="form-control border-input"
                           placeholder="Password"
+                          required
                         />
                       </div>
                     </div>
@@ -59,6 +65,7 @@
                           v-model="address"
                           class="form-control border-input"
                           placeholder="Home Address"
+                          required
                         />
                       </div>
                     </div>
@@ -69,23 +76,32 @@
                     <button
                       type="submit"
                       class="btn btn-success btn-fill btn-wd p-2 m-2"
-                    >Create a Link</button>
+                    >
+                      Create a Link
+                    </button>
                   </div>
                 </form>
                 <!--End Of Store Login-->
                 <div v-if="verified" class="row">
                   <div class="col-md-5">
-                    <h5 class="m-b-20 text-center">Account Linked Successfully!</h5>
+                    <h5 class="m-b-20 text-center">
+                      Account Linked Successfully!
+                    </h5>
                     <br />
                     <div class="row justify-content-center">
                       <span class="mt-1">
-                        <i class="far fa-check-circle text-success" style="font-size:3.2rem;"></i>
+                        <i
+                          class="far fa-check-circle text-success"
+                          style="font-size:3.2rem;"
+                        ></i>
                       </span>
                     </div>
                   </div>
 
                   <div class="col-md-7">
-                    <h5 class="m-b-20 text-center">Update Your Delivery Address</h5>
+                    <h5 class="m-b-20 text-center">
+                      Update Your Delivery Address
+                    </h5>
                     <form id="address-form" @submit.prevent="updateAddress">
                       <div class="row">
                         <div class="col-md-12">
@@ -107,7 +123,9 @@
                         <button
                           type="submit"
                           class="btn btn-success btn-fill btn-wd p-2 m-2"
-                        >Update Address</button>
+                        >
+                          Update Address
+                        </button>
                       </div>
                     </form>
                   </div>
@@ -162,30 +180,36 @@ export default {
         .then(
           response => {
             console.log(response);
-            console.log(response.data._id);
+            console.log(response.data.id);
             console.log("trying to update store id in firebase");
-            if (response.status == 200) {
+            if (response.status == 201) {
+              sessionStorage.setItem("storeId", response.data.id);
               db.collection("users")
                 .doc(this.currentUser.uid)
                 .set(
                   {
-                    storeId: response.data._id
+                    storeId: response.data.id
                   },
                   { merge: true }
-                );
+                )
+                .then(this.$router.push({ name: "groceryLists" }));
               //Refresh Page
             }
           },
           error => {
-            console.log(error);
+            console.log("This is the error"+error);
           }
         );
     },
     updateAddress: function() {
       axios
-        .put("https://supermarketmock-api.herokuapp.com/api/customer/" + this.storeId, {
-          address: this.address
-        })
+        .put(
+          "https://supermarketmock-api.herokuapp.com/api/customer/" +
+            this.storeId,
+          {
+            address: this.address
+          }
+        )
         .then(
           response => {
             // console.log(response);
