@@ -247,6 +247,7 @@ export default {
               this.deliveryDate = "00/00/00";
               console.log("IF DELIVERY DATE" + this.deliveryDate);
             } else {
+              this.deliveryExists = true;
               this.deliveryList = response.data[0].list_name;
               this.deliveryDate = response.data[0].delivery_date;
               this.deliveryDate = response.data[0].delivery_date;
@@ -268,8 +269,8 @@ export default {
         )
         .then(
           response => {
-            console.log(response);
-            console.log(response.data[0]);
+           // console.log(response);
+            //console.log(response.data[0]);
 
             if (response.status == 200 && response.data[0] == undefined) {
               this.pickupDate = "00/00/00";
@@ -287,8 +288,8 @@ export default {
         );
     },
     loadData: function() {
-      console.log("Checking storage" + sessionStorage.getItem("storeId"));
-      console.log("uid: " + this.currentUser.uid);
+      //console.log("Checking storage" + sessionStorage.getItem("storeId"));
+     // console.log("uid: " + this.currentUser.uid);
 
       // you can load data from here and assign response in to variable
       db.collection("users")
@@ -312,8 +313,8 @@ export default {
           )
           .then(
             response => {
-              console.log(response);
-              console.log(response.data.address);
+             // console.log(response);
+             // console.log(response.data.address);
 
               if (response.status == 200) {
                 this.address = response.data.address;
