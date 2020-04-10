@@ -120,18 +120,18 @@
                     <div class="col-md-12">
                       <div class="form-group">
                         <label>
-                          Purchase Frequency
+                          Product Purchase Frequency
                           <small>(Optional)</small>
                         </label>
                         <div class="input-group mb-3">
                           <div class="input-group-prepend">
-                            <label class="input-group-text" for="inputGroupSelect01">Frequency</label>
+                            <label class="input-group-text" for="frequencySelect">Frequency</label>
                           </div>
-                          <select class="custom-select" id="inputGroupSelect01">
-                            <option selected>Choose Purchase Frequency</option>
-                            <option value="1">More than Once A Week</option>
-                            <option value="2">Once A Week</option>
-                            <option value="3">Bi-Weekly</option>
+                          <select v-model="frequency"  class="custom-select" id="frequencySelect">
+                            <option value="none" selected>Choose Purchase Frequency</option>
+                            <option value="More than opw">More than Once A Week</option>
+                            <option value="Once a Week">Once A Week</option>
+                            <option value="Bi-Weekly">Bi-Weekly</option>
                           </select>
                         </div>
                       </div>
@@ -187,6 +187,7 @@ export default {
       productList: {},
       listName: "",
       quantity: null,
+      frequency:"none",
       listNames: [],
       errorMessageValue: null,
       errorMessage: false,
@@ -254,6 +255,7 @@ export default {
     createList() {
       if (this.errorMessage === false && this.listName != "") {
         this.productList.quantity = this.quantity;
+        this.productList.frequency = this.frequency;
         var plist = this.productList;
         db.collection("shopping_lists")
           .add({
