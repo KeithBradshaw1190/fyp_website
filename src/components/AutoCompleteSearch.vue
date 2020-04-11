@@ -27,7 +27,7 @@
         {{ item[itemText] }}
         <br />
         <small> {{ item[itemId] }} </small>
-      </li> -->
+      </li>-->
 
       <li
         class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
@@ -35,17 +35,15 @@
         :key="i"
         @click="
           keywordSearch = '';
-          onSelected(item[itemId], item[itemText], item[itemImage]);
+          onSelected(item[itemId], item[itemText], item[itemImage], item[itemDepartment] );
         "
       >
         <!-- Custom content-->
         <div class="media align-items-lg-center flex-column flex-lg-row">
           <div class="media-body order-2 order-lg-1">
-            <h5 class=" font-weight-bold">
+            <h5 class="font-weight-bold">
               {{ item[itemText] }}
-              <p class="font-weight-bold text-success my-2">
-                €{{ item[itemId] }}
-              </p>
+              <p class="font-weight-bold text-success my-2">€{{ item[itemId] }}</p>
             </h5>
           </div>
         </div>
@@ -66,7 +64,8 @@ export default {
     autoCompleteProgress: Boolean,
     itemText: String,
     itemId: String,
-    itemImage: String
+    itemImage: String,
+    itemDepartment: String
   },
 
   data() {

@@ -107,7 +107,7 @@
                                   <a class="btn-floating btn-tw btn-sm">
                                     <i class="fas fa-clipboard-list"></i>
                                   </a>
-                                  {{ name.quantity }} Items @ €{{name.price.toFixed(2)}} each
+                                  {{ name.quantity }} Item(s) @ €{{name.price.toFixed(2)}} each
                                 </li>
                               </ul>
                               <!-- End of Info List -->

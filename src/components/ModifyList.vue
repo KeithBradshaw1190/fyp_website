@@ -158,6 +158,7 @@
                         :item-text="autoCompleteText"
                         :item-id="autoCompleteFieldId"
                         :item-image="autoCompleteImage"
+                        :item-department="AutoCompleteDepartment"
                       ></AutoCompleteSearch>
                     </div>
                     <div class="col-md-4">
@@ -229,6 +230,7 @@ export default {
     Sidebar,
     AutoCompleteSearch
   },
+  //each autocomplete value is an attribute to select from Tesco API
   data() {
     return {
       currentUser: false,
@@ -238,6 +240,8 @@ export default {
       autoCompleteText: "name",
       autoCompleteFieldId: "price",
       autoCompleteImage: "image",
+      AutoCompleteDepartment: "superDepartment",
+      ingredientName: "",
       listName: "",
       amountOfItems: 0,
       totalPrice: null,
@@ -258,12 +262,17 @@ export default {
     this.fetchListItems(this.listId);
   },
   methods: {
-    onSelectedAutoCompleteEvent(price, name, img) {
-      console.log(price, name, img);
+    onSelectedAutoCompleteEvent(price, name, img, department) {
+      console.log(price, name, img, department);
 
       this.autoCompleteProgress = false;
       this.autoCompleteResult = [];
-      var product = { name: name, price: price, img: img };
+      var product = {
+        name: name,
+        price: price,
+        img: img,
+        department: department
+      };
       this.placeHolderInputText = name;
       this.productList = product;
     },
@@ -285,7 +294,9 @@ export default {
           }
         })
           .then(response => {
-            // console.log(response.data.uk.ghs.products.results);
+            //Use the suggested item as a possible ingredient string(It has no additional product info-saves parsing)
+            this.ingredientName =
+              response.data.uk.ghs.products.suggestions[0].text;
             var newData = [];
             response.data.uk.ghs.products.results.forEach(function(
               item,
@@ -315,6 +326,8 @@ export default {
       if (this.productList != null) {
         this.productList.quantity = this.quantity;
         this.productList.frequency = this.frequency;
+        //Simple name used for recipe search in chatbot
+        this.productList.simpleName = this.ingredientName;
         var listRef = db.collection("shopping_lists").doc(this.listId);
         var plist = this.productList;
 
