@@ -127,7 +127,7 @@
                           <div class="input-group-prepend">
                             <label class="input-group-text" for="frequencySelect">Frequency</label>
                           </div>
-                          <select v-model="frequency"  class="custom-select" id="frequencySelect">
+                          <select v-model="frequency" class="custom-select" id="frequencySelect">
                             <option value="none" selected>Choose Purchase Frequency</option>
                             <option value="More than opw">More than Once A Week</option>
                             <option value="Once a Week">Once A Week</option>
@@ -184,10 +184,11 @@ export default {
       autoCompleteText: "name",
       autoCompleteFieldId: "price",
       autoCompleteImage: "image",
+      ingredientName: "",
       productList: {},
       listName: "",
       quantity: null,
-      frequency:"none",
+      frequency: "none",
       listNames: [],
       errorMessageValue: null,
       errorMessage: false,
@@ -226,7 +227,9 @@ export default {
           }
         })
           .then(response => {
-            // console.log(response.data.uk.ghs.products.results);
+            //Use the suggested item as a possible ingredient string(It has no additional product info-saves parsing)
+            this.ingredientName =
+              response.data.uk.ghs.products.suggestions[0].text;
             var newData = [];
             response.data.uk.ghs.products.results.forEach(function(
               item,
@@ -256,6 +259,8 @@ export default {
       if (this.errorMessage === false && this.listName != "") {
         this.productList.quantity = this.quantity;
         this.productList.frequency = this.frequency;
+        //Simple name used for recipe search in chatbot
+        this.productList.simpleName = this.ingredientName;
         var plist = this.productList;
         db.collection("shopping_lists")
           .add({
