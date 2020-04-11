@@ -228,8 +228,8 @@ export default {
         })
           .then(response => {
             //Use the suggested item as a possible ingredient string(It has no additional product info-saves parsing)
-            this.ingredientName =
-              response.data.uk.ghs.products.suggestions[0].text;
+            //var simplename = response.data.uk.ghs.products.suggestions[0].text;
+
             var newData = [];
             response.data.uk.ghs.products.results.forEach(function(
               item,
@@ -241,9 +241,11 @@ export default {
                 0
               ) {
                 newData.push(item);
+                
               }
             });
             this.autoCompleteResult = newData;
+            
             this.autoCompleteProgress = false;
           })
           .catch(e => {
@@ -260,7 +262,7 @@ export default {
         this.productList.quantity = this.quantity;
         this.productList.frequency = this.frequency;
         //Simple name used for recipe search in chatbot
-        this.productList.simpleName = this.ingredientName;
+        //this.productList.simpleName = this.ingredientName;
         var plist = this.productList;
         db.collection("shopping_lists")
           .add({

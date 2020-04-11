@@ -295,8 +295,8 @@ export default {
         })
           .then(response => {
             //Use the suggested item as a possible ingredient string(It has no additional product info-saves parsing)
-            this.ingredientName =
-              response.data.uk.ghs.products.suggestions[0].text;
+            // this.ingredientName =
+            //   response.data.uk.ghs.products.suggestions[0].text;
             var newData = [];
             response.data.uk.ghs.products.results.forEach(function(
               item,
@@ -327,7 +327,7 @@ export default {
         this.productList.quantity = this.quantity;
         this.productList.frequency = this.frequency;
         //Simple name used for recipe search in chatbot
-        this.productList.simpleName = this.ingredientName;
+        // this.productList.simpleName = this.ingredientName;
         var listRef = db.collection("shopping_lists").doc(this.listId);
         var plist = this.productList;
 
