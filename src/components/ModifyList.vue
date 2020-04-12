@@ -329,8 +329,8 @@ export default {
         //Simple name used for recipe search in chatbot
         //filter out weigh values if present
         var simpleName = this.productList.name.replace(/\d+(g|ml)/i, "");
-        console.log(simpleName);
-        console.log("weight removed" + simpleName);
+        simpleName = simpleName.substr(simpleName.indexOf(" ") + 1);
+       
         var wordsToRemove = [
           "Tesco",
           "Large",
@@ -346,12 +346,9 @@ export default {
           "White",
           "Soft"
         ];
-        for (var i=0; i <= wordsToRemove.length; i++) {
-       
-            console.log("Contains this word" + wordsToRemove[i]);
-            simpleName = simpleName.replace(wordsToRemove[i], "");
-            this.productList.simpleName = simpleName;
-          
+        for (var i = 0; i <= wordsToRemove.length; i++) {
+          simpleName = simpleName.replace(wordsToRemove[i], "");
+          this.productList.simpleName = simpleName;
         }
 
         var listRef = db.collection("shopping_lists").doc(this.listId);
