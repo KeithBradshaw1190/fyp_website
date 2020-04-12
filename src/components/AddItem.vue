@@ -241,11 +241,10 @@ export default {
                 0
               ) {
                 newData.push(item);
-                
               }
             });
             this.autoCompleteResult = newData;
-            
+
             this.autoCompleteProgress = false;
           })
           .catch(e => {
@@ -262,7 +261,33 @@ export default {
         this.productList.quantity = this.quantity;
         this.productList.frequency = this.frequency;
         //Simple name used for recipe search in chatbot
-        //this.productList.simpleName = this.ingredientName;
+        //filter out weigh values if present
+        var simpleName = this.productList.name.replace(/\d+(g|ml)/i, "");
+        console.log(simpleName);
+        console.log("weight removed" + simpleName);
+        var wordsToRemove = [
+          "Tesco",
+          "Large",
+          "Multipack",
+          "Pack",
+          "Family",
+          "Finest",
+          "Mixed",
+          "Organic",
+          "Happy",
+          "Medium",
+          "Hovis",
+          "White",
+          "Soft"
+        ];
+        for (var i=0; i <= wordsToRemove.length; i++) {
+       
+            console.log("Contains this word" + wordsToRemove[i]);
+            simpleName = simpleName.replace(wordsToRemove[i], "");
+            this.productList.simpleName = simpleName;
+          
+        }
+
         var plist = this.productList;
         db.collection("shopping_lists")
           .add({
