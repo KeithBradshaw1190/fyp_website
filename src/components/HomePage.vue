@@ -434,7 +434,7 @@ img {
 
 .yours .message {
   margin-right: 25%;
-  background-color: #eee;
+  background-color: #e1e9ec;
   position: relative;
 }
 
@@ -446,7 +446,7 @@ img {
   left: -7px;
   height: 20px;
   width: 20px;
-  background: #eee;
+  background: #e1e9ec;
   border-bottom-right-radius: 15px;
 }
 .yours .message.last:after {
