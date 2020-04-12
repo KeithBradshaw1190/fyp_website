@@ -141,7 +141,7 @@
                       </h5>
                       <h5 class="col-6 mt-2">
                         <i class="far fa-clock" style="font-size:18px;"></i>
-                        Expect at {{ pickupTime.slice(0, -3) }}
+                        Ready at {{ pickupTime.slice(0, -3) }}
                       </h5>
                       <h5 class="col-6 mt-2">
                         <i class="fas fa-euro-sign mt-1" style="font-size:18px;"></i>
@@ -249,8 +249,12 @@ export default {
             } else {
               this.deliveryExists = true;
               this.deliveryList = response.data[0].list_name;
-              this.deliveryDate = response.data[0].delivery_date;
-              this.deliveryDate = response.data[0].delivery_date;
+              //reformat date
+              var datePart = response.data[0].delivery_date.match(/\d+/g),
+                year = datePart[0].substring(2),
+                month = datePart[1],
+                day = datePart[2];
+              this.deliveryDate = day + "/" + month + "/" + year;
               this.deliveryTime = response.data[0].delivery_time;
               this.deliveryCost = response.data[0].order_price;
             }
@@ -269,7 +273,7 @@ export default {
         )
         .then(
           response => {
-           // console.log(response);
+            // console.log(response);
             //console.log(response.data[0]);
 
             if (response.status == 200 && response.data[0] == undefined) {
@@ -277,7 +281,12 @@ export default {
             } else {
               this.pickupExists = true;
               this.pickupList = response.data[0].list_name;
-              this.pickupDate = response.data[0].pickup_date;
+              //reformat date
+              var datePart = response.data[0].pickup_date.match(/\d+/g),
+                year = datePart[0].substring(2), // get only two digits
+                month = datePart[1],
+                day = datePart[2];
+              this.pickupDate = day + "/" + month + "/" + year;
               this.pickupTime = response.data[0].pickup_time;
               this.pickupCost = response.data[0].order_price;
             }
@@ -289,7 +298,7 @@ export default {
     },
     loadData: function() {
       //console.log("Checking storage" + sessionStorage.getItem("storeId"));
-     // console.log("uid: " + this.currentUser.uid);
+      // console.log("uid: " + this.currentUser.uid);
 
       // you can load data from here and assign response in to variable
       db.collection("users")
@@ -313,8 +322,8 @@ export default {
           )
           .then(
             response => {
-             // console.log(response);
-             // console.log(response.data.address);
+              // console.log(response);
+              // console.log(response.data.address);
 
               if (response.status == 200) {
                 this.address = response.data.address;

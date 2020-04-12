@@ -305,7 +305,7 @@ export default {
               console.log(item);
               if (
                 item.name.toLowerCase().indexOf(keywordEntered.toLowerCase()) >=
-                0
+                1
               ) {
                 newData.push(item);
               }
