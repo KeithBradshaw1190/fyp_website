@@ -1,5 +1,5 @@
 <template id="sidebar">
-  <nav class="sidebar sidebar-default sidebar-separate sidebar-fixed pt-4">
+  <nav class="sidebar sidebar-default sidebar-separate col-md-3 pt-4">
     <div class="sidebar-content">
       <div class="sidebar-category sidebar-default">
         <div class="sidebar-user rounded">
@@ -160,6 +160,29 @@ export default {
     display: table-cell;
     vertical-align: top;
     width: 280px;
+    padding: 0 1.25rem;
+  }
+  .sidebar.sidebar-fixed {
+    position: sticky;
+    top: 5.5rem;
+  }
+  .sidebar.sidebar-default .sidebar-category {
+    background-color: #fff;
+  }
+  .sidebar.sidebar-separate .sidebar-content {
+    box-shadow: none;
+  }
+  .sidebar.sidebar-separate .sidebar-category {
+    margin-bottom: 1.25rem;
+    border-radius: 0.25rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  }
+}
+@media (max-width: 568px) {
+  .sidebar {
+    padding-top: 2rem !important;
+    display: table-cell;
+    vertical-align: top;
     padding: 0 1.25rem;
   }
   .sidebar.sidebar-fixed {

@@ -91,6 +91,50 @@
             <div class="col-xl-10 col-md-11 col-10">
               <h5 class="font-weight-bold mb-3">Delivery</h5>
               <p>Send a Message asking to schedule a grocery delivery with the name of the list you want, the time and date that suits you.</p>
+              <!-- Accordian For What to ask bot -->
+              <div id="accordion" class="featureAccordian">
+                <div class="card">
+                  <div class="card-header" id="deliveryAccordian">
+                    <h2 class="mb-0">
+                      <button
+                        class="d-flex align-items-center justify-content-between btn btn-link collapsed fullBtn listName"
+                        data-toggle="collapse"
+                        data-target="#deliveryCollapse"
+                        aria-expanded="false"
+                        aria-controls="deliveryCollapse"
+                      >
+                        <!-- Title -->
+                        Examples
+                        <span class="fa-stack fa-sm">
+                          <i class="fas fa-circle fa-stack-2x"></i>
+                          <i class="fas fa-plus fa-stack-1x fa-inverse"></i>
+                        </span>
+                      </button>
+                    </h2>
+                  </div>
+                  <div
+                    id="deliveryCollapse"
+                    class="collapse"
+                    aria-labelledby="deliveryAccordian"
+                    data-parent="#accordion"
+                  >
+                    <div class="card-body">
+                      <ul>
+                        <li>
+                          <div class="yours messages">
+                            <div class="message last">Can I schedule a delivery?</div>
+                            <div
+                              class="message last"
+                            >Could I schedule a delivery for tomorrow at 4pm?</div>
+                            <div class="message last">I want to schedule a delivery</div>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- end of accordian -->
             </div>
           </div>
 
@@ -103,6 +147,50 @@
             <div class="col-xl-10 col-md-11 col-10">
               <h5 class="font-weight-bold mb-3">Collection / PickUp</h5>
               <p>Send a Message asking to schedule a grocery Pickup from your local store with the name of the list you want, the time and date that suits you.</p>
+              <!-- Accordian For What to ask bot -->
+              <div id="accordion" class="featureAccordian">
+                <div class="card">
+                  <div class="card-header" id="collectionAccordian">
+                    <h2 class="mb-0">
+                      <button
+                        class="d-flex align-items-center justify-content-between btn btn-link collapsed fullBtn listName"
+                        data-toggle="collapse"
+                        data-target="#collectionCollapse"
+                        aria-expanded="false"
+                        aria-controls="collectionCollapse"
+                      >
+                        <!-- Title -->
+                        Examples
+                        <span class="fa-stack fa-sm">
+                          <i class="fas fa-circle fa-stack-2x"></i>
+                          <i class="fas fa-plus fa-stack-1x fa-inverse"></i>
+                        </span>
+                      </button>
+                    </h2>
+                  </div>
+                  <div
+                    id="collectionCollapse"
+                    class="collapse"
+                    aria-labelledby="collectionCollapse"
+                    data-parent="#accordion"
+                  >
+                    <div class="card-body">
+                      <ul>
+                        <li>
+                          <div class="yours messages">
+                            <div class="message last">Can I schedule a pick up?</div>
+                            <div
+                              class="message last"
+                            >Could I schedule a collection for tomorrow at 6pm?</div>
+                            <div class="message last">I want to schedule a pickup</div>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- end of accordian -->
             </div>
           </div>
 
@@ -115,6 +203,52 @@
             <div class="col-xl-10 col-md-11 col-10">
               <h5 class="font-weight-bold mb-3">Recipes</h5>
               <p>Send a message asking for recipe suggestions with specified ingredients or ingredients in one of your shopping lists.</p>
+              <!-- Accordian For What to ask bot -->
+              <div id="accordion" class="featureAccordian">
+                <div class="card">
+                  <div class="card-header" id="recipeAccordian">
+                    <h2 class="mb-0">
+                      <button
+                        class="d-flex align-items-center justify-content-between btn btn-link collapsed fullBtn listName"
+                        data-toggle="collapse"
+                        data-target="#recipeCollapse"
+                        aria-expanded="false"
+                        aria-controls="recipeCollapse"
+                      >
+                        <!-- Title -->
+                        Examples
+                        <span class="fa-stack fa-sm">
+                          <i class="fas fa-circle fa-stack-2x"></i>
+                          <i class="fas fa-plus fa-stack-1x fa-inverse"></i>
+                        </span>
+                      </button>
+                    </h2>
+                  </div>
+                  <div
+                    id="recipeCollapse"
+                    class="collapse"
+                    aria-labelledby="recipeAccordian"
+                    data-parent="#accordion"
+                  >
+                    <div class="card-body">
+                      <ul>
+                        <li>
+                          <div class="yours messages">
+                            <div class="message last">Find me a recipe from my Weekly Shop</div>
+                            <div
+                              class="message last"
+                            >I want a recipe fro breakfast with eggs and bacon</div>
+                            <div
+                              class="message last"
+                            >I want a recipe for lunch with chicken and pasta</div>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- end of accordian -->
             </div>
           </div>
         </div>
@@ -244,6 +378,90 @@ img {
 .btn-site-primary:hover {
   background: var(--secondary-color);
 }
+
+/* Accordian Styling */
+
+.featureAccordian .card-header {
+  border-bottom-color: #edeff0;
+  background: rgba(165, 165, 170, 0.03);
+}
+.featureAccordian .card {
+  border: 0;
+}
+
+.listAccordion .fa-stack {
+  font-size: 18px;
+}
+.listName {
+  color: #333;
+}
+.featureAccordian .fullBtn {
+  width: 100%;
+  /* padding: 0; */
+}
+
+.featureAccordian .fullBtn:hover,
+.featureAccordian .fullBtn:focus {
+  text-decoration: none;
+}
+
+.list-group-flush .list-group-item {
+  border-top: 0;
+}
+.list-group-item {
+  padding: 0;
+}
+/* End of Accordian Styling */
+
+/* Message style [https://codepen.io/sajadhsm/pen/odaBdd]*/
+.messages {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.message {
+  border-radius: 20px;
+  padding: 8px 15px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  display: inline-block;
+}
+
+.yours {
+  align-items: flex-start;
+}
+
+.yours .message {
+  margin-right: 25%;
+  background-color: #eee;
+  position: relative;
+}
+
+.yours .message.last:before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  bottom: 0;
+  left: -7px;
+  height: 20px;
+  width: 20px;
+  background: #eee;
+  border-bottom-right-radius: 15px;
+}
+.yours .message.last:after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  bottom: 0;
+  left: -10px;
+  width: 10px;
+  height: 20px;
+  background: white;
+  border-bottom-right-radius: 10px;
+}
+
+/* message style */
 </style>
 <script>
 import SignUp from "./SignUp";

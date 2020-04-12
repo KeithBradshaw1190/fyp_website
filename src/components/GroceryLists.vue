@@ -37,7 +37,7 @@
                 </div>
               </div>
             </div>
-            <!-- Display when no lists -->
+            <!-- end of Display when no lists -->
 
             <div
               v-for="list in shoppingLists"
@@ -290,22 +290,7 @@ a {
 .listaccordion li + li {
   margin-top: 10px;
 }
-.chip {
-  display: inline-block;
-  height: 32px;
-  padding: 0 12px;
-  margin-right: 1rem;
-  margin-bottom: 1rem;
-  font-size: 13px;
-  font-weight: 500;
-  line-height: 32px;
-  color: rgba(0, 0, 0, 0.6);
-  cursor: pointer;
-  background-color: #eceff1;
-  border-radius: 16px;
-  -webkit-transition: all 0.3s linear;
-  transition: all 0.3s linear;
-}
+
 .list-group-flush .list-group-item {
   border-top: 0;
 }

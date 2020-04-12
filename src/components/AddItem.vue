@@ -146,7 +146,6 @@
                       id="btnCreateList"
                     >Add Product &amp; Create List</button>
                   </div>
-                  <div class="clearfix"></div>
                 </form>
               </div>
             </div>
@@ -507,4 +506,6 @@ body {
   background-color: #fff;
   border: 0;
 }
+
+
 </style>

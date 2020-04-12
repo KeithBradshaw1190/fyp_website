@@ -67,26 +67,26 @@
                 <div class="card">
                   <div class="card-block">
                     <h4 class="m-b-20 text-center">
-                      <i class="fas fa-truck" style="font-size:20px;"></i> Latest Delivery Details
+                      <i class="fas fa-truck" style="font-size:18px;"></i> Latest Delivery Details
                       <br />
                     </h4>
                     <br />
 
                     <div class="row">
                       <h5 class="col-6 mt-2">
-                        <i class="fas fa-clipboard-list" style="font-size:20px;"></i>
+                        <i class="fas fa-clipboard-list" style="font-size:18px;"></i>
                         {{ deliveryList }}
                       </h5>
                       <h5 class="col-6 mt-2">
-                        <i class="fas fa-calendar-day" style="font-size:20px;"></i>
+                        <i class="fas fa-calendar-day" style="font-size:18px;"></i>
                         Date {{ deliveryDate }}
                       </h5>
                       <h5 class="col-6 mt-2">
-                        <i class="far fa-clock" style="font-size:20px;"></i>
+                        <i class="far fa-clock" style="font-size:18px;"></i>
                         Expect at {{ deliveryTime.slice(0, -3) }}
                       </h5>
                       <h5 class="col-6 mt-2">
-                        <i class="fas fa-euro-sign mt-1" style="font-size:20px;"></i>
+                        <i class="fas fa-euro-sign mt-1" style="font-size:18px;"></i>
                         Cost {{ deliveryCost }}
                       </h5>
                     </div>
@@ -132,19 +132,19 @@
 
                     <div class="row">
                       <h5 class="col-6 mt-2">
-                        <i class="fas fa-clipboard-list" style="font-size:20px;"></i>
+                        <i class="fas fa-clipboard-list" style="font-size:18px;"></i>
                         {{ pickupList }}
                       </h5>
                       <h5 class="col-6 mt-2">
-                        <i class="fas fa-calendar-day" style="font-size:20px;"></i>
+                        <i class="fas fa-calendar-day" style="font-size:18px;"></i>
                         Date {{ pickupDate }}
                       </h5>
                       <h5 class="col-6 mt-2">
-                        <i class="far fa-clock" style="font-size:20px;"></i>
+                        <i class="far fa-clock" style="font-size:18px;"></i>
                         Expect at {{ pickupTime.slice(0, -3) }}
                       </h5>
                       <h5 class="col-6 mt-2">
-                        <i class="fas fa-euro-sign mt-1" style="font-size:20px;"></i>
+                        <i class="fas fa-euro-sign mt-1" style="font-size:18px;"></i>
                         Cost {{ pickupCost }}
                       </h5>
                     </div>
