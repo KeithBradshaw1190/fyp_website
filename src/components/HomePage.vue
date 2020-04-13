@@ -237,7 +237,7 @@
                             <div class="message last">Find me a recipe from my Weekly Shop</div>
                             <div
                               class="message last"
-                            >I want a recipe fro breakfast with eggs and bacon</div>
+                            >I want a recipe for breakfast with eggs and bacon</div>
                             <div
                               class="message last"
                             >I want a recipe for lunch with chicken and pasta</div>

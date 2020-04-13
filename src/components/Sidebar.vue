@@ -19,7 +19,7 @@
             <li class="nav-item">
               <router-link class="nav-link" to="/GroceryLists/">
                 <i class="fas fa-shopping-cart"></i>
-                Grocery Lists
+               Manage Grocery Lists
               </router-link>
             </li>
             <li class="nav-item">
