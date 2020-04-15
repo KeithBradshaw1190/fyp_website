@@ -129,8 +129,8 @@
                           </div>
                           <select v-model="frequency" class="custom-select" id="frequencySelect">
                             <option value="none" selected>Choose Purchase Frequency</option>
-                            <option value="More than opw">More than Once A Week</option>
-                            <option value="Once a Week">Once A Week</option>
+                            <option value="More Than Once a Week">More than Once A Week</option>
+                            <option value="Once Per Week">Once A Week</option>
                             <option value="Bi-Weekly">Bi-Weekly</option>
                           </select>
                         </div>
