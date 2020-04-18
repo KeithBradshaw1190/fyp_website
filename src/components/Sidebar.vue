@@ -31,9 +31,9 @@
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/?#/features">
+              <a class="nav-link" href="https://smartgrocery-manager.herokuapp.com/#/features">
                 <i class="fas fa-comments"></i>View All Chatbot Features
-              </router-link>
+              </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="https://www.facebook.com/SmartGrocery-103970551177074">
