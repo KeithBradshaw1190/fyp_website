@@ -19,7 +19,7 @@
             <li class="nav-item">
               <router-link class="nav-link" to="/GroceryLists/">
                 <i class="fas fa-shopping-cart"></i>
-               Manage Grocery Lists
+                Manage Grocery Lists
               </router-link>
             </li>
             <li class="nav-item">
@@ -28,6 +28,11 @@
               </router-link>
               <router-link v-if="verified" class="nav-link" to="/verify-details">
                 <i class="fas fa-home"></i>Change Delivery Address
+              </router-link>
+            </li>
+            <li class="nav-item">
+              <router-link class="nav-link" to="/?#/features">
+                <i class="fas fa-comments"></i>View All Chatbot Features
               </router-link>
             </li>
             <li class="nav-item">

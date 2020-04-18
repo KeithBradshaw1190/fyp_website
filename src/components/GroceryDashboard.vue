@@ -10,12 +10,18 @@
             <h1 class="h2">Welcome to the SmartGrocery Dashboard</h1>
           </div>
           <!--Dashboard content  -->
+          <!-- Displayed in these possible segments 
+            -First Sign up(!deliveryExists &&!pickupExists)&&(!verified && !listCreated && !messengerLink)
+            -Process of linking has begun maintain the above but display success on cards that are valid
+            -if(!deliveryExists &&!pickupExists)&&(verified && listCreated && messengerLink)->Message Bot cards
+            else(deliveryExists &&pickupExists)
+          -->
           <div class="container">
-            <div class="row">
-              <!-- Grid column -->
+            <div class="row" v-if="(!deliveryExists &&!pickupExists)">
+              <!-- Grid column for initial sign up-->
               <div class="col-md-6 mb-4">
                 <!--Card-->
-                <div class="card" v-if="verified && !deliveryExists">
+                <div class="card" v-if="(!listCreated||!messengerLink) && (verified)">
                   <h5 class="card-title text-center mt-3">Shopping Account</h5>
                   <!--Card image-->
                   <div class="card-body">
@@ -35,9 +41,9 @@
                 </div>
                 <!--/.Card-->
 
-                <!--Card-->
-                <div class="card" v-if="!verified">
-                  <h5 class="card-title text-center mt-3">Firstly Link Shopping Account</h5>
+                <!--Card initial sign up-->
+                <div class="card" v-if="(!listCreated||!messengerLink) && (!verified)">
+                  <h5 class="card-title text-center mt-3 h-100">Firstly Link Shopping Account</h5>
                   <!--Card image-->
                   <div class="card-body row">
                     <!-- Link Account Half -->
@@ -46,13 +52,13 @@
                         <i class="fas fa-store text-center" style="font-size:3rem;"></i>
                         <p
                           class="card-text"
-                        >Linking your account allows you to order deliveries and pickups.</p>
+                        >Linking your account allows you to order deliveries &amp; pickups.</p>
                       </div>
-                      <div class="row justify-content-center">
+                      <!-- <div class="row justify-content-center">
                         <div class="col-12" style="text-align: center">
                           <i class="fas fa-check text-center text-success" style="font-size:3rem;"></i>
                         </div>
-                      </div>
+                      </div>-->
                       <router-link
                         class="btn btn-dark btn-fill btn-wd p-2 m-2 text-white"
                         to="/verify-details"
@@ -60,14 +66,14 @@
                     </div>
                   </div>
                 </div>
-                <!--/.Card-->
+                <!--/.Card initial sign up-->
               </div>
-              <!-- Grid column -->
+              <!--  Grid column  -->
 
               <!-- Grid column -->
               <div class="col-md-6 mb-4">
                 <!--Card-->
-                <div class="card" v-if="!listCreated && !pickupExists">
+                <div class="card" v-if="(!verified||!messengerLink) && (!listCreated)">
                   <h5 class="card-title text-center mt-3">Then Create a Grocery List</h5>
                   <!--Card image-->
                   <div class="card-body row">
@@ -88,7 +94,7 @@
                 </div>
                 <!--/.Card-->
                 <!--Card-->
-                <div class="card" v-if="listCreated && !pickupExists">
+                <div class="card" v-if="(!verified || !messengerLink) && (listCreated)">
                   <h5 class="card-title text-center mt-3">Grocery List</h5>
                   <!--Card image-->
                   <div class="card-body">
@@ -110,8 +116,8 @@
               </div>
               <!-- Grid column -->
               <div class="col-md-12 mb-4">
-                <!--Card-->
-                <div class="card" v-if="messengerLink==null">
+                <!--Card initial sign up-->
+                <div class="card" v-if="(!verified || !listCreated || !messengerLink)">
                   <h5 class="card-title text-center mt-3">Message the Bot</h5>
                   <!--Card image-->
                   <div class="card-body">
@@ -126,10 +132,11 @@
                           class="card-text"
                         >Send an initial message of 'sign in' to link your Facebook account and then your're all set up!</p>
                       </div>
-                      <router-link
+
+                      <a
                         class="btn btn-dark btn-fill btn-wd p-2 m-2 text-white"
-                        to="/verify-details"
-                      >Send Message</router-link>
+                        href="https://www.facebook.com/SmartGrocery-103970551177074"
+                      >Send Message</a>
                     </div>
                   </div>
                 </div>
@@ -139,7 +146,7 @@
             </div>
 
             <!-- When Verified -->
-            <div v-if="verified" class="row">
+            <div v-if="(verified && listCreated && messengerLink)" class="row">
               <div v-if="deliveryExists" class="col-md-6 col-xl-6 pt-4">
                 <div class="card">
                   <div class="card-block">
@@ -288,7 +295,7 @@ export default {
       pickupCost: "",
       verified: null,
       listCreated: null,
-      messengerLink: sessionStorage.getItem("messengerLink"),
+      messengerLink: null,
       storeId: sessionStorage.getItem("storeId"),
       deliveryExists: false,
       pickupExists: false
@@ -383,19 +390,23 @@ export default {
           .doc(this.currentUser.uid)
           .get()
           .then(function(doc) {
-            if (doc.exists && doc.get("storeId")) {
-              console.log(doc.get("storeId"));
-              console.log(doc.get("messengerID"));
-              sessionStorage.setItem("storeId", doc.get("storeId"));
-              //sessionStorage.setItem("messengerLink", true);
-              //  this.messengerLink = true;
-            } else if (doc.exists && doc.get("messengerID")) {
-              sessionStorage.setItem("messengerLink", true);
+            if (doc.exists) {
+              if (doc.get("storeId")) {
+                console.log("StoreID Exists");
+                sessionStorage.setItem("storeId", doc.get("storeId"));
+              }
+              if (doc.get("messengerID")) {
+                console.log("messengerID Exists");
+                sessionStorage.setItem("messengerLink", true);
+              }
             }
           })
           .catch(function(error) {
             console.log("Error getting document:", error);
           });
+      }
+      if (sessionStorage.getItem("messengerLink") == "true") {
+        this.messengerLink = true;
       }
 
       if (sessionStorage.getItem("storeId") != null) {
