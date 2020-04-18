@@ -53,6 +53,19 @@ export default {
       password: "",
       currentUser: firebaseApp.auth().currentUser
     };
+  },created(){
+    var url_string = window.location.href;
+      var url = new URL(url_string);
+      var account_token = url.searchParams.get("account_linking_token");
+      if(account_token!=null){
+          sessionStorage.clear();
+      firebaseApp
+        .auth()
+        .signOut()
+        .then(() => {
+          router.go({ name: "homepage" });
+        });
+      }
   },
   methods: {
     getUrlVars: function() {

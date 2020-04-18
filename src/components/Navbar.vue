@@ -105,7 +105,8 @@ export default {
         .then(() => {
           router.go({ name: "homepage" });
         });
-    }
+    },
+
   }
 };
 </script>
