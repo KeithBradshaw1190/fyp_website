@@ -7,58 +7,135 @@
           <div
             class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-1 mb-3"
           >
-            <h1 class="h2 text-center">Dashboard</h1>
+            <h1 class="h2">Welcome to the SmartGrocery Dashboard</h1>
           </div>
           <!--Dashboard content  -->
           <div class="container">
-            <div v-if="!verified" class="row">
-              <div class="card">
-                <div class="card-block">
-                  <div class="row">
-                    <div class="col-6">
-                      <h5 class="text-center">Firstly Link Shopping Account</h5>
+            <div class="row">
+              <!-- Grid column -->
+              <div class="col-md-6 mb-4">
+                <!--Card-->
+                <div class="card" v-if="verified && !deliveryExists">
+                  <h5 class="card-title text-center mt-3">Shopping Account</h5>
+                  <!--Card image-->
+                  <div class="card-body">
+                    <!-- Link Account Half -->
+                    <div class="row justify-content-center">
+                      <div class="col-12" style="text-align: center">
+                        <i class="fas fa-store text-center" style="font-size:3rem;"></i>
+                        <p class="card-text">Shopping Account has been linked successfully.</p>
+                      </div>
                       <div class="row justify-content-center">
-                        <div class="col-12" style="text-align: center">
-                          <i class="fas fa-store text-center" style="font-size:3rem;"></i>
+                        <div class="col-12 p-1" style="text-align: center">
+                          <i class="fas fa-check text-center text-success" style="font-size:3rem;"></i>
                         </div>
-                        <small
-                          class="text-center"
-                        >Linking your account allows you to order deliveries and pickups</small>
-                      </div>
-                      <div class="text-center">
-                        <!--<button type="submit" class="btn btn-info btn-fill btn-wd p-2">Update Details</button>-->
-                        <router-link
-                          class="btn btn-dark btn-fill btn-wd p-2 m-2 text-white"
-                          to="/verify-details"
-                        >Link Account</router-link>
-                      </div>
-                    </div>
-
-                    <div class="col-6">
-                      <h5 class="text-center">Make an Order!</h5>
-                      <div class="row justify-content-center">
-                        <div class="col-12" style="text-align: center">
-                          <i
-                            class="fab fa-facebook-messenger text-center text-primary"
-                            style="font-size:3rem;"
-                          ></i>
-                        </div>
-                        <small
-                          class="text-center"
-                        >Order information will display here when you create your first order.</small>
-                      </div>
-                      <div class="text-center">
-                        <!--<button type="submit" class="btn btn-info btn-fill btn-wd p-2">Update Details</button>-->
-
-                        <a
-                          href="https://www.facebook.com/SmartGrocery-103970551177074"
-                          class="btn btn-dark btn-fill btn-wd p-2 m-2"
-                        >Message Bot</a>
                       </div>
                     </div>
                   </div>
                 </div>
+                <!--/.Card-->
+
+                <!--Card-->
+                <div class="card" v-if="!verified">
+                  <h5 class="card-title text-center mt-3">Firstly Link Shopping Account</h5>
+                  <!--Card image-->
+                  <div class="card-body row">
+                    <!-- Link Account Half -->
+                    <div class="row justify-content-center">
+                      <div class="col-12" style="text-align: center">
+                        <i class="fas fa-store text-center" style="font-size:3rem;"></i>
+                        <p
+                          class="card-text"
+                        >Linking your account allows you to order deliveries and pickups.</p>
+                      </div>
+                      <div class="row justify-content-center">
+                        <div class="col-12" style="text-align: center">
+                          <i class="fas fa-check text-center text-success" style="font-size:3rem;"></i>
+                        </div>
+                      </div>
+                      <router-link
+                        class="btn btn-dark btn-fill btn-wd p-2 m-2 text-white"
+                        to="/verify-details"
+                      >Link Account</router-link>
+                    </div>
+                  </div>
+                </div>
+                <!--/.Card-->
               </div>
+              <!-- Grid column -->
+
+              <!-- Grid column -->
+              <div class="col-md-6 mb-4">
+                <!--Card-->
+                <div class="card" v-if="!listCreated && !pickupExists">
+                  <h5 class="card-title text-center mt-3">Then Create a Grocery List</h5>
+                  <!--Card image-->
+                  <div class="card-body row">
+                    <!-- Link Account Half -->
+                    <div class="row justify-content-center">
+                      <div class="col-12" style="text-align: center">
+                        <i class="fas fa-shopping-cart text-center" style="font-size:3rem;"></i>
+                        <p
+                          class="card-text"
+                        >Grocery lists are used to find recipes &amp; make orders</p>
+                      </div>
+                      <router-link
+                        class="btn btn-dark btn-fill btn-wd p-2 m-2 text-white"
+                        to="/addItem"
+                      >Create First List</router-link>
+                    </div>
+                  </div>
+                </div>
+                <!--/.Card-->
+                <!--Card-->
+                <div class="card" v-if="listCreated && !pickupExists">
+                  <h5 class="card-title text-center mt-3">Grocery List</h5>
+                  <!--Card image-->
+                  <div class="card-body">
+                    <!-- Link Account Half -->
+                    <div class="row justify-content-center">
+                      <div class="col-12" style="text-align: center">
+                        <i class="fas fa-shopping-cart text-center" style="font-size:3rem;"></i>
+                        <p class="card-text">You have successfully created a grocery list.</p>
+                      </div>
+                      <div class="row justify-content-center">
+                        <div class="col-12 p-1" style="text-align: center">
+                          <i class="fas fa-check text-center text-success" style="font-size:3rem;"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--/.Card-->
+              </div>
+              <!-- Grid column -->
+              <div class="col-md-12 mb-4">
+                <!--Card-->
+                <div class="card" v-if="messengerLink==null">
+                  <h5 class="card-title text-center mt-3">Message the Bot</h5>
+                  <!--Card image-->
+                  <div class="card-body">
+                    <!-- Link Account Half -->
+                    <div class="row justify-content-center">
+                      <div class="col-12" style="text-align: center">
+                        <i
+                          class="fab fa-facebook-messenger text-center text-primary"
+                          style="font-size:3rem;"
+                        ></i>
+                        <p
+                          class="card-text"
+                        >Send an initial message of 'sign in' to link your Facebook account and then your're all set up!</p>
+                      </div>
+                      <router-link
+                        class="btn btn-dark btn-fill btn-wd p-2 m-2 text-white"
+                        to="/verify-details"
+                      >Send Message</router-link>
+                    </div>
+                  </div>
+                </div>
+                <!--/.Card-->
+              </div>
+              <!-- Grid column -->
             </div>
 
             <!-- When Verified -->
@@ -210,6 +287,8 @@ export default {
       pickupTime: "",
       pickupCost: "",
       verified: null,
+      listCreated: null,
+      messengerLink: sessionStorage.getItem("messengerLink"),
       storeId: sessionStorage.getItem("storeId"),
       deliveryExists: false,
       pickupExists: false
@@ -218,6 +297,7 @@ export default {
   created() {
     this.fetchInfo();
     this.loadData();
+    this.checkList();
   },
   methods: {
     fetchInfo: function() {
@@ -297,22 +377,27 @@ export default {
         );
     },
     loadData: function() {
-      //console.log("Checking storage" + sessionStorage.getItem("storeId"));
-      // console.log("uid: " + this.currentUser.uid);
+      if (this.messengerLink == null || this.verified == null) {
+        console.log("load data");
+        db.collection("users")
+          .doc(this.currentUser.uid)
+          .get()
+          .then(function(doc) {
+            if (doc.exists && doc.get("storeId")) {
+              console.log(doc.get("storeId"));
+              console.log(doc.get("messengerID"));
+              sessionStorage.setItem("storeId", doc.get("storeId"));
+              //sessionStorage.setItem("messengerLink", true);
+              //  this.messengerLink = true;
+            } else if (doc.exists && doc.get("messengerID")) {
+              sessionStorage.setItem("messengerLink", true);
+            }
+          })
+          .catch(function(error) {
+            console.log("Error getting document:", error);
+          });
+      }
 
-      // you can load data from here and assign response in to variable
-      db.collection("users")
-        .doc(this.currentUser.uid)
-        .get()
-        .then(function(doc) {
-          if (doc.exists && doc.get("storeId")) {
-            console.log(doc.get("storeId"));
-            sessionStorage.setItem("storeId", doc.get("storeId"));
-          }
-        })
-        .catch(function(error) {
-          console.log("Error getting document:", error);
-        });
       if (sessionStorage.getItem("storeId") != null) {
         this.verified = true;
         axios
@@ -335,6 +420,28 @@ export default {
           );
       } else {
         this.verified = false;
+      }
+    },
+    checkList: function() {
+      console.log("Check session" + sessionStorage.getItem("listCreated"));
+      if (sessionStorage.getItem("listCreated") == null) {
+        console.log("Check session" + sessionStorage.getItem("listCreated"));
+
+        db.collection("shopping_lists")
+          .where("uid", "==", this.currentUser.uid)
+          .get()
+          .then(snapshot => {
+            if (!snapshot.empty) {
+              sessionStorage.setItem("listCreated", true);
+              this.listCreated = sessionStorage.getItem("listCreated");
+              return;
+            }
+          })
+          .catch(function(error) {
+            console.log("Error getting document:", error);
+          });
+      } else {
+        this.listCreated = true;
       }
     }
   }
