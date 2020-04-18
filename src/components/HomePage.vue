@@ -251,6 +251,62 @@
               <!-- end of accordian -->
             </div>
           </div>
+
+          <div class="row">
+            <!-- Icon -->
+            <div class="col-1">
+              <i class="fas fa-share fa-lg"></i>
+            </div>
+            <!-- Shopping List Feauture -->
+            <div class="col-xl-10 col-md-11 col-10">
+              <h5 class="font-weight-bold mb-3">Grocery Lists</h5>
+              <p>Send a message asking to view all grocery lists, specific lists or all items by purchase frequency.</p>
+              <!-- Accordian For What to ask bot -->
+              <div id="accordion" class="featureAccordian">
+                <div class="card">
+                  <div class="card-header" id="shoppingAccordian">
+                    <h2 class="mb-0">
+                      <button
+                        class="d-flex align-items-center justify-content-between btn btn-link collapsed fullBtn listName"
+                        data-toggle="collapse"
+                        data-target="#shoppingAccordian"
+                        aria-expanded="false"
+                        aria-controls="shoppingAccordian"
+                      >
+                        <!-- Title -->
+                        Examples
+                        <span class="fa-stack fa-sm">
+                          <i class="fas fa-circle fa-stack-2x"></i>
+                          <i class="fas fa-plus fa-stack-1x fa-inverse"></i>
+                        </span>
+                      </button>
+                    </h2>
+                  </div>
+                  <div
+                    id="shoppingAccordian"
+                    class="collapse"
+                    aria-labelledby="shoppingAccordian"
+                    data-parent="#accordion"
+                  >
+                    <div class="card-body">
+                      <ul>
+                        <li>
+                          <div class="yours messages">
+                            <div class="message last">Can I see my shopping lists?</div>
+                            <div class="message last">Can I see my Weekly Shop?</div>
+                            <div class="message last">What do I buy once per week?</div>
+                            <div class="message last">What do I buy more than once a week?</div>
+                            <div class="message last">What do I buy every other week?</div>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- end of accordian -->
+            </div>
+          </div>
         </div>
       </div>
     </section>
