@@ -52,7 +52,7 @@
                         <i class="fas fa-store text-center" style="font-size:3rem;"></i>
                         <p
                           class="card-text"
-                        >Linking your account allows you to order deliveries &amp; pickups.</p>
+                        >This allows you to order deliveries &amp; pickups.</p>
                       </div>
                       <!-- <div class="row justify-content-center">
                         <div class="col-12" style="text-align: center">

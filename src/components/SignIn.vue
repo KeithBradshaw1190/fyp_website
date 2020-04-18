@@ -53,19 +53,6 @@ export default {
       password: "",
       currentUser: firebaseApp.auth().currentUser
     };
-  },created(){
-    var url_string = window.location.href;
-      var url = new URL(url_string);
-      var account_token = url.searchParams.get("account_linking_token");
-      if(account_token!=null){
-          sessionStorage.clear();
-      firebaseApp
-        .auth()
-        .signOut()
-        .then(() => {
-          router.go({ name: "homepage" });
-        });
-      }
   },
   methods: {
     getUrlVars: function() {
@@ -106,7 +93,9 @@ export default {
             var token = result.credential.accessToken;
             // The signed-in user info.
             var user = result.user;
-            alert(`Alert 1 Login successful for ${user.providerData[0].displayName}`);
+            alert(
+              `Alert 1 Login successful for ${user.providerData[0].displayName}`
+            );
             firebaseApp
               .auth()
               .currentUser.updateProfile({
@@ -142,7 +131,9 @@ export default {
             var token = result.credential.accessToken;
             // The signed-in user info.
             var user = result.user;
-            alert(`Alert 2 Login successful for ${user.providerData[0].displayName}`);
+            alert(
+              `Alert 2 Login successful for ${user.providerData[0].displayName}`
+            );
             firebaseApp
               .auth()
               .currentUser.updateProfile({
@@ -150,14 +141,22 @@ export default {
               })
               .then(() => {
                 this.currentUser = firebaseApp.auth().currentUser;
-                console.log("Then "+this.currentUser.uid+" "+firebaseApp.auth().currentUser);
+                console.log(
+                  "Then " +
+                    this.currentUser.uid +
+                    " " +
+                    firebaseApp.auth().currentUser
+                );
 
                 db.collection("users")
                   .doc(this.currentUser.uid)
-                  .set({
-                    name: user.providerData[0].displayName,
-                    facebookID: user.providerData[0].uid
-                  },{merge: true})
+                  .set(
+                    {
+                      name: user.providerData[0].displayName,
+                      facebookID: user.providerData[0].uid
+                    },
+                    { merge: true }
+                  )
                   .then(() => {
                     this.loadData();
                     router.go({ name: "groceryDashboard" });

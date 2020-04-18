@@ -535,11 +535,34 @@ export default {
       currentUser: false
     };
   },
+ 
   created() {
     if (firebaseApp.auth().currentUser) {
       this.isLoggedIn = true;
       this.currentUser = firebaseApp.auth().currentUser.email;
     }
-  }
+    // var url_string = window.location.href;
+    // var url = new URL(url_string);
+    // var account_token = url.searchParams.get("account_linking_token");
+
+    // if (account_token != null) {
+    //   this.signUserOutAuthMessenger();
+    // }
+  },
+  // methods: {
+  //   signUserOutAuthMessenger: function() {
+  //     console.log("ACCOUNT TOKEN");
+  //     sessionStorage.clear();
+  //     firebaseApp
+  //       .auth()
+  //       .signOut()
+  //       .then(() => {
+  //         console.log("log out");
+  //         window.location.search(url_string);
+
+  //         //router.go({ name: "homepage" });
+  //       });
+  //   }
+  // }
 };
 </script>
