@@ -76,7 +76,14 @@ let router = new Router({
         requiresGuest: true
       }
     }
-  ]
+  ],
+  scrollBehavior: function (to) {
+    if (to.hash) {
+      return {
+        selector: to.hash
+      }
+    }
+  },
 });
 
 //Navigation Guards
