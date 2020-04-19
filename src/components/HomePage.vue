@@ -5,10 +5,12 @@
         <div>
           <h1>Smart Grocery</h1>
           <ul class="list-group">
-            <li 
-              class="list-item" v-if="messengerAuth"
+            <li
+              class="list-item"
+              v-if="messengerAuth"
             >Sign In with Facebook below to link Facebook Messenger with your SmartGrocery Account.</li>
-            <li  v-if="!messengerAuth"
+            <li
+              v-if="!messengerAuth"
               class="list-item"
             >The Chatbot to save you time and make grocery shopping much easier.</li>
           </ul>
@@ -201,7 +203,7 @@
             </div>
           </div>
 
-          <div class="row">
+          <div class="row mb-3">
             <!-- Icon -->
             <div class="col-1">
               <i class="fas fa-share fa-lg"></i>

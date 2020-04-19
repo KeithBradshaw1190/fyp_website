@@ -3,8 +3,7 @@
     <div class="container">
       <a class="navbar-brand col-sm-3 col-md-2 mr-0 logo">Smart Grocery</a>
 
-      <h3 class="logo"></h3>
-      <ul class="nav right">
+      <ul v-if="!messengerAuth" class="nav right">
         <li v-if="isLoggedIn">
           <router-link to="/">Home</router-link>
         </li>
@@ -87,7 +86,8 @@ export default {
   data() {
     return {
       isLoggedIn: false,
-      currentUser: false
+      currentUser: false,
+      messengerAuth:null
     };
   },
   created() {
@@ -95,6 +95,13 @@ export default {
       this.isLoggedIn = true;
       this.currentUser = firebaseApp.auth().currentUser.email;
     }
+    var url_string = window.location.href;
+    var url = new URL(url_string);
+    var account_token = url.searchParams.get("account_linking_token");
+    if (account_token != null) {
+      this.messengerAuth = true;
+    }
+  
   },
   methods: {
     logout: function() {
