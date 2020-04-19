@@ -5,13 +5,20 @@
         <div>
           <h1>Smart Grocery</h1>
           <ul class="list-group">
-            <li
+            <li 
+              class="list-item" v-if="messengerAuth"
+            >Sign In with Facebook below to link Facebook Messenger with your SmartGrocery Account.</li>
+            <li  v-if="!messengerAuth"
               class="list-item"
             >The Chatbot to save you time and make grocery shopping much easier.</li>
           </ul>
           <div class="row">
-            <a href="#features" class="btn-site-primary text-center mr-3">View All Features</a>
-            <SignIn v-if="!isLoggedIn" />
+            <a
+              v-if="!messengerAuth"
+              href="#features"
+              class="btn-site-primary text-center mr-3"
+            >View All Features</a>
+            <SignIn v-if="!isLoggedIn || messengerAuth" />
           </div>
         </div>
         <img src="../assets/onePlusPhone.png" alt />
@@ -19,7 +26,7 @@
     </section>
 
     <!-- How It works Steps-->
-    <section class="text-overlay">
+    <section v-if="!messengerAuth" class="text-overlay">
       <div class="overlay">
         <div class="text-overlay-inner">
           <h3>How It Works</h3>
@@ -59,7 +66,7 @@
     </section>
 
     <!--Chatbot Feature Section-->
-    <section class="feature-section" id="features">
+    <section v-if="!messengerAuth" class="feature-section" id="features">
       <!-- Section heading -->
       <h2 class="font-weight-bold text-center my-5">ChatBot Features</h2>
       <!-- Section description -->
@@ -532,37 +539,22 @@ export default {
   data() {
     return {
       isLoggedIn: false,
-      currentUser: false
+      currentUser: false,
+      messengerAuth: null
     };
   },
- 
+
   created() {
     if (firebaseApp.auth().currentUser) {
       this.isLoggedIn = true;
       this.currentUser = firebaseApp.auth().currentUser.email;
     }
-    // var url_string = window.location.href;
-    // var url = new URL(url_string);
-    // var account_token = url.searchParams.get("account_linking_token");
-
-    // if (account_token != null) {
-    //   this.signUserOutAuthMessenger();
-    // }
-  },
-  // methods: {
-  //   signUserOutAuthMessenger: function() {
-  //     console.log("ACCOUNT TOKEN");
-  //     sessionStorage.clear();
-  //     firebaseApp
-  //       .auth()
-  //       .signOut()
-  //       .then(() => {
-  //         console.log("log out");
-  //         window.location.search(url_string);
-
-  //         //router.go({ name: "homepage" });
-  //       });
-  //   }
-  // }
+    var url_string = window.location.href;
+    var url = new URL(url_string);
+    var account_token = url.searchParams.get("account_linking_token");
+    if (account_token != null) {
+      this.messengerAuth = true;
+    }
+  }
 };
 </script>
