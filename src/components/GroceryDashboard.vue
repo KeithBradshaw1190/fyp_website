@@ -50,9 +50,7 @@
                     <div class="row justify-content-center">
                       <div class="col-12" style="text-align: center">
                         <i class="fas fa-store text-center" style="font-size:3rem;"></i>
-                        <p
-                          class="card-text"
-                        >This allows you to order deliveries &amp; pickups.</p>
+                        <p class="card-text">This allows you to order deliveries &amp; pickups.</p>
                       </div>
                       <!-- <div class="row justify-content-center">
                         <div class="col-12" style="text-align: center">
@@ -128,9 +126,10 @@
                           class="fab fa-facebook-messenger text-center text-primary"
                           style="font-size:3rem;"
                         ></i>
-                        <p
-                          class="card-text"
-                        >Send an initial message of 'sign in' to link your Facebook account and then your're all set up!</p>
+                        <p class="card-text">
+                          Click the send message button on the facebook page followed by 'Get started' in the chat window.
+                          You'll be prompted to sign into your SmartGrocery account. After that you are all set up!
+                        </p>
                       </div>
 
                       <a
