@@ -16,7 +16,15 @@
             -if(!deliveryExists &&!pickupExists)&&(verified && listCreated && messengerLink)->Message Bot cards
             else(deliveryExists &&pickupExists)
           -->
-          <div class="container">
+          <div class="container text-center mt-3 pt-3" v-if="loadingScreen">
+            <div class="lds-facebook mt-3 pt-3">
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+            <h1 class="small">Loading Details...This wont take long!</h1>
+          </div>
+          <div class="container" v-if="!loadingScreen">
             <div class="row" v-if="(!deliveryExists &&!pickupExists)">
               <!-- Grid column for initial sign up-->
               <div class="col-md-6 mb-4">
@@ -295,9 +303,10 @@ export default {
       verified: null,
       listCreated: null,
       messengerLink: null,
-      storeId: sessionStorage.getItem("storeId"),
+      storeId: null,
       deliveryExists: false,
-      pickupExists: false
+      pickupExists: false,
+      loadingScreen: null
     };
   },
   created() {
@@ -316,8 +325,7 @@ export default {
       var storeId = sessionStorage.getItem("storeId");
       if (storeId != null) {
         console.log("NOT NULL");
-      } else {
-        console.log("nul");
+        this.storeId = storeId;
       }
       axios
         .get(
@@ -328,10 +336,13 @@ export default {
           response => {
             console.log("Then response" + response.status);
             console.log(response.data[0]);
-
+            console.log("Setting loading to false storeID->" + this.storeId);
+            this.loadingScreen = false;
             if (response.status == 200 && response.data[0] == undefined) {
-              this.deliveryDate = "00/00/00";
-              console.log("IF DELIVERY DATE" + this.deliveryDate);
+              this.deliveryExists = false;
+
+              //this.deliveryDate = "00/00/00";
+              //console.log("IF DELIVERY DATE" + this.deliveryDate);
             } else {
               this.deliveryExists = true;
               this.deliveryList = response.data[0].list_name;
@@ -361,9 +372,12 @@ export default {
           response => {
             // console.log(response);
             //console.log(response.data[0]);
-
+            console.log("Setting loading to false storeID->" + this.storeId);
+            this.loadingScreen = false;
             if (response.status == 200 && response.data[0] == undefined) {
-              this.pickupDate = "00/00/00";
+              this.pickupExists = false;
+
+              //.pickupDate = "00/00/00";
             } else {
               this.pickupExists = true;
               this.pickupList = response.data[0].list_name;
@@ -384,6 +398,8 @@ export default {
     },
     loadData: function() {
       if (this.messengerLink == null || this.verified == null) {
+        console.log("Setting loading to true storeID->" + this.storeId);
+        this.loadingScreen = true;
         console.log("load data");
         db.collection("users")
           .doc(this.currentUser.uid)
@@ -402,34 +418,38 @@ export default {
           })
           .catch(function(error) {
             console.log("Error getting document:", error);
-          });
-      }
-      if (sessionStorage.getItem("messengerLink") == "true") {
-        this.messengerLink = true;
-      }
-
-      if (sessionStorage.getItem("storeId") != null) {
-        this.verified = true;
-        axios
-          .get(
-            "https://supermarketmock-api.herokuapp.com/api/customer/" +
-              sessionStorage.getItem("storeId")
-          )
-          .then(
-            response => {
-              // console.log(response);
-              // console.log(response.data.address);
-
-              if (response.status == 200) {
-                this.address = response.data.address;
-              }
-            },
-            error => {
-              console.log(error);
+          })
+          .finally(() => {
+            if (sessionStorage.getItem("messengerLink") == "true") {
+              this.messengerLink = true;
             }
-          );
-      } else {
-        this.verified = false;
+            if (sessionStorage.getItem("storeId") != null) {
+              this.verified = true;
+              axios
+                .get(
+                  "https://supermarketmock-api.herokuapp.com/api/customer/" +
+                    sessionStorage.getItem("storeId")
+                )
+                .then(
+                  response => {
+                    // console.log(response);
+                    // console.log(response.data.address);
+                    console.log(
+                      "Setting loading to false storeID->" + this.storeId
+                    );
+                    this.loadingScreen = false;
+                    if (response.status == 200) {
+                      this.address = response.data.address;
+                    }
+                  },
+                  error => {
+                    console.log(error);
+                  }
+                );
+            } else {
+              this.verified = false;
+            }
+          });
       }
     },
     checkList: function() {
@@ -480,12 +500,6 @@ body {
   background: linear-gradient(45deg, #457aa7, #5784b8);
 }
 
-.bg-info-card {
-  /* background: #ffba58; */
-  /* background: hsla(207, 83%, 41%, 0.44); */
-  background: #ff5722;
-}
-
 .bg-c-pink {
   background: linear-gradient(45deg, #ff5370, #ff869a);
 }
@@ -519,5 +533,43 @@ body {
 
 .f-right {
   float: right;
+}
+/* Loading animation provided by https://loading.io/css/  released under CC0 License, so can be used freely */
+.lds-facebook {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-facebook div {
+  display: inline-block;
+  position: absolute;
+  left: 8px;
+  width: 16px;
+  background: rgba(100, 90, 90, 0.562);
+  animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+}
+.lds-facebook div:nth-child(1) {
+  left: 8px;
+  animation-delay: -0.24s;
+}
+.lds-facebook div:nth-child(2) {
+  left: 32px;
+  animation-delay: -0.12s;
+}
+.lds-facebook div:nth-child(3) {
+  left: 56px;
+  animation-delay: 0;
+}
+@keyframes lds-facebook {
+  0% {
+    top: 8px;
+    height: 64px;
+  }
+  50%,
+  100% {
+    top: 24px;
+    height: 32px;
+  }
 }
 </style>

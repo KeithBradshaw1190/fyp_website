@@ -4,36 +4,7 @@
       <i class="fab fa-facebook-f pr-1"></i>Sign in with Facebook
     </button>
 
-    <!-- <form class="form-signin">
-              <div class="form-label-group">
-                <input
-                  type="email"
-                  id="inputEmail"
-                  class="form-control"
-                  v-model="email"
-                  placeholder="Email address"
-                  required
-                  autofocus
-                />
-              </div>
-              <br />
-              <div class="form-label-group">
-                <input
-                  type="password"
-                  id="password"
-                  class="form-control"
-                  v-model="password"
-                  placeholder="Password"
-                  required
-                />
-              </div>
-              <br />
-              <button
-                class="btn btn-lg btn-primary btn-outline-primary"
-                @click="signin"
-                type="submit"
-              >Log In</button>
-    </form>-->
+  
   </div>
 </template>
 
@@ -238,7 +209,7 @@ export default {
 
     updateDoc: function(user, account_token, access_token, r_uri) {
       this.currentUser = firebaseApp.auth().currentUser;
-      console.log("PAGE ACCESS TOKEN" + access_token);
+     // console.log("PAGE ACCESS TOKEN" + access_token);
       axios
         .get(
           "https://graph.facebook.com/v2.6/me?access_token=" +
@@ -265,21 +236,6 @@ export default {
             });
         });
     }
-    // signin: function(e) {
-    //   fb.auth()
-    //     .signInWithEmailAndPassword(this.email, this.password)
-    //     .then(
-    //       user => {
-    //         alert(`Login successful for ${user.user.email}`);
-    //         router.go({ name: "groceryDashboard" });
-    //         console.log(user);
-    //       },
-    //       err => {
-    //         alert("error " + err.message);
-    //       }
-    //     );
-    //   e.preventDefault();
-    // }
   }
 };
 </script>

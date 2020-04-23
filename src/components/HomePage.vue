@@ -134,7 +134,7 @@
                             <div class="message last">Can I schedule a delivery?</div>
                             <div
                               class="message last"
-                            >Could I schedule a delivery for tomorrow at 4pm?</div>
+                            >Can I schedule a delivery tomorrow?</div>
                             <div class="message last">I want to schedule a delivery</div>
                           </div>
                         </li>

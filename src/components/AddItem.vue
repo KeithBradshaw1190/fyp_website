@@ -75,7 +75,14 @@
                   <div class="row">
                     <div class="col-md-12">
                       <div class="form-group">
-                        <label>List Name</label>
+                        <label>
+                          List Name
+                          <span
+                            title="Currently Supported list names: 'Weekly Shop','Essentials','Monthly Shop' or 'Essential Items'"
+                          >
+                            <i class="fa fa-question-circle tooltiptext" style="font-size:1rem;"></i>
+                          </span>
+                        </label>
                         <input
                           type="text"
                           v-model="listName"
@@ -84,7 +91,7 @@
                           required
                           @keyup="validateListName"
                         />
-                        <p class="text-danger" v-if="errorMessage">{{errorMessageValue}}</p>
+                        <small class="text-danger" v-if="errorMessage">{{errorMessageValue}}</small>
                       </div>
                     </div>
                   </div>
@@ -385,6 +392,14 @@ export default {
         });
     },
     validateListName() {
+      clearTimeout();
+      var allowedNames = [
+        "weekly shop",
+        "monthly shop",
+        "essentials",
+        "essential items"
+      ];
+
       var lowerListName = this.listName.toLowerCase();
       if (this.listNames.includes(lowerListName)) {
         this.errorMessage = true;
@@ -392,6 +407,10 @@ export default {
       } else if (this.listName == "") {
         this.errorMessage = true;
         this.errorMessageValue = "The List Name can't be empty!";
+      } else if (!allowedNames.includes(lowerListName)) {
+        this.errorMessage = true;
+        this.errorMessageValue =
+          "This list name is not supported for use with the chatbot. View supported names by hovering over the '?' icon";
       } else {
         this.errorMessage = false;
       }
@@ -506,6 +525,42 @@ body {
   background-color: #fff;
   border: 0;
 }
+.fa-question-circle {
+  color: #6c757d;
+}
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
 
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 150%;
+  left: 50%;
+  margin-left: -60px;
+}
 
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
 </style>
