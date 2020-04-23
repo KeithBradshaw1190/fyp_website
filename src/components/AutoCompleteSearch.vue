@@ -77,17 +77,6 @@ export default {
 </script>
 
 <style scoped>
-.loading-circle {
-  background-color: #ffffff;
-  background-size: 16px 16px;
-  background-position: right center;
-  background-repeat: no-repeat;
-}
-
-.hide-loading-circle {
-  background: none;
-}
-
 .form-textinput {
   padding: 8px 10px;
   border-radius: 5px;
@@ -101,11 +90,12 @@ export default {
 .autocomplete-results {
   padding: 0;
   margin: 0;
-  border: 1px solid #eeeeee;
+  /* border: 1px solid #eeeeee; */
   height: 150px;
   overflow: auto;
-  background-color: #fdf8f3;
+  background-color: #ffffff;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 .autocomplete-result {
