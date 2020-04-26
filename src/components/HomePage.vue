@@ -96,7 +96,7 @@
               <i class="fas fa-share fa-lg"></i>
             </div>
 
-            <!-- Delivery Feature -->
+            <!-- Delivery Feature based on: https://mdbootstrap.com/snippets/jquery/marta-szymanska/1304975-->
             <div class="col-xl-10 col-md-11 col-10">
               <h5 class="font-weight-bold mb-3">Delivery</h5>
               <p>Send a Message asking to schedule a grocery delivery with the name of the list you want, the time and date that suits you.</p>
@@ -278,9 +278,9 @@
                       <button
                         class="d-flex align-items-center justify-content-between btn btn-link collapsed fullBtn listName"
                         data-toggle="collapse"
-                        data-target="#shoppingAccordian"
+                        data-target="#shoppingCollapse"
                         aria-expanded="false"
-                        aria-controls="shoppingAccordian"
+                        aria-controls="shoppingCollapse"
                       >
                         <!-- Title -->
                         Examples
@@ -292,7 +292,7 @@
                     </h2>
                   </div>
                   <div
-                    id="shoppingAccordian"
+                    id="shoppingCollapse"
                     class="collapse"
                     aria-labelledby="shoppingAccordian"
                     data-parent="#accordion"

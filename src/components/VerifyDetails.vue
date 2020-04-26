@@ -8,32 +8,24 @@
             class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-1 mb-3"
           ></div>
           <div class="container">
-            <div
-              v-if="errors.length > 0"
-              class="alert alert-danger"
-              role="alert"
-            >
-              {{ errors[0] }}
-            </div>
+            <div v-if="errors.length > 0" class="alert alert-danger" role="alert">{{ errors[0] }}</div>
             <div class="card bg-info-card order-card">
               <div class="card-block">
-                <form
-                  v-if="!verified"
-                  id="signup-form"
-                  @submit.prevent="processForm"
-                >
+                <form v-if="!verified" id="signup-form" @submit.prevent="processForm">
                   <h5 class="m-b-20 text-center">
                     Sign up to Your Local Supermarket
                     <br />
-                    <small class="text-center text-grey"
-                      >(Needed for delivery and Collection Services)</small
-                    >
+                    <small
+                      class="text-center text-grey"
+                    >(Needed for delivery and Collection Services)</small>
                   </h5>
 
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
-                        <label>Email</label>
+                        <label>
+                          <i class="fas fa-envelope" style="font-size:1.2rem;"></i> Email
+                        </label>
                         <input
                           type="text"
                           name="email"
@@ -46,7 +38,7 @@
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
-                        <label>Password</label>
+                        <label><i class="fas fa-lock" style="font-size:1.2rem;"></i> Password</label>
                         <input
                           type="password"
                           name="password"
@@ -62,7 +54,7 @@
                   <div class="row">
                     <div class="col-md-12">
                       <div class="form-group">
-                        <label>Delivery Address</label>
+                        <label><i class="fas fa-home" style="font-size:1.2rem;"></i> Delivery Address</label>
                         <input
                           type="text"
                           name="address"
@@ -76,42 +68,33 @@
                   </div>
 
                   <div class="text-center">
-                    <!--<button type="submit" class="btn btn-info btn-fill btn-wd p-2">Update Details</button>-->
                     <button
                       type="submit"
                       class="btn btn-success btn-fill btn-wd p-2 m-2"
-                    >
-                      Create a Link
-                    </button>
+                    >Create a Link</button>
                   </div>
                 </form>
                 <!--End Of Store Login-->
                 <div v-if="verified" class="row">
                   <div class="col-md-5">
-                    <h5 class="m-b-20 text-center">
-                      Account Linked Successfully!
-                    </h5>
+                    <h5 class="m-b-20 text-center">Account Linked Successfully!</h5>
                     <br />
                     <div class="row justify-content-center">
                       <span class="mt-1">
-                        <i
-                          class="far fa-check-circle text-success"
-                          style="font-size:3.2rem;"
-                        ></i>
+                        <i class="far fa-check-circle text-success" style="font-size:3.2rem;"></i>
                       </span>
                     </div>
                   </div>
 
                   <div class="col-md-7">
-                    <h5 class="m-b-20 text-center">
-                      Update Your Delivery Address
-                    </h5>
+                    <h5 class="m-b-20 text-center"><i class="fas fa-home" style="font-size:1.2rem;"></i> Update Your Delivery Address</h5>
                     <form id="address-form" @submit.prevent="updateAddress">
                       <div class="row">
                         <div class="col-md-12">
                           <div class="form-group">
                             <!-- <label>Update Your Delivery Address</label> -->
                             <input
+                              id="address"
                               type="text"
                               name="address"
                               v-model="address"
@@ -127,9 +110,7 @@
                         <button
                           type="submit"
                           class="btn btn-success btn-fill btn-wd p-2 m-2"
-                        >
-                          Update Address
-                        </button>
+                        >Update Address</button>
                       </div>
                     </form>
                   </div>

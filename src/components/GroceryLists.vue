@@ -186,7 +186,7 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style >
 #add-grocery {
   height: 100%;
   min-height: 100%;

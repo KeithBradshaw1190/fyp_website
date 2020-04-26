@@ -15,8 +15,7 @@
   margin: 0;
   padding: 0;
   width: 100%;
-  height: 100%;
-  min-height: 100%;
+
   --primary-color: #333;
   --secondary-color: rgb(165, 165, 170);
   --overlay-color: rgba(0, 0, 0, 0.5);
