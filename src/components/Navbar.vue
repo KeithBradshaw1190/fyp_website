@@ -56,6 +56,7 @@ img {
   font-size: 1.2rem;
   padding-top: 0.3rem;
   padding-bottom: 0.3rem;
+  background-color: white;
 }
 
 .navbar .logo {
@@ -87,7 +88,7 @@ export default {
     return {
       isLoggedIn: false,
       currentUser: false,
-      messengerAuth:null
+      messengerAuth: null
     };
   },
   created() {
@@ -101,7 +102,6 @@ export default {
     if (account_token != null) {
       this.messengerAuth = true;
     }
-  
   },
   methods: {
     logout: function() {
@@ -112,8 +112,7 @@ export default {
         .then(() => {
           router.go({ name: "homepage" });
         });
-    },
-
+    }
   }
 };
 </script>

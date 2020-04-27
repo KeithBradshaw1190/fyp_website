@@ -132,9 +132,7 @@
                         <li>
                           <div class="yours messages">
                             <div class="message last">Can I schedule a delivery?</div>
-                            <div
-                              class="message last"
-                            >Can I schedule a delivery tomorrow?</div>
+                            <div class="message last">Can I schedule a delivery tomorrow?</div>
                             <div class="message last">I want to schedule a delivery</div>
                           </div>
                         </li>
@@ -321,7 +319,6 @@
     </section>
   </div>
 </template>
-
 <style scoped>
 #homepage {
   font-family: "Catamaran", "sans-serif";
@@ -332,39 +329,32 @@
   --secondary-color: rgb(165, 165, 170);
   --overlay-color: rgba(0, 0, 0, 0.5);
 }
-
 h1,
 h2,
 h3,
 h4 {
   line-height: 1.3;
 }
-
 a {
   color: var(--secondary-color);
   text-decoration: none;
 }
-
 ul {
   list-style: none;
 }
-
 img {
   width: 100%;
 }
-
 .container {
   max-width: 1100px;
   margin: auto;
   overflow: hidden;
   padding: 0 2rem;
 }
-
 /* Features section */
 .features {
   margin: 2rem 0;
 }
-
 .features .container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -372,7 +362,6 @@ img {
   align-items: center;
   justify-content: center;
 }
-
 .features h1 {
   font-size: 4rem;
   color: var(--primary-color);
@@ -384,14 +373,12 @@ img {
 .features p {
   margin: 1rem 0;
 }
-
 /* How it works section */
 .text-overlay {
   position: relative;
   background: url("../assets/grocery-store.jpg") no-repeat bottom center/cover;
   height: 1000px;
 }
-
 .overlay {
   position: absolute;
   top: 0;
@@ -400,7 +387,6 @@ img {
   width: 100%;
   background-color: var(--overlay-color);
 }
-
 .text-overlay-inner {
   color: #fff;
   height: 100%;
@@ -413,21 +399,17 @@ img {
   text-align: center;
   padding: 2.5rem 0;
 }
-
 .text-overlay-inner h2 {
   font-size: 5rem;
   margin-top: 0.5rem;
 }
-
 .text-overlay-inner h3 {
   font-size: 2rem;
 }
-
 .text-overlay-inner p {
   font-size: 1.5rem;
   margin-top: 1rem;
 }
-
 .btn-site-primary {
   display: inline-block;
   background: var(--primary-color);
@@ -439,13 +421,10 @@ img {
   border-radius: 30px;
   margin-top: 0.2rem;
 }
-
 .btn-site-primary:hover {
   background: var(--secondary-color);
 }
-
 /* Accordian Styling */
-
 .featureAccordian .card-header {
   border-bottom-color: #edeff0;
   background: rgba(165, 165, 170, 0.03);
@@ -453,7 +432,6 @@ img {
 .featureAccordian .card {
   border: 0;
 }
-
 .listAccordion .fa-stack {
   font-size: 18px;
 }
@@ -464,12 +442,10 @@ img {
   width: 100%;
   /* padding: 0; */
 }
-
 .featureAccordian .fullBtn:hover,
 .featureAccordian .fullBtn:focus {
   text-decoration: none;
 }
-
 .list-group-flush .list-group-item {
   border-top: 0;
 }
@@ -477,14 +453,12 @@ img {
   padding: 0;
 }
 /* End of Accordian Styling */
-
 /* Message style [https://codepen.io/sajadhsm/pen/odaBdd]*/
 .messages {
   margin-top: 30px;
   display: flex;
   flex-direction: column;
 }
-
 .message {
   border-radius: 20px;
   padding: 8px 15px;
@@ -492,17 +466,14 @@ img {
   margin-bottom: 5px;
   display: inline-block;
 }
-
 .yours {
   align-items: flex-start;
 }
-
 .yours .message {
   margin-right: 25%;
   background-color: #e1e9ec;
   position: relative;
 }
-
 .yours .message.last:before {
   content: "";
   position: absolute;
@@ -525,7 +496,6 @@ img {
   background: white;
   border-bottom-right-radius: 10px;
 }
-
 /* message style */
 </style>
 <script>
@@ -545,7 +515,6 @@ export default {
       messengerAuth: null
     };
   },
-
   created() {
     if (firebaseApp.auth().currentUser) {
       this.isLoggedIn = true;
