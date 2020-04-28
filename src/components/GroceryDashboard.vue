@@ -492,23 +492,7 @@ body {
   color: #fff;
 }
 
-.bg-c-green {
-  background: linear-gradient(45deg, #4099ff, #73b4ff);
-}
 
-.bg-c-blue {
-  background: linear-gradient(45deg, #457aa7, #5784b8);
-}
-
-.bg-c-pink {
-  background: linear-gradient(45deg, #ff5370, #ff869a);
-}
-.bg-c-black {
-  background: linear-gradient(45deg, #0a0a0a, #5f5d5d);
-}
-.bg-c-grey {
-  background: linear-gradient(45deg, #bebebe, #d4d1d2);
-}
 .card {
   border-radius: 5px;
   -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4, 26, 55, 0.16);
