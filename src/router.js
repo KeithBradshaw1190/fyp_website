@@ -8,7 +8,7 @@ import SignIn from '@/components/SignIn'
 import SignUp from '@/components/SignUp'
 import AddItem from '@/components/AddItem'
 import ModifyList from '@/components/ModifyList'
-
+import AllOrders from '@/components/AllOrders'
 import firebaseApp from './firebaseInit'
 
 Vue.use(Router)
@@ -31,6 +31,13 @@ let router = new Router({
       path: '/grocery-dashboard/',
       name: 'groceryDashboard',
       component: GroceryDashboard,
+      meta: {
+        requiresAuth: true
+      }
+    }, {
+      path: '/allOrders/',
+      name: 'allorders',
+      component: AllOrders,
       meta: {
         requiresAuth: true
       }
