@@ -15,6 +15,13 @@
                 <vue-good-table
                   :columns="columns"
                   :rows="orders"
+                  :sort-options="{
+                    enabled: true,
+                    initialSortBy: [
+                      { field: 'status', type: 'asc' },
+                      { field: 'filter_date', type: 'desc' }
+                    ]
+                  }"
                   styleClass="vgt-table"
                   :pagination-options="{
                     enabled: true,
@@ -115,6 +122,16 @@ export default {
           label: "Status",
           field: "status",
           html: true
+        },
+        {
+          label: "filter_time",
+          field: "filter_time",
+          hidden: true
+        },
+        {
+          label: "filter_date",
+          field: "filter_date",
+          hidden: true
         }
       ],
       orders: []
@@ -124,43 +141,73 @@ export default {
     if (firebaseApp.auth().currentUser) {
       this.currentUser = firebaseApp.auth().currentUser;
     }
-    this.getTableInfo();
+    this.getDeliveryInfo();
+    this.getPickupInfo();
   },
   methods: {
-    getTableInfo: function() {
+    getDeliveryInfo: function() {
       axios
         .get(
           "https://supermarketmock-api.herokuapp.com/api/delivery/all/customer/" +
             sessionStorage.getItem("storeId")
         )
         .then(response => {
-          //console.log(response);
-          var currentdate = new Date();
-          var dTime, dDate, combinedTimeStamp, orderStatus;
+          var type = "Delivery";
           var arrayOfOrders = response.data;
-          arrayOfOrders.forEach(obj => {
-            dTime = obj.delivery_time;
-            dDate = new Date(obj.delivery_date).toLocaleDateString();
-            combinedTimeStamp = dTime + " " + dDate;
-
-            orderStatus =
-              new Date(combinedTimeStamp).getTime() > currentdate.getTime();
-
-            if (orderStatus) {
-              obj.status = `<i class="order-status text-warning fas fa-circle fa-2x" style="font-size: 0.6rem;"></i><span class=" ">
-                        In Progress`;
-            } else if (!orderStatus) {
-              obj.status = `<span class="order-status text-success">✔</span>
-                          Delivered`;
-            }
-            obj.delivery_schedule =moment(combinedTimeStamp).format('MMMM Do YYYY [at] h:mm a');
-            
-
-            obj.order_type = `Delivery
-                          <i class="fas fa-truck icon"></i>`;
-            this.orders.push(obj);
-          });
+          this.filterOrders(arrayOfOrders, type);
         });
+    },
+    getPickupInfo: function() {
+      axios
+        .get(
+          "https://supermarketmock-api.herokuapp.com/api/pickup/all/customer/" +
+            sessionStorage.getItem("storeId")
+        )
+        .then(response => {
+          var type = "Pickup";
+          var arrayOfOrders = response.data;
+          this.filterOrders(arrayOfOrders, type);
+        });
+    },
+    filterOrders: function(arrayOfOrders, type) {
+      console.log(arrayOfOrders);
+      var currentdate = new Date();
+      var time, date, combinedTimeStamp, orderStatus;
+      arrayOfOrders.forEach(obj => {
+        if (type == "Delivery") {
+          time = obj.delivery_time;
+          date = new Date(obj.delivery_date).toLocaleDateString();
+          obj.order_type = `Delivery
+                          <i class="fas fa-truck icon"></i>`;
+        } else if (type == "Pickup") {
+          time = obj.pickup_time;
+          date = new Date(obj.pickup_date).toLocaleDateString();
+          obj.order_type = `Collection
+                          <i class="fas fa-shopping-basket"></i>`;
+        }
+        combinedTimeStamp = time + " " + date;
+        obj.filter_time = time;
+        obj.filter_date = date;
+
+        orderStatus =
+          new Date(combinedTimeStamp).getTime() > currentdate.getTime();
+        obj.delivery_schedule = moment(combinedTimeStamp).format(
+          "MMMM Do YYYY [at] h:mm a"
+        );
+
+        if (orderStatus) {
+          obj.status = `<i class="order-status text-warning fas fa-circle fa-2x" style="font-size: 0.6rem;"></i><span class=" ">
+                        In Progress`;
+        } else if (!orderStatus && type == "Pickup") {
+          obj.status = `<span class="order-status text-success">✔</span>
+                          Collected`;
+        } else if (!orderStatus && type == "Delivery") {
+          obj.status = `<span class="order-status text-success">✔</span>
+                          Delivered`;
+        }
+
+        this.orders.push(obj);
+      });
     }
   }
 };
@@ -218,12 +265,7 @@ table.table .icon {
   vertical-align: middle;
   margin-right: 10px;
 }
-table.table tr th,
-table.table tr td {
-  border-color: #e9e9e9;
-  padding: 12px 15px;
-  vertical-align: middle;
-}
+
 .order-status {
   font-size: 30px;
   margin: 2px 2px 0 0;
@@ -231,9 +273,17 @@ table.table tr td {
   vertical-align: middle;
   line-height: 10px;
 }
-.table th {
-  padding: 0.75rem;
-  vertical-align: top;
-  border-top: 0;
+.vgt-table thead th {
+  color: #333333;
+  background: #fff;
+}
+table.vgt-table {
+  font-size: 18px;
+  border-collapse: collapse;
+  background-color: #fff;
+  width: 100%;
+  max-width: 100%;
+  table-layout: auto;
+  border: 0cm;
 }
 </style>

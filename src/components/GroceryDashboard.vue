@@ -180,6 +180,11 @@
                         <i class="fas fa-euro-sign mt-1" style="font-size:18px;"></i>
                         Cost {{ deliveryCost }}
                       </h5>
+                      <div class="col-12 mt-2">
+                        <router-link class="btn btn-outline-secondary" to="/allorders/">
+                          View All Orders
+                        </router-link>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -238,6 +243,11 @@
                         <i class="fas fa-euro-sign mt-1" style="font-size:18px;"></i>
                         Cost {{ pickupCost }}
                       </h5>
+                      <div class="col-12 mt-2">
+                        <router-link class="btn btn-outline-secondary" to="/allorders/">
+                          View All Orders
+                        </router-link>
+                      </div>
                     </div>
                   </div>
                 </div>
