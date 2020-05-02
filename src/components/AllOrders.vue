@@ -39,37 +39,6 @@
                     allLabel: 'All'
                   }"
                 />
-                <!-- <div class="table-responsive">
-                  <table id="myTable" class="display table table-hover">
-                    <thead class="thead">
-                      <tr>
-                        <th scope="col">Order Type</th>
-                        <th scope="col">List Ordered</th>
-                        <th scope="col">Schedule Details</th>
-                        <th scope="col">Cost</th>
-                        <th scope="col">Status</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-for="order in orders" :key="order._id">
-                        <th scope="row">
-                          Delivery
-                          <i class="fas fa-truck icon"></i>
-                        </th>
-                        <td>{{ order.list_name }}</td>
-                        <td>
-                          Delivery on {{ order.delivery_date }} at
-                          {{ order.delivery_time }}
-                        </td>
-                        <td>€ {{ order.order_price }}</td>
-                        <td>
-                          <span class="order-status text-success">✔</span>
-                          Delivered
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div> -->
               </div>
             </div>
           </div>

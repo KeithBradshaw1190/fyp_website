@@ -181,7 +181,7 @@
                         Cost {{ deliveryCost }}
                       </h5>
                       <div class="col-12 mt-2">
-                        <router-link class="btn btn-outline-secondary" to="/allorders/">
+                        <router-link class="btn btn-outline-dark btn-circle btn-sm" to="/allorders">
                           View All Orders
                         </router-link>
                       </div>
@@ -244,7 +244,7 @@
                         Cost {{ pickupCost }}
                       </h5>
                       <div class="col-12 mt-2">
-                        <router-link class="btn btn-outline-secondary" to="/allorders/">
+                        <router-link class="btn btn-outline-dark btn-circle btn-sm" to="/allorders">
                           View All Orders
                         </router-link>
                       </div>
