@@ -23,21 +23,31 @@
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link v-if="!verified" class="nav-link" to="/verify-details">
+              <router-link
+                v-if="!verified"
+                class="nav-link"
+                to="/verify-details"
+              >
                 <i class="fas fa-store"></i>Verify Store Login
               </router-link>
-              <router-link v-if="verified" class="nav-link" to="/verify-details">
+              <router-link
+                v-if="verified"
+                class="nav-link"
+                to="/verify-details"
+              >
                 <i class="fas fa-home"></i>Change Delivery Address
               </router-link>
             </li>
             <li class="nav-item">
-              
               <router-link class="nav-link" to="/#features">
                 <i class="fas fa-comments"></i>View All Chatbot Features
               </router-link>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="https://www.facebook.com/SmartGrocery-103970551177074">
+              <a
+                class="nav-link"
+                href="https://www.facebook.com/SmartGrocery-103970551177074"
+              >
                 <i class="fab fa-facebook-messenger text-primary"></i>
                 Visit Facebook Page
               </a>
@@ -82,7 +92,6 @@ export default {
 .sidebar .sidebar-user .category-content {
   padding: 1rem;
   text-align: center;
-
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -115,11 +124,6 @@ export default {
   text-transform: uppercase;
   font-weight: 500;
   font-size: 0.75rem;
-}
-.center-title {
-  font-weight: 500;
-  font-size: 1.25rem;
-  font-style: bold;
 }
 .sidebar.sidebar-default .category-content .nav li > a {
   color: #333;
@@ -168,10 +172,6 @@ export default {
     width: 280px;
     padding: 0 1.25rem;
   }
-  .sidebar.sidebar-fixed {
-    position: sticky;
-    top: 5.5rem;
-  }
   .sidebar.sidebar-default .sidebar-category {
     background-color: #fff;
   }
@@ -190,10 +190,6 @@ export default {
     display: table-cell;
     vertical-align: top;
     padding: 0 1.25rem;
-  }
-  .sidebar.sidebar-fixed {
-    position: sticky;
-    top: 5.5rem;
   }
   .sidebar.sidebar-default .sidebar-category {
     background-color: #fff;

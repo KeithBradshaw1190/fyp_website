@@ -56,7 +56,7 @@
                       v-bind:aria-controls="list.docuID"
                     >
                       <!-- Title -->
-                      <h4 class="font-weight-bold listName mb-0 mt-3">{{ list.listName}}</h4>
+                      <h4 class="font-weight-bold listName mb-0 mt-3 capitalize">{{ list.listName }}</h4>
                     </button>
                     <p class="mb-2">
                       <i class="fas fa-shopping-basket"></i>
@@ -201,6 +201,9 @@ body {
 .Slist .btn-link:focus {
   text-decoration: none;
 }
+.capitalize {
+    text-transform: capitalize;   
+  }
 
 .Slist {
   margin: 50px auto;

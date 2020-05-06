@@ -283,7 +283,12 @@ export default {
           "Medium",
           "Hovis",
           "White",
-          "Soft"
+          "Soft",
+          "Free Range",
+          "Irish",
+          "English",
+          "British",
+          "Original"
         ];
         for (var i = 0; i <= wordsToRemove.length; i++) {
           simpleName = simpleName.replace(wordsToRemove[i], "");
@@ -294,7 +299,7 @@ export default {
         db.collection("shopping_lists")
           .add({
             uid: this.currentUser.uid,
-            listName: this.listName,
+            listName: this.listName.toLowerCase(),
             items: [plist]
           })
           .then(docRef => {
@@ -322,7 +327,7 @@ export default {
             return;
           }
           snapshot.forEach(doc => {
-            console.log(doc.id, "=>", doc.data().listName);
+          //  console.log(doc.id, "=>", doc.data().listName);
             listNames.push(doc.data().listName.toLowerCase());
             if (doc.data().messengerID) {
               messengerID = doc.data().messengerID;

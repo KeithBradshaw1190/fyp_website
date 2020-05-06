@@ -50,7 +50,9 @@
                         <button
                           class="btn btn-sm btn-outline-danger"
                           @click="deleteList"
-                        >Delete List</button>
+                        >
+                          Delete List
+                        </button>
                       </small>
                     </div>
                   </div>
@@ -75,7 +77,9 @@
                         <button
                           class="btn btn-sm btn-outline-success"
                           @click="updateList"
-                        >Save Changes</button>
+                        >
+                          Save Changes
+                        </button>
                       </small>
                     </div>
                   </div>
@@ -101,26 +105,33 @@
                                 <a
                                   class="text-danger"
                                   @click="deleteItemFromLocalList(index)"
-                                >X Remove</a>
+                                  >X Remove</a
+                                >
                                 <br />
                                 {{ item.name }}
                               </h6>
                               <div class="quantity">
-                                <small class="text-success mr-3">Price: €{{ item.price }}</small>
+                                <small class="text-success mr-3"
+                                  >Price: €{{ item.price }}</small
+                                >
                                 <!-- <small class="text-muted"
                                   >Quantity: {{ item.quantity }}</small
                                 >-->
 
                                 <div class="input-group">
                                   <div class="input-group-prepend">
-                                    <small class="input-group-text">Quantity</small>
+                                    <small class="input-group-text"
+                                      >Quantity</small
+                                    >
                                   </div>
                                   <input
                                     type="number"
                                     name="quantity"
                                     min="1"
                                     v-model="item.quantity"
-                                    v-on:change="event => changeLocalQuantity(index, event)"
+                                    v-on:change="
+                                      event => changeLocalQuantity(index, event)
+                                    "
                                     class="form-control form-control"
                                   />
                                 </div>
@@ -183,11 +194,23 @@
                         </label>
                         <div class="input-group mb-3">
                           <div class="input-group-prepend">
-                            <label class="input-group-text" for="frequencySelect">Frequency</label>
+                            <label
+                              class="input-group-text"
+                              for="frequencySelect"
+                              >Frequency</label
+                            >
                           </div>
-                          <select v-model="frequency" class="custom-select" id="frequencySelect">
-                            <option value="none" selected>Choose Purchase Frequency</option>
-                            <option value="More Than Once a Week">More than Once A Week</option>
+                          <select
+                            v-model="frequency"
+                            class="custom-select"
+                            id="frequencySelect"
+                          >
+                            <option value="none" selected
+                              >Choose Purchase Frequency</option
+                            >
+                            <option value="More Than Once a Week"
+                              >More than Once A Week</option
+                            >
                             <option value="Once Per Week">Once A Week</option>
                             <option value="Bi-Weekly">Bi-Weekly</option>
                           </select>
@@ -202,7 +225,9 @@
                       @click="addToList"
                       class="btn btn-secondary btn-fill btn-wd"
                       id="btnCreateList"
-                    >Add Product</button>
+                    >
+                      Add Product
+                    </button>
                   </div>
                   <div class="clearfix"></div>
                 </form>
@@ -344,7 +369,12 @@ export default {
           "Medium",
           "Hovis",
           "White",
-          "Soft"
+          "Soft",
+          "Free Range",
+          "Irish",
+          "English",
+          "British",
+          "Original"
         ];
         for (var i = 0; i <= wordsToRemove.length; i++) {
           simpleName = simpleName.replace(wordsToRemove[i], "");

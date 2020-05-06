@@ -45,7 +45,7 @@
                           name="email"
                           v-model="email"
                           class="form-control border-input"
-                          placeholder="JohnDowe@mail.com"
+                          placeholder="address@mail.com"
                           required
                         />
                       </div>
@@ -70,14 +70,23 @@
 
                   <div class="row">
                     <div class="col-md-12">
-                      <vue-google-autocomplete
-                        id="map"
-                        classname="form-control"
-                        v-model="address"
-                        v-on:placechanged="getAddressData"
-                        :country="'ie'"
-                      >
-                      </vue-google-autocomplete>
+                      <div class="form-group">
+                        <label
+                          ><i class="fas fa-home" style="font-size:1.2rem;"></i>
+                          Delivery Address</label
+                        >
+                        <vue-google-autocomplete
+                          id="map"
+                          name="address"
+                          classname="form-control"
+                          v-model="address"
+                          placeholder="Start typing your delivery address"
+                          v-on:placechanged="getAddressData"
+                          :country="'ie'"
+                        >
+                        </vue-google-autocomplete>
+                      </div>
+
                       <!-- <div class="form-group">
                         <label><i class="fas fa-home" style="font-size:1.2rem;"></i> Delivery Address</label>
                         <input
@@ -107,9 +116,9 @@
                     <h5 class="m-b-20 text-center">
                       Account Linked Successfully!
                     </h5>
-                    <br />
+                   
                     <div class="row justify-content-center">
-                      <span class="mt-1">
+                      <span class="mt-2">
                         <i
                           class="far fa-check-circle text-success"
                           style="font-size:3.2rem;"

@@ -164,11 +164,11 @@
                     <br />
 
                     <div class="row">
-                      <h5 class="col-6 mt-2">
+                      <h5 class="col-6 mt-2 capitalize">
                         <i class="fas fa-clipboard-list" style="font-size:18px;"></i>
                         {{ deliveryList }}
                       </h5>
-                      <h5 class="col-6 mt-2">
+                      <h5 class="col-6 mt-2 ">
                         <i class="fas fa-calendar-day" style="font-size:18px;"></i>
                         Date {{ deliveryDate }}
                       </h5>
@@ -227,7 +227,7 @@
                     <br />
 
                     <div class="row">
-                      <h5 class="col-6 mt-2">
+                      <h5 class="col-6 mt-2 capitalize">
                         <i class="fas fa-clipboard-list" style="font-size:18px;"></i>
                         {{ pickupList }}
                       </h5>
@@ -528,6 +528,9 @@ body {
 .f-right {
   float: right;
 }
+.capitalize {
+    text-transform: capitalize;   
+  }
 /* Loading animation provided by https://loading.io/css/  released under CC0 License, so can be used freely */
 .lds-facebook {
   display: inline-block;

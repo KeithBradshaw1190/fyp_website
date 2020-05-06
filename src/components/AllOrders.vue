@@ -157,7 +157,7 @@ export default {
         combinedTimeStamp = time + " " + date;
         obj.filter_time = time;
         obj.filter_date = date;
-
+        obj.order_price = "€"+obj.order_price
         orderStatus =
           new Date(combinedTimeStamp).getTime() > currentdate.getTime();
         obj.delivery_schedule = moment(combinedTimeStamp).format(
