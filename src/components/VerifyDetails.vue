@@ -246,7 +246,7 @@ export default {
                   },
                   { merge: true }
                 )
-                .then(this.$router.push({ name: "groceryLists" }));
+                .then(this.$router.push({ name: "groceryDashboard" }));
             }
           },
           error => {
@@ -278,8 +278,8 @@ export default {
         );
     },
     loadData: function() {
-      console.log("Checking storage" + sessionStorage.getItem("storeId"));
-      console.log("uid: " + this.currentUser.uid);
+      //console.log("Checking storage" + sessionStorage.getItem("storeId"));
+     // console.log("uid: " + this.currentUser.uid);
 
       // you can load data from here and assign response in to variable
       db.collection("users")
@@ -287,7 +287,7 @@ export default {
         .get()
         .then(function(doc) {
           if (doc.exists && doc.get("storeId")) {
-            console.log(doc.get("storeId"));
+           // console.log(doc.get("storeId"));
             sessionStorage.setItem("storeId", doc.get("storeId"));
           }
         })
@@ -303,8 +303,8 @@ export default {
           )
           .then(
             response => {
-              console.log(response);
-              console.log(response.data.address);
+            //  console.log(response);
+              //console.log(response.data.address);
 
               if (response.status == 200) {
                 this.address = response.data.address;

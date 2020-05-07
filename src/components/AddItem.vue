@@ -80,7 +80,10 @@
                           <span
                             title="Currently Supported list names: 'Weekly Shop','Essentials','Monthly Shop' or 'Essential Items'"
                           >
-                            <i class="fa fa-question-circle tooltiptext" style="font-size:1rem;"></i>
+                            <i
+                              class="fa fa-question-circle tooltiptext"
+                              style="font-size:1rem;"
+                            ></i>
                           </span>
                         </label>
                         <input
@@ -91,7 +94,9 @@
                           required
                           @keyup="validateListName"
                         />
-                        <small class="text-danger" v-if="errorMessage">{{errorMessageValue}}</small>
+                        <small class="text-danger" v-if="errorMessage">{{
+                          errorMessageValue
+                        }}</small>
                       </div>
                     </div>
                   </div>
@@ -132,11 +137,23 @@
                         </label>
                         <div class="input-group mb-3">
                           <div class="input-group-prepend">
-                            <label class="input-group-text" for="frequencySelect">Frequency</label>
+                            <label
+                              class="input-group-text"
+                              for="frequencySelect"
+                              >Frequency</label
+                            >
                           </div>
-                          <select v-model="frequency" class="custom-select" id="frequencySelect">
-                            <option value="none" selected>Choose Purchase Frequency</option>
-                            <option value="More Than Once a Week">More than Once A Week</option>
+                          <select
+                            v-model="frequency"
+                            class="custom-select"
+                            id="frequencySelect"
+                          >
+                            <option value="none" selected
+                              >Choose Purchase Frequency</option
+                            >
+                            <option value="More Than Once a Week"
+                              >More than Once A Week</option
+                            >
                             <option value="Once Per Week">Once A Week</option>
                             <option value="Bi-Weekly">Bi-Weekly</option>
                           </select>
@@ -151,7 +168,9 @@
                       @click="createList"
                       class="btn btn-secondary btn-fill btn-wd"
                       id="btnCreateList"
-                    >Add Product &amp; Create List</button>
+                    >
+                      Add Product &amp; Create List
+                    </button>
                   </div>
                 </form>
               </div>
@@ -210,7 +229,7 @@ export default {
 
       this.autoCompleteProgress = false;
       this.autoCompleteResult = [];
-      var product = { name: name, price: price, img: img };
+      var product = { name: name, price: price.toFixed(2), img: img };
       this.placeHolderInputText = name;
       this.productList = product;
     },
@@ -241,7 +260,7 @@ export default {
               item,
               index
             ) {
-              console.log(item);
+             //console.log(item);
               if (
                 item.name.toLowerCase().indexOf(keywordEntered.toLowerCase()) >=
                 0
@@ -303,14 +322,18 @@ export default {
             items: [plist]
           })
           .then(docRef => {
-            var id = docRef.id;
-            console.log(id);
-            this.$router.push({ name: "modify-list", params: { id: id } });
+            this.$router.push({
+              name: "modify-list",
+              params: { id: docRef.id }
+            });
           })
           .catch(err => {
-            this.$router.push({ name: "groceryLists", params: { id: id } });
+            //this.$router.push({ name: "groceryLists", params: { id: id } });
             this.errorMessage = err.message;
+            alert(err.message);
           });
+      } else {
+        this.errorMessage = "List Name cannot be empty!";
       }
     },
     getListNames() {
@@ -322,19 +345,16 @@ export default {
         .get()
         .then(snapshot => {
           var messengerID;
-          if (snapshot.empty) {
-            console.log("No matching documents.");
-            return;
+          if (!snapshot.empty) {
+            snapshot.forEach(doc => {
+              listNames.push(doc.data().listName.toLowerCase());
+              if (doc.data().messengerID) {
+                messengerID = doc.data().messengerID;
+              } else {
+                messengerID = null;
+              }
+            });
           }
-          snapshot.forEach(doc => {
-          //  console.log(doc.id, "=>", doc.data().listName);
-            listNames.push(doc.data().listName.toLowerCase());
-            if (doc.data().messengerID) {
-              messengerID = doc.data().messengerID;
-            } else {
-              messengerID = null;
-            }
-          });
           //assign to local values
           this.messengerID = messengerID;
           this.listNames = listNames;
@@ -342,7 +362,7 @@ export default {
         .catch(err => {
           console.log("Error getting documents", err);
         })
-        .then(() => {
+        .finally(() => {
           this.checkForMessengerID();
         });
     },
@@ -358,7 +378,7 @@ export default {
           .get()
           .then(function(doc) {
             if (doc.exists) {
-              console.log("checkformessenger" + doc.data().messengerID);
+              // console.log("checkformessenger" + doc.data().messengerID);
               messengerID = doc.data().messengerID;
 
               //then call method to add messenger ID to lists
@@ -372,13 +392,13 @@ export default {
             if (this.messengerID != null) {
               this.addMessengerIDToLists();
             } else {
-              console.log("Messenger ID is still not set! " + this.messengerID);
+              console.log("Messenger ID is still not set! ");
             }
           });
       }
     },
     addMessengerIDToLists() {
-      console.log("addMessengerIDToLists" + this.messengerID);
+      //console.log("addMessengerIDToLists" + this.messengerID);
       const newDocumentBody = {
         messengerID: this.messengerID
       };

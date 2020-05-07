@@ -294,7 +294,7 @@ export default {
       this.autoCompleteResult = [];
       var product = {
         name: name,
-        price: price,
+        price: price.toFixed(2),
         img: img,
         department: department
       };
@@ -327,7 +327,7 @@ export default {
               item,
               index
             ) {
-              console.log(item);
+              //console.log(item.price);
               if (
                 item.name.toLowerCase().indexOf(keywordEntered.toLowerCase()) >=
                 1
@@ -501,6 +501,8 @@ export default {
             this.messengerID = messengerID;
             this.amountOfItems = theDoc.amnt;
             theDoc.items.forEach(element => {
+              //round price correvtly
+              element.price = element.price;
               totalp = totalp + element.quantity * element.price;
             });
             this.totalPrice = totalp.toFixed(2);
