@@ -387,9 +387,9 @@ export default {
         let transaction = db
           .runTransaction(t => {
             return t.get(listRef).then(doc => {
-              console.log(doc.data().items);
+             // console.log(doc.data().items);
               var newItems = doc.data().items.concat(this.productList);
-              console.log(newItems);
+             // console.log(newItems);
               t.update(listRef, {
                 list_price: this.totalPrice,
                 list_quantity: this.quantity,
@@ -443,9 +443,9 @@ export default {
         let transaction = db
           .runTransaction(t => {
             return t.get(listRef).then(doc => {
-              console.log(doc.data().items);
+             // console.log(doc.data().items);
               var newItems = localSlist;
-              console.log(newItems);
+            //  console.log(newItems);
               t.update(listRef, {
                 list_price: this.totalPrice,
                 list_quantity: this.amountOfItems,
@@ -489,7 +489,7 @@ export default {
           } else {
             if (doc.data().messengerID) {
               messengerID = doc.data().messengerID;
-              console.log("messengerID in fetchList" + messengerID);
+             // console.log("messengerID in fetchList" + messengerID);
             } else {
               messengerID = null;
             }
@@ -537,7 +537,7 @@ export default {
           .get()
           .then(function(doc) {
             if (doc.exists) {
-              console.log("checkformessenger" + doc.data().messengerID);
+            //  console.log("checkformessenger" + doc.data().messengerID);
               messengerID = doc.data().messengerID;
 
               //then call method to add messenger ID to lists
@@ -551,13 +551,13 @@ export default {
             if (this.messengerID != null) {
               this.addMessengerIDToLists();
             } else {
-              console.log("Messenger ID is still not set! " + this.messengerID);
+              console.log("Messenger ID is still not set! ");
             }
           });
       }
     },
     addMessengerIDToLists() {
-      console.log("addMessengerIDToLists" + this.messengerID);
+      //console.log("addMessengerIDToLists" + this.messengerID);
       const newDocumentBody = {
         messengerID: this.messengerID
       };

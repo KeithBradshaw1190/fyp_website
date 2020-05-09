@@ -77,7 +77,7 @@ export default {
       this.currentUser = firebaseApp.auth().currentUser;
     }
     if (sessionStorage.getItem("storeId") != null) {
-      console.log(sessionStorage.getItem("storeId"));
+      //console.log(sessionStorage.getItem("storeId"));
       this.verified = true;
     }
   }

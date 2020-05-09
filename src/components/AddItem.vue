@@ -252,7 +252,6 @@ export default {
           }
         })
           .then(response => {
-            //Use the suggested item as a possible ingredient string(It has no additional product info-saves parsing)
             //var simplename = response.data.uk.ghs.products.suggestions[0].text;
 
             var newData = [];
@@ -286,7 +285,7 @@ export default {
         this.productList.quantity = this.quantity;
         this.productList.frequency = this.frequency;
         //Simple name used for recipe search in chatbot
-        //filter out weigh values if present
+        //filter out non needed values if present
         var simpleName = this.productList.name.replace(/\d+(g|ml)/i, "");
         simpleName = simpleName.substr(simpleName.indexOf(" ") + 1);
         var wordsToRemove = [

@@ -344,9 +344,9 @@ export default {
         )
         .then(
           response => {
-            console.log("Then response" + response.status);
-            console.log(response.data[0]);
-            console.log("Setting loading to false storeID->" + this.storeId);
+           //console.log("Then response" + response.status);
+           //console.log(response.data[0]);
+            //console.log("Setting loading to false storeID->" + this.storeId);
             this.loadingScreen = false;
             if (response.status == 200 && response.data[0] == undefined) {
               this.deliveryExists = false;
@@ -382,7 +382,7 @@ export default {
           response => {
             // console.log(response);
             //console.log(response.data[0]);
-            console.log("Setting loading to false storeID->" + this.storeId);
+            //console.log("Setting loading to false storeID->" + this.storeId);
             this.loadingScreen = false;
             if (response.status == 200 && response.data[0] == undefined) {
               this.pickupExists = false;
@@ -408,9 +408,9 @@ export default {
     },
     loadData: function() {
       if (this.messengerLink == null || this.verified == null) {
-        console.log("Setting loading to true storeID->" + this.storeId);
+        //console.log("Setting loading to true storeID->" + this.storeId);
         this.loadingScreen = true;
-        console.log("load data");
+        //console.log("load data");
         db.collection("users")
           .doc(this.currentUser.uid)
           .get()
@@ -444,9 +444,9 @@ export default {
                   response => {
                     // console.log(response);
                     // console.log(response.data.address);
-                    console.log(
-                      "Setting loading to false storeID->" + this.storeId
-                    );
+                    // console.log(
+                    //   "Setting loading to false storeID->" + this.storeId
+                    // );
                     this.loadingScreen = false;
                     if (response.status == 200) {
                       this.address = response.data.address;
@@ -463,9 +463,9 @@ export default {
       }
     },
     checkList: function() {
-      console.log("Check session" + sessionStorage.getItem("listCreated"));
+     //console.log("Check session" + sessionStorage.getItem("listCreated"));
       if (sessionStorage.getItem("listCreated") == null) {
-        console.log("Check session" + sessionStorage.getItem("listCreated"));
+   //console.log("Check session" + sessionStorage.getItem("listCreated"));
 
         db.collection("shopping_lists")
           .where("uid", "==", this.currentUser.uid)

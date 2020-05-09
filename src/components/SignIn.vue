@@ -53,8 +53,8 @@ export default {
 
       var r_uri = url.searchParams.get("redirect_uri");
 
-      console.log(account_token);
-      console.log(r_uri);
+    //  console.log(account_token);
+      //console.log(r_uri);
       if (account_token != null && r_uri) {
         var provider = new firebase.auth.FacebookAuthProvider();
         firebaseApp
@@ -65,7 +65,7 @@ export default {
             // The signed-in user info.
             var user = result.user;
             alert(
-              `Alert 1 Login successful for ${user.providerData[0].displayName}`
+              `Login successful for ${user.providerData[0].displayName}`
             );
             firebaseApp
               .auth()
@@ -103,7 +103,7 @@ export default {
             // The signed-in user info.
             var user = result.user;
             alert(
-              `Alert 2 Login successful for ${user.providerData[0].displayName}`
+              `Login successful for ${user.providerData[0].displayName}`
             );
             firebaseApp
               .auth()
@@ -112,12 +112,12 @@ export default {
               })
               .then(() => {
                 this.currentUser = firebaseApp.auth().currentUser;
-                console.log(
-                  "Then " +
-                    this.currentUser.uid +
-                    " " +
-                    firebaseApp.auth().currentUser
-                );
+                // console.log(
+                //   "Then " +
+                //     this.currentUser.uid +
+                //     " " +
+                //     firebaseApp.auth().currentUser
+                // );
 
                 db.collection("users")
                   .doc(this.currentUser.uid)
@@ -156,16 +156,15 @@ export default {
       }
     },
     loadData: function() {
-      console.log("Checking storage" + sessionStorage.getItem("storeId"));
-      console.log("uid: " + this.currentUser.uid);
+      // console.log("Checking storage" + sessionStorage.getItem("storeId"));
+      // console.log("uid: " + this.currentUser.uid);
 
-      // you can load data from here and assign response in to variable
       db.collection("users")
         .doc(this.currentUser.uid)
         .get()
         .then(function(doc) {
           if (doc.exists && doc.get("storeId")) {
-            console.log(doc.get("storeId"));
+            //console.log(doc.get("storeId"));
             sessionStorage.setItem("storeId", doc.get("storeId"));
           }
         })
@@ -175,8 +174,8 @@ export default {
     },
     addToShoppingLists(resp, r_uri) {
       this.currentUser = firebaseApp.auth().currentUser;
-      console.log(this.currentUser.uid);
-      console.log("addtoshopping lists");
+     // console.log(this.currentUser.uid);
+     // console.log("addtoshopping lists");
       const newDocumentBody = {
         messengerID: resp.data.recipient
       };
@@ -218,7 +217,7 @@ export default {
             account_token
         )
         .then(resp => {
-          console.log(resp.data.recipient);
+        //  console.log(resp.data.recipient);
           db.collection("users")
             .doc(this.currentUser.uid)
             .update({
@@ -227,7 +226,7 @@ export default {
               messengerID: resp.data.recipient
             })
             .then(() => {
-              console.log("then");
+            //  console.log("then");
               this.addToShoppingLists(resp, r_uri);
             })
             .catch(err => {
