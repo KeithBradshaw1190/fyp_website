@@ -86,18 +86,6 @@
                         >
                         </vue-google-autocomplete>
                       </div>
-
-                      <!-- <div class="form-group">
-                        <label><i class="fas fa-home" style="font-size:1.2rem;"></i> Delivery Address</label>
-                        <input
-                          type="text"
-                          name="address"
-                          v-model="address"
-                          class="form-control border-input"
-                          placeholder="Home Address"
-                          required
-                        />
-                      </div> -->
                     </div>
                   </div>
 
@@ -281,7 +269,6 @@ export default {
       //console.log("Checking storage" + sessionStorage.getItem("storeId"));
      // console.log("uid: " + this.currentUser.uid);
 
-      // you can load data from here and assign response in to variable
       db.collection("users")
         .doc(this.currentUser.uid)
         .get()

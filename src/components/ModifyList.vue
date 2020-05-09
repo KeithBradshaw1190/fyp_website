@@ -352,7 +352,7 @@ export default {
         this.productList.quantity = this.quantity;
         this.productList.frequency = this.frequency;
         //Simple name used for recipe search in chatbot
-        //filter out weigh values if present
+        //filter out weigh values and other non needed words if present
         var simpleName = this.productList.name.replace(/\d+(g|ml)/i, "");
         simpleName = simpleName.substr(simpleName.indexOf(" ") + 1);
 
