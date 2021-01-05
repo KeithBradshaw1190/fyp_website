@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@andresouzaabreu/vue-data-table": "^1.4.7",
-    "axios": "^0.19.1",
+    "axios": "^0.21.1",
     "bootstrap-vue-datatable": "^1.0.7",
     "core-js": "^2.6.5",
     "datatables.net": "^1.10.20",
